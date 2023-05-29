@@ -1,0 +1,77 @@
+import { useForm } from "react-hook-form";
+import { Box, Button, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useToast, VStack } from "@chakra-ui/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getTeamPlayersNotConnected, playerConnecting } from "../api";
+import { ITinyPlayer } from "../types";
+import { FaCheck } from "react-icons/fa";
+
+interface PlayerConnectModalProps {
+    isOpen : boolean;
+    onClose : () => void;
+    teamPk : string
+}
+
+interface IPlayerConnectForm {
+    playerPk : string;
+    code : number;
+}
+
+export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
+
+    const { isLoading : teamPlayersNotConnectedLoading, data : teamPlayersNotConnectedData, isError : teamPlayersNotConnectedError } = useQuery<ITinyPlayer[]>(["teamNotConnectedPlayers", props.teamPk], getTeamPlayersNotConnected);
+    const { register, handleSubmit, formState : {errors}, reset : playerConnectFormReset } = useForm<IPlayerConnectForm>();
+
+    const toast = useToast();
+    const queryClient = useQueryClient()
+
+    const playerConnectingMutation = useMutation(playerConnecting, {
+        onSuccess : (data) => {
+            console.log("player connecting successful")
+            // data.ok
+            toast({
+                title : "플레이어 연결 요청 성공",
+                status : "success"
+            });
+            props.onClose();
+            queryClient.refetchQueries(["team"])
+        },
+    });
+
+    const onSubmit = ({ playerPk, code }:IPlayerConnectForm) => {
+        playerConnectingMutation.mutate({ playerPk, code });
+        // data:ILogInForm 으로 받고, mutation.mutate({ data.username, data.password }) 로 받고 싶은데 안됨
+        // console.log(data)
+    }
+
+    return (
+    <Modal motionPreset="slideInBottom" isOpen={props.isOpen} onClose={props.onClose}>
+    {/* motionPreset prop을 이용하면 모달이 나타나는 모양을 지정할 수 있음, default는 "scale" */}
+        <ModalOverlay />
+            {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
+        <ModalContent> 
+            <ModalHeader> Player Connect </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
+                <VStack>
+                    <FormControl>
+                            <FormLabel fontWeight={"bold"} color={"main.500"} fontSize={"sm"} > SELECT PLAYER </FormLabel>
+                            {/* <Select placeholder="Choose a vsteam" onChange={handleVSteamChange}> */}
+                            <Select {...register("playerPk", {required:true})} placeholder="CHOOSE A PLAYER">
+                                {teamPlayersNotConnectedData?.map((player) => <option key={player.pk} value={player.pk}>{player.backnumber}. {player.name}</option>)}
+                            </Select>
+                    </FormControl>
+                    <FormControl>
+                    <FormLabel>Team Code</FormLabel>
+                        <InputGroup>
+                            <InputLeftAddon children={<FaCheck />} />
+                            <Input {...register("code", {required:true})} type="number" min={0} isInvalid={Boolean(errors.code?.message)} />
+                        </InputGroup>
+                    </FormControl>
+                    {playerConnectingMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> code is wrong </Text>) : null}
+                    <Button type="submit" isLoading={playerConnectingMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> CONNECT </Button>
+                </VStack>
+            </ModalBody>
+        </ModalContent>
+    </Modal>
+    )
+}

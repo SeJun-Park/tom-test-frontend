@@ -1,0 +1,170 @@
+import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, HStack, Input, Text, useDisclosure, useToast, VStack } from "@chakra-ui/react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { Helmet } from "react-helmet";
+import { useForm } from "react-hook-form";
+import { FaArrowLeft  } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+import { gameUpdate, getGame, getTeam, getTeamPlayers, isSpvsr } from "../api";
+import DeleteGameModal from "../components/DeleteGameModal";
+import Empty from "../components/Empty";
+import ProtectedPage from "../components/ProtectedPage";
+import { IGame, ISpvsrUser, ITeam, ITinyPlayer } from "../types";
+
+interface UpdateGameBeforeProps {
+    teamPk : number
+}
+
+interface IUpdateGameForm {
+    vsteam : string,
+    location : string,
+    start_time : string,
+    end_time : string
+    participants : number[],
+}
+
+export default function UpdateGameBefore( props : UpdateGameBeforeProps ) {
+
+    const { gamePk } = useParams();
+
+    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
+    const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
+
+    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", props.teamPk], getTeam);
+    const { isLoading : teamPlayersLoading, data : teamPlayersData, isError : teamPlayersError } = useQuery<ITinyPlayer[]>(["teamPlayers", props.teamPk], getTeamPlayers);
+
+    const { watch, register, setValue, handleSubmit, formState : {errors}, reset : updateGameFormReset } = useForm<IUpdateGameForm>({defaultValues: {
+                                                                                                                                                        participants: gameData?.participants.map(participant => participant.pk) || []
+                                                                                                                                                    }});
+    console.log(watch())
+    const navigate = useNavigate();
+    const toast = useToast();
+
+    const { isOpen, onOpen, onClose } = useDisclosure()                                                                                                                                                
+
+    // const [ date, setDate ] = useState<Date | undefined>();
+
+    const updateGameMutation = useMutation(gameUpdate, {
+        onSuccess : (data) => {
+            toast({
+                title : "game upload success.",
+                status : "success"
+            });
+            navigate(-1)
+        }
+    })
+
+    // const handleDateChange = (date : any) => {
+    //     setDate(date.toISOString().split("T")[0])
+    //     console.log(date)
+    //   };
+
+    const onSubmit = ( { vsteam, location, start_time, end_time, participants } : IUpdateGameForm) => {
+        // setTeam(name)
+        // teamSearchMutation.mutate({ name, participants, date});
+        
+        if (gamePk && gameData) {
+            updateGameMutation.mutate({gamePk, vsteam, location, start_time, end_time,participants})
+        }
+
+        // uploadGameFormReset();
+    }
+
+    const onClickBack = () => {
+        navigate(-1)
+    }
+
+    if (spvsrData?.team.name !== gameData?.team.name) {
+        navigate("/")
+    }
+
+    return (
+        <ProtectedPage>
+            <Helmet>
+                <title>{ gameData ? (`3OM | ${gameData.team.name} vs ${gameData.vsteam} Update`) : "Loading.." }</title>
+            </Helmet>
+            <HStack height={20} px={5}>
+                <Button variant={"unstyled"} onClick={onClickBack}>
+                    <FaArrowLeft />
+                </Button>
+            </HStack>
+            <VStack alignItems={"flex-start"} padding={"5"}>
+                <Text fontSize={"xl"} as="b"> Update Game </Text>
+            </VStack>
+            <VStack as="form" onSubmit={handleSubmit(onSubmit)} p={10} spacing={6}>
+                <FormControl mb={5}>
+                    <FormLabel>
+                        team name
+                    </FormLabel>
+                    <Input type={"text"} isReadOnly value={teamData?.pk} px={1} placeholder={teamData?.name} variant={"flushed"} color={"gray.400"}/>
+                </FormControl>
+                <FormControl mb={5}>
+                    <FormLabel>
+                        vsteam name
+                    </FormLabel>
+                    <Input {...register("vsteam", { required : true})} defaultValue={gameData?.vsteam} px={1} type={"text"} isInvalid={Boolean(errors.vsteam?.message)} required variant={"flushed"}/>
+                    <FormHelperText fontSize={"xs"}>
+                      정확히 입력하면 상대 전적을 확인할 수 있습니다.
+                    </FormHelperText>
+                </FormControl>
+                <FormControl>
+                    <FormLabel>
+                        location
+                    </FormLabel>
+                    <Input {...register("location", { required : true})} defaultValue={gameData?.location} type={"text"} px={1} isInvalid={Boolean(errors.location?.message)} variant={"flushed"}/>
+
+                </FormControl>
+                <FormControl>
+                    <FormLabel> 
+                        Date 
+                    </FormLabel>
+                    <Input defaultValue={gameData?.date} isReadOnly={true} color={"gray.400"} type={"text"} px={1} variant={"flushed"} />
+                    <FormHelperText fontSize={"xs"}> 날짜와 시간은 등록 이후 수정할 수 없습니다. </FormHelperText>
+                </FormControl>
+                <FormControl>
+                    <FormLabel mb={5}>
+                        start time
+                    </FormLabel>
+                    <Input {...register("start_time")} defaultValue={gameData?.start_time} isReadOnly={true} color={"gray.400"} type={"time"} step="1800" variant={"flushed"} />
+
+                </FormControl>
+                <FormControl>
+                    <FormLabel mb={5}>
+                        end time
+                    </FormLabel>
+                    <Input {...register("end_time")} defaultValue={gameData?.end_time} isReadOnly={true} color={"gray.400"} type={"time"} step="1800" variant={"flushed"} />
+
+                </FormControl>
+                <FormControl>
+                    <FormLabel my={5}> 
+                        Participants 
+                    </FormLabel>
+                    {teamPlayersData?.map((player) => {
+                                                        // const isChecked = gameData?.participants?.includes(player);
+                                                        const isChecked = gameData?.participants.some((participant) => participant.pk === player.pk);
+
+                                                        return (
+                                                            <Box key={player.pk}>
+                                                            <Checkbox
+                                                                {...register("participants", { required: true })}
+                                                                defaultChecked={isChecked} // defaultChecked prop을 사용하여 체크 여부 설정
+                                                                value={player.pk}
+                                                                my={1}
+                                                            >
+                                                                {player.backnumber}. {player.name}
+                                                            </Checkbox>
+                                                            </Box>
+                                                        );
+                                                        })}
+                    <FormHelperText mt={5} fontSize={"xs"}> *participants는 경기 종료 시간 이후 수정 불가합니다. </FormHelperText>
+                </FormControl>
+                <Empty />
+                {updateGameMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}
+                <Button isLoading={updateGameMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> Update </Button>
+                <Button onClick={onOpen} isLoading={updateGameMutation.isLoading} backgroundColor={"black"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> Delete </Button>
+            </VStack>
+            <Empty />
+            <DeleteGameModal isOpen={isOpen} onClose={onClose}/>
+        </ProtectedPage>
+    )
+}
