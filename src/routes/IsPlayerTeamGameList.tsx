@@ -116,8 +116,8 @@ export default function IsPlayerTeamGameList() {
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text fontSize={"sm"}> win-rate </Text>
                                 
-                                <CircularProgress size={"65px"} thickness={"5px"} value={teamStatsData && teamGamesData && teamGamesData.length !=0 ? Number(((teamStatsData.win/teamGamesData.length)*100).toFixed(1)) : 0} color='main.500'>
-                                    <CircularProgressLabel fontSize={"xs"}>{teamStatsData && teamGamesData && teamGamesData.length !=0 ? ((teamStatsData.win/teamGamesData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
+                                <CircularProgress size={"65px"} thickness={"5px"} value={teamStatsData && teamGamesData && teamGamesData.length !==0 ? Number(((teamStatsData.win/teamGamesData.length)*100).toFixed(1)) : 0} color='main.500'>
+                                    <CircularProgressLabel fontSize={"xs"}>{teamStatsData && teamGamesData && teamGamesData.length !==0 ? ((teamStatsData.win/teamGamesData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                                 </CircularProgress>
                             </HStack>
                         </VStack>
@@ -187,8 +187,8 @@ export default function IsPlayerTeamGameList() {
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text fontSize={"sm"}> win-rate </Text>
-                                        <CircularProgress size={"65px"} thickness={"5px"} value={teamStatsRelative && teamVSteamGames && teamVSteamGames.length !=0 ? Number(((teamStatsRelative.win/teamVSteamGames.length)*100).toFixed(1)) : 0} color='main.500'>
-                                             <CircularProgressLabel fontSize={"xs"}>{teamStatsRelative && teamVSteamGames && teamVSteamGames.length !=0 ? ((teamStatsRelative.win/teamVSteamGames.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
+                                        <CircularProgress size={"65px"} thickness={"5px"} value={teamStatsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? Number(((teamStatsRelative.win/teamVSteamGames.length)*100).toFixed(1)) : 0} color='main.500'>
+                                             <CircularProgressLabel fontSize={"xs"}>{teamStatsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? ((teamStatsRelative.win/teamVSteamGames.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                                         </CircularProgress>
                                     </HStack>
                                 </VStack>
