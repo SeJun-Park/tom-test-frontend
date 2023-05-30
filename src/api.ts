@@ -4,7 +4,7 @@ import Cookie from "js-cookie";
 import { formatDate } from "./lib/utils";
 
 const instance = axios.create({
-    baseURL : "http://127.0.0.1:8001/api/v1/",
+    baseURL : process.env.NODE_ENV === "development" ? "http://127.0.0.1:8001/api/v1/" : "https://tom-test-o4x9.onrender.com/api/v1/",
     withCredentials : true,
         // 이 뜻은 Api 요청을 할 때 Cookie를 보내겠다는 의미
 })

@@ -55,7 +55,7 @@ export default function IsSpvsrHome() {
                                             </Box>
                                         </Link>
                                     </VStack>
-                                    <VStack position="relative" width="100%" height="150" my={10}>
+                                    <VStack position="relative" width="100%" height="75" my={10}>
                                             <Link to={"/"}>
                                                 <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                                     <Box
