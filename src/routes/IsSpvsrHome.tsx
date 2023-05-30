@@ -26,7 +26,7 @@ export default function IsSpvsrHome() {
             {spvsrTeamData && spvsrGamesData ? 
                             <>
                                 <VStack alignItems={"flex-start"} padding={"5"}>
-                                    <VStack position="relative" width="100%" height="75" mt={0}>
+                                    {/* <VStack position="relative" width="100%" height="75" mt={0}>
                                         <Link to={"/"}>
                                             <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                                 <Box
@@ -48,13 +48,12 @@ export default function IsSpvsrHome() {
                                                             sponsored
                                                         </Text>
                                                         <Box color={"white"}>
-                                                            {/* <FaArrowRight /> */}
                                                         </Box>
                                                     </HStack>
                                                 </Box>
                                             </Box>
                                         </Link>
-                                    </VStack>
+                                    </VStack> */}
                                     <VStack position="relative" width="100%" height="75" my={10}>
                                             <Link to={"/"}>
                                                 <Box position="absolute" top={0} left={0} right={0} bottom={0}>

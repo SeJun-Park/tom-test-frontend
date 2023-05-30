@@ -132,7 +132,7 @@ export default function IsPlayerTeamGameList() {
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text fontSize={"sm"}> Goals per Game </Text>
-                                <Text fontSize={"sm"}> {teamGoalsData && teamGamesData && teamGamesData.length !=0 ? (teamGoalsData.goals/teamGamesData.length).toFixed(1) : "0"} GOAL </Text>
+                                <Text fontSize={"sm"}> {teamGoalsData && teamGamesData && teamGamesData.length !==0 ? (teamGoalsData.goals/teamGamesData.length).toFixed(1) : "0"} GOAL </Text>
                             </HStack>
                         </VStack>
                         <BigDivider />
@@ -204,7 +204,7 @@ export default function IsPlayerTeamGameList() {
                                     <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text fontSize={"sm"}> Goals per game </Text>
                                         <Text fontSize={"sm"}> 
-                                            {teamGoalsRelative && teamVSteamGames && teamVSteamGames.length !=0 ? (teamGoalsRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} GOAL</Text>
+                                            {teamGoalsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} GOAL</Text>
                                     </HStack>
                                 </VStack>
                                 <BigDivider />

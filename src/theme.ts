@@ -1,7 +1,7 @@
 import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
 
 const config : ThemeConfig = {
-    initialColorMode : "dark",
+    initialColorMode : "light",
         // system에 맞출 지, 아니면 Default 값을 둘지
     useSystemColorMode : false,
         // system에 맞추지 않겠다 라는 뜻
