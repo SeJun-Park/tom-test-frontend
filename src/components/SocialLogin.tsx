@@ -6,7 +6,7 @@ export default function SocialLogin() {
     const kakaoParamsObject = {
         client_id : "d2703f278acadc861b3685bb7368adfb",
         // 아마도 REST API KEY
-        redirect_uri : "http://127.0.0.1:3001/kakaologin",
+        redirect_uri : "https://tom-test-frontend.onrender.com/kakaologin",
         response_type : "code",
             //response_type 은 "code" 로 고정
     }
