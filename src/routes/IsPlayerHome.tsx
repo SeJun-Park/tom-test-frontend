@@ -59,7 +59,7 @@ export default function IsPlayerHome() {
                     <Link to={"/"}>
                         <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                             <Box
-                            backgroundImage="url(https://cdn.shopify.com/s/files/1/0425/7621/articles/what-is-the-official-soccer-ball-for-the-2022-world-cup-481526.jpg?v=1654357624)"
+                            backgroundImage="url(https://static.nike.com/a/images/f_auto,cs_srgb/w_1920,c_limit/7fc0cfa6-9305-4b79-8cf2-2eef2061b5de/nike-soccer.png)"
                             backgroundSize="cover"
                             backgroundPosition="center"
                             width="100%"

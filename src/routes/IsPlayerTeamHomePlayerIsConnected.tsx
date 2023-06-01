@@ -4,6 +4,7 @@ import { FaArrowRight, FaFutbol, FaRunning, FaUserNinja } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { getPlayer, getPlayerGames, getPlayerGoals, getPlayerTomGames } from "../api";
 import BigDivider from "../components/BigDivider";
+import Empty from "../components/Empty";
 import PlayerConnectCancelModal from "../components/PlayerConnectCancelModal";
 import SmallDivider from "../components/SmallDivider";
 import { IGoals, IPlayer, ITinyGame } from "../types";
@@ -94,6 +95,7 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
                     </HStack>
                 </VStack>
             </Link>
+            <Empty />
             <PlayerConnectCancelModal isOpen={isOpen} onClose={onClose} playerPk={props.playerPk} />
         </>
     )

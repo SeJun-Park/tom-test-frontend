@@ -1,6 +1,7 @@
 import { Avatar, Button, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import BigDivider from "../components/BigDivider";
+import Empty from "../components/Empty";
 import NullGame from "../components/NullGame";
 import PlayerConnectingCancelModal from "../components/PlayerConnectingCancelModal";
 import SmallDivider from "../components/SmallDivider";
@@ -58,6 +59,7 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
                     <Text as="b" fontSize={"sm"}> 0 GOALS </Text>
                 </HStack>
             </VStack>
+            <Empty />
             <PlayerConnectingCancelModal isOpen={isOpen} onClose={onClose} playerPk={props.playerPk} />
         </>
     )

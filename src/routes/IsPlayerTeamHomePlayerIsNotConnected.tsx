@@ -1,5 +1,6 @@
 import { Avatar, Button, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import BigDivider from "../components/BigDivider";
+import Empty from "../components/Empty";
 import NullGame from "../components/NullGame";
 import PlayerConnectModal from "../components/PlayerConnectModal";
 import SmallDivider from "../components/SmallDivider";
@@ -57,6 +58,7 @@ export default function IsPlayerTeamHomePlayerIsNotConnected( props : IsPlayerTe
                     <Text as="b" fontSize={"sm"}> 0 GOALS </Text>
                 </HStack>
             </VStack>
+            <Empty />
             <PlayerConnectModal isOpen={isOpen} onClose={onClose} teamPk={props.teamPk} />
         </>
     )
