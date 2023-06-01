@@ -1,4 +1,4 @@
-import { Button, CircularProgress, CircularProgressLabel, Divider, HStack, Text, VStack } from "@chakra-ui/react";
+import { Button, CircularProgress, CircularProgressLabel, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
@@ -43,31 +43,69 @@ export default function IsPlayerTeamPlayerList() {
                                 <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !=0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                 </CircularProgress>
             </HStack>
-            <VStack alignItems={"flex-start"} px={3} mt={8}>
-                <Text as="b" color={"main.500"} fontSize={"sm"}> PLAYER </Text>
-                <Divider />
-                <HStack width={"100%"} justifyContent={"space-between"}>
-                    <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {teamPlayersData ? teamPlayersData.length : "0"} PLAYERS </Text>
-                </HStack>
-            </VStack>
-            <BigDivider />
-            <VStack alignItems={"flex-start"} px={3} spacing={4}>
-                <Text as="b" color={"main.500"} fontSize={"sm"}> ALL </Text>
-                <Divider />
-                {teamPlayersData?.map((player) => (
-                                <Player 
-                                    key={player.pk}
-                                    pk={player.pk}
-                                    avatar={player.avatar}
-                                    backnumber={player.backnumber}
-                                    name={player.name}
-                                    is_connecting={player.is_connecting}
-                                    is_connected={player.is_connected}
-                                />
-                            ))}
-            </VStack>
-            <Empty />
+            <Tabs isFitted my={5} isLazy>
+                <TabList mb='1em'>
+                    <Tab _selected={{color : "main.500"}}> ALL </Tab>
+                    <Tab _selected={{color : "main.500"}}> STATS </Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel p={0}>
+                        <VStack alignItems={"flex-start"} px={3} mt={8}>
+                            <Text as="b" color={"main.500"} fontSize={"sm"}> PLAYER </Text>
+                            <Divider />
+                            <HStack width={"100%"} justifyContent={"space-between"}>
+                                <Text as="b" fontSize={"sm"}> TOTAL </Text>
+                                <Text as="b" fontSize={"sm"}> {teamPlayersData ? teamPlayersData.length : "0"} PLAYERS </Text>
+                            </HStack>
+                        </VStack>
+                        <BigDivider />
+                        <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                            <Text as="b" color={"main.500"} fontSize={"sm"}> ALL </Text>
+                            <Divider />
+                            {teamPlayersData?.map((player) => (
+                                            <Player 
+                                                key={player.pk}
+                                                pk={player.pk}
+                                                avatar={player.avatar}
+                                                backnumber={player.backnumber}
+                                                name={player.name}
+                                                is_connecting={player.is_connecting}
+                                                is_connected={player.is_connected}
+                                            />
+                                        ))}
+                        </VStack>
+                        <Empty />
+                    </TabPanel>
+                    <TabPanel p={0}>
+                        <Tabs variant='soft-rounded' isLazy align={"center"}>
+                            <TabList>
+                                <Tab _selected={{color : "black", bgColor : "point.500"}}>3OM</Tab>
+                                <Tab _selected={{color : "black", bgColor : "point.500"}}>participants</Tab>
+                                <Tab _selected={{color : "black", bgColor : "point.500"}}>medias</Tab>
+                            </TabList>
+                            <TabPanels>
+                                <TabPanel p={0}>
+                                    <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                                        <Divider mt={8}/>
+                                        <Empty />
+                                    </VStack>
+
+
+                                </TabPanel>
+                                <TabPanel p={0}>
+                                    <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                                        <Divider mt={8}/>
+                                    <Empty />
+                                    </VStack>
+                                </TabPanel>
+                                <TabPanel p={0}>
+
+                                </TabPanel>
+                            </TabPanels>
+                        </Tabs>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
         </ProtectedPage>
     )
 }
