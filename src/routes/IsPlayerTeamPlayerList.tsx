@@ -77,16 +77,14 @@ export default function IsPlayerTeamPlayerList() {
                         <Empty />
                     </TabPanel>
                     <TabPanel p={0}>
-                        <Tabs variant='soft-rounded' isLazy align={"center"}>
+                        <Tabs variant='soft-rounded' isLazy align={"center"} mt={8}>
                             <TabList>
                                 <Tab _selected={{color : "black", bgColor : "point.500"}}>3OM</Tab>
-                                <Tab _selected={{color : "black", bgColor : "point.500"}}>participants</Tab>
-                                <Tab _selected={{color : "black", bgColor : "point.500"}}>medias</Tab>
+                                <Tab _selected={{color : "black", bgColor : "point.500"}}>goals</Tab>
                             </TabList>
                             <TabPanels>
                                 <TabPanel p={0}>
                                     <VStack alignItems={"flex-start"} px={3} spacing={4}>
-                                        <Divider mt={8}/>
                                         <Empty />
                                     </VStack>
 
@@ -94,12 +92,8 @@ export default function IsPlayerTeamPlayerList() {
                                 </TabPanel>
                                 <TabPanel p={0}>
                                     <VStack alignItems={"flex-start"} px={3} spacing={4}>
-                                        <Divider mt={8}/>
                                     <Empty />
                                     </VStack>
-                                </TabPanel>
-                                <TabPanel p={0}>
-
                                 </TabPanel>
                             </TabPanels>
                         </Tabs>
