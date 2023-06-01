@@ -48,7 +48,7 @@ export default function LogInRequired() {
                     Please Log In / Sign Up
                   </Text> */}
                   <HStack spacing={4} mt={4}>
-                    <Button onClick={onLoginOpen}>Log In</Button>
+                    <Button onClick={onLoginOpen} backgroundColor="gray.500" color="white">Log In</Button>
                     <LightMode>
                       <Button onClick={onSignUpOpen} backgroundColor="main.500" color="white">
                         Sign Up

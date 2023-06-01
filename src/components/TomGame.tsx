@@ -75,7 +75,7 @@ export default function TomGame ( props : ITomGameProps ) {
                     <Divider />
                     <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10}>
                         {gameVoteData ?
-                                    (new Date() > new Date(gameVoteData.end) && props.toms.length!=0) ? (
+                                    (new Date() > new Date(gameVoteData.end) && props.toms.length!==0) ? (
                                                                                                             props.toms.map((tom) => 
                                                                                                                 <VStack>
                                                                                                                     <Avatar src={tom.avatar} />
@@ -83,7 +83,7 @@ export default function TomGame ( props : ITomGameProps ) {
                                                                                                                 </VStack>
                                                                                                                             )
                                                                                                         ) : 
-                                                                                                            ((new Date() < new Date(gameVoteData.end) && props.toms.length!=0) ? (
+                                                                                                            ((new Date() < new Date(gameVoteData.end) && props.toms.length!==0) ? (
                                                                                                                                                                                     <VStack width={"100%"}>
                                                                                                                                                                                         <Box width={"100%"} backgroundColor={"main.500"} color={"white"} textAlign={"center"}> vote-ing </Box>                                                                                       
                                                                                                                                                                                     {/* <Avatar src={tom.avatar} />
