@@ -59,7 +59,7 @@ export default function IsPlayerHome() {
                     <Link to={"/"}>
                         <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                             <Box
-                            backgroundImage="url(https://static.nike.com/a/images/f_auto,cs_srgb/w_1920,c_limit/7fc0cfa6-9305-4b79-8cf2-2eef2061b5de/nike-soccer.png)"
+                            backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/3e881f4e-0d99-4087-77a2-236600d78700/public)"
                             backgroundSize="cover"
                             backgroundPosition="center"
                             width="100%"

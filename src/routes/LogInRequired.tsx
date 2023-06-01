@@ -29,7 +29,7 @@ export default function LogInRequired() {
               </Helmet>
               <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                 <Box
-                backgroundImage="url(https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F72%2Fd9%2F23%2F72d923df0366b9c2e15296df87d978b6.jpg&type=sc960_832)"
+                backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/55da74ce-715c-4795-5746-c27ace4b5b00/public)"
                 backgroundSize="cover"
                 backgroundPosition="center"
                 width="100%"
