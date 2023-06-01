@@ -5,6 +5,7 @@ import { getPlayerGoals } from "../api";
 import { IGoals } from "../types";
 
 interface IPlayerGoalStatsProps {
+    index : number,
     pk : number,
     backnumber : number,
     avatar : string,
@@ -19,7 +20,8 @@ export default function PlayerGoalStats ( props : IPlayerGoalStatsProps ) {
 
     return (
         <Box width={"100%"}>
-                <HStack justifyContent={"center"} mb={4} px={3}>
+                <HStack justifyContent={"center"} mb={4} px={3} spacing={3}>
+                    <Text as="b" fontSize={"xs"} color={"main.500"}>{props.index}.</Text>
                     <Badge ml={1} backgroundColor={"black"} color={"white"}>
                         <HStack>
                             <FaFutbol />

@@ -5,6 +5,7 @@ import { getPlayerTomGames } from "../api";
 import { ITinyGame } from "../types";
 
 interface IPlayerTOMStatsProps {
+    index : number,
     pk : number,
     backnumber : number,
     avatar : string,
@@ -19,7 +20,8 @@ export default function PlayerTOMStats ( props : IPlayerTOMStatsProps ) {
 
     return (
         <Box width={"100%"}>
-                <HStack justifyContent={"center"} mb={4} px={3}>
+                <HStack justifyContent={"center"} mb={4} px={3} spacing={3}>
+                    <Text as="b" fontSize={"xs"} color={"main.500"}>{props.index}.</Text>
                     <Badge ml={1} backgroundColor={"point.500"} color={"black"}>
                         <HStack>
                             <FaUserNinja />

@@ -8,6 +8,8 @@ import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import NullPlayer from "../components/NullPlayer";
 import Player from "../components/Player";
+import PlayerGoalStats from "../components/PlayerGoalStats";
+import PlayerTOMStats from "../components/PlayerTOMStats";
 import ProtectedPage from "../components/ProtectedPage";
 import { ITeam, ITinyPlayer } from "../types";
 
@@ -79,7 +81,7 @@ export default function IsPlayerTeamPlayerList() {
                         <Empty />
                     </TabPanel>
                     <TabPanel p={0}>
-                        <Tabs variant='soft-rounded' isLazy align={"center"} mt={8}>
+                        <Tabs variant='soft-rounded' isLazy align={"center"} my={8}>
                             <TabList>
                                 <Tab _selected={{color : "black", bgColor : "point.500"}}>3OM</Tab>
                                 <Tab _selected={{color : "black", bgColor : "point.500"}}>goals</Tab>
@@ -87,9 +89,12 @@ export default function IsPlayerTeamPlayerList() {
                             <TabPanels>
                                 <TabPanel p={0}>
                                     <VStack alignItems={"flex-start"} px={3} spacing={4}>
-                                        {teamPlayersGoalStatsData?.map((player) => (
-                                                <Player 
+                                        <Text as="b" color={"main.500"} fontSize={"sm"}> RANKING </Text>
+                                        <Divider />
+                                        {teamPlayersTOMStatsData?.map((player, index) => (
+                                                <PlayerTOMStats 
                                                     key={player.pk}
+                                                    index={index}
                                                     pk={player.pk}
                                                     avatar={player.avatar}
                                                     backnumber={player.backnumber}
@@ -103,9 +108,12 @@ export default function IsPlayerTeamPlayerList() {
                                 </TabPanel>
                                 <TabPanel p={0}>
                                     <VStack alignItems={"flex-start"} px={3} spacing={4}>
-                                        {teamPlayersTOMStatsData?.map((player) => (
-                                                    <Player 
+                                        <Text as="b" color={"main.500"} fontSize={"sm"}> RANKING </Text>
+                                        <Divider />
+                                        {teamPlayersGoalStatsData?.map((player, index) => (
+                                                    <PlayerGoalStats 
                                                         key={player.pk}
+                                                        index={index}
                                                         pk={player.pk}
                                                         avatar={player.avatar}
                                                         backnumber={player.backnumber}
