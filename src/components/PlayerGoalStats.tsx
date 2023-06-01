@@ -23,18 +23,18 @@ export default function PlayerGoalStats ( props : IPlayerGoalStatsProps ) {
                 <HStack justifyContent={"space-between"} mb={4} px={3}>
                     <HStack spacing={3}>
                         <Text as="b" fontSize={"xs"} color={"main.500"}>{props.index}.</Text>
-                        <Badge ml={1} backgroundColor={"black"} color={"white"}>
-                            <HStack>
-                                <FaFutbol />
-                                <Text>{playerGoalsData ? playerGoalsData.goals : "0"}</Text>
-                            </HStack>
-                        </Badge>
+                        <HStack spacing={3}>
+                            <Avatar src={props.avatar}></Avatar>
+                            <Text as="b" fontSize={"xs"}>{props.backnumber}.</Text>
+                            <Text as="b" fontSize={"xs"}>{props.name}</Text>
+                        </HStack>
                     </HStack>
-                    <HStack spacing={3}>
-                        <Avatar src={props.avatar}></Avatar>
-                        <Text as="b" fontSize={"xs"}>{props.backnumber}.</Text>
-                        <Text as="b" fontSize={"xs"}>{props.name}</Text>
-                    </HStack>
+                    <Badge ml={1} backgroundColor={"black"} color={"white"}>
+                        <HStack>
+                            <FaFutbol />
+                            <Text>{playerGoalsData ? playerGoalsData.goals : "0"}</Text>
+                        </HStack>
+                    </Badge>
                 </HStack>
                 <Divider />
         </Box>
