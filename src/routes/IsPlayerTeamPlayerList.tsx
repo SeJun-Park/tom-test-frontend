@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamPlayers, getTeamPlayersConnected } from "../api";
+import { getTeam, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersGoalStats, getTeamPlayersTOMStats } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import NullPlayer from "../components/NullPlayer";
@@ -18,6 +18,8 @@ export default function IsPlayerTeamPlayerList() {
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
     const { isLoading : teamPlayersConnectedLoading, data : teamPlayersConnectedData, isError : teamPlayersConnectedError } = useQuery<ITinyPlayer[]>(["teamConnectdPlayers", teamPk], getTeamPlayersConnected);
     const { isLoading : teamPlayersLoading, data : teamPlayersData, isError : teamPlayersError } = useQuery<ITinyPlayer[]>(["teamPlayers", teamPk], getTeamPlayers);
+    const { isLoading : teamPlayersGoalStatsLoading, data : teamPlayersGoalStatsData, isError : teamPlayersGoalStatsError } = useQuery<ITinyPlayer[]>(["teamPlayersGoalStats", teamPk], getTeamPlayersGoalStats);
+    const { isLoading : teamPlayersTOMStatsLoading, data : teamPlayersTOMStatsData, isError : teamPlayersTOMStatsError } = useQuery<ITinyPlayer[]>(["teamPlayersTOMStats", teamPk], getTeamPlayersTOMStats);
 
     const navigate = useNavigate();
     const onClickBack = () => {
@@ -39,8 +41,8 @@ export default function IsPlayerTeamPlayerList() {
             </VStack>
             <HStack justifyContent={"center"}>
                 <Text fontSize={"sm"}> CNTD-rate </Text>
-                <CircularProgress size={"65px"} thickness={"5px"} value={teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !=0 ? Number(((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1)) : 0} color='main.500'>
-                                <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !=0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
+                <CircularProgress size={"65px"} thickness={"5px"} value={teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? Number(((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1)) : 0} color='main.500'>
+                                <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                 </CircularProgress>
             </HStack>
             <Tabs isFitted my={5} isLazy>
@@ -85,14 +87,34 @@ export default function IsPlayerTeamPlayerList() {
                             <TabPanels>
                                 <TabPanel p={0}>
                                     <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                                        {teamPlayersGoalStatsData?.map((player) => (
+                                                <Player 
+                                                    key={player.pk}
+                                                    pk={player.pk}
+                                                    avatar={player.avatar}
+                                                    backnumber={player.backnumber}
+                                                    name={player.name}
+                                                    is_connecting={player.is_connecting}
+                                                    is_connected={player.is_connected}
+                                                />
+                                            ))}
                                         <Empty />
                                     </VStack>
-
-
                                 </TabPanel>
                                 <TabPanel p={0}>
                                     <VStack alignItems={"flex-start"} px={3} spacing={4}>
-                                    <Empty />
+                                        {teamPlayersTOMStatsData?.map((player) => (
+                                                    <Player 
+                                                        key={player.pk}
+                                                        pk={player.pk}
+                                                        avatar={player.avatar}
+                                                        backnumber={player.backnumber}
+                                                        name={player.name}
+                                                        is_connecting={player.is_connecting}
+                                                        is_connected={player.is_connected}
+                                                    />
+                                                ))}
+                                        <Empty />
                                     </VStack>
                                 </TabPanel>
                             </TabPanels>

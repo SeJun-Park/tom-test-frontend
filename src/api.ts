@@ -125,6 +125,18 @@ export const getTeamPlayers = async ({ queryKey } : QueryFunctionContext) => {
     return response.data
 }
 
+export const getTeamPlayersGoalStats = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/players/goalstats/`)
+    return response.data
+}
+
+export const getTeamPlayersTOMStats = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/players/tomstats/`)
+    return response.data
+}
+
 export const getTeamPlayersConnected = async ({ queryKey } : QueryFunctionContext) => {
     const [ _, teamPk ] = queryKey;
     const response = await instance.get(`teams/${teamPk}/players/connected/`)
