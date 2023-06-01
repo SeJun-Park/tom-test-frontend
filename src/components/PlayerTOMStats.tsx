@@ -25,7 +25,6 @@ export default function PlayerTOMStats ( props : IPlayerTOMStatsProps ) {
                         <Text as="b" fontSize={"xs"} color={"main.500"}>{props.index}.</Text>
                         <HStack spacing={3}>
                             <Avatar src={props.avatar}></Avatar>
-                            <Text as="b" fontSize={"xs"}>{props.backnumber}.</Text>
                             <Text as="b" fontSize={"xs"}>{props.name}</Text>
                         </HStack>
                     </HStack>

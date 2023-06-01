@@ -89,6 +89,7 @@ export default function IsPlayerTeamPlayerList() {
                             <TabPanels>
                                 <TabPanel p={0}>
                                     <VStack alignItems={"flex-start"} px={3} spacing={4} mt={8}>
+                                        <Divider />
                                         <Text as="b" color={"main.500"} fontSize={"sm"}> RANKING </Text>
                                         <Divider />
                                         {teamPlayersTOMStatsData?.map((player, index) => (
@@ -108,6 +109,7 @@ export default function IsPlayerTeamPlayerList() {
                                 </TabPanel>
                                 <TabPanel p={0}>
                                     <VStack alignItems={"flex-start"} px={3} spacing={4} mt={8}>
+                                        <Divider />
                                         <Text as="b" color={"main.500"} fontSize={"sm"}> RANKING </Text>
                                         <Divider />
                                         {teamPlayersGoalStatsData?.map((player, index) => (
