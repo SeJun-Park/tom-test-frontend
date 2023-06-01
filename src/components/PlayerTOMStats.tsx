@@ -20,14 +20,16 @@ export default function PlayerTOMStats ( props : IPlayerTOMStatsProps ) {
 
     return (
         <Box width={"100%"}>
-                <HStack justifyContent={"center"} mb={4} px={3} spacing={3}>
-                    <Text as="b" fontSize={"xs"} color={"main.500"}>{props.index}.</Text>
-                    <Badge ml={1} backgroundColor={"point.500"} color={"black"}>
-                        <HStack>
-                            <FaUserNinja />
-                            <Text>{playerTomGamesData ? playerTomGamesData.length : "0"}</Text>
-                        </HStack>
-                    </Badge>
+                <HStack justifyContent={"space-between"} mb={4} px={3}>
+                    <HStack spacing={3}>
+                        <Text as="b" fontSize={"xs"} color={"main.500"}>{props.index}.</Text>
+                        <Badge ml={1} backgroundColor={"point.500"} color={"black"}>
+                            <HStack>
+                                <FaUserNinja />
+                                <Text>{playerTomGamesData ? playerTomGamesData.length : "0"}</Text>
+                            </HStack>
+                        </Badge>
+                    </HStack>
                     <HStack spacing={3}>
                         <Avatar src={props.avatar}></Avatar>
                         <Text as="b" fontSize={"xs"}>{props.backnumber}.</Text>

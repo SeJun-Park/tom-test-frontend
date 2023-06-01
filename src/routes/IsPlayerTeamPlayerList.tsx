@@ -88,13 +88,13 @@ export default function IsPlayerTeamPlayerList() {
                             </TabList>
                             <TabPanels>
                                 <TabPanel p={0}>
-                                    <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                                    <VStack alignItems={"flex-start"} px={3} spacing={4} mt={8}>
                                         <Text as="b" color={"main.500"} fontSize={"sm"}> RANKING </Text>
                                         <Divider />
                                         {teamPlayersTOMStatsData?.map((player, index) => (
                                                 <PlayerTOMStats 
                                                     key={player.pk}
-                                                    index={index}
+                                                    index={index+1}
                                                     pk={player.pk}
                                                     avatar={player.avatar}
                                                     backnumber={player.backnumber}
@@ -107,13 +107,13 @@ export default function IsPlayerTeamPlayerList() {
                                     </VStack>
                                 </TabPanel>
                                 <TabPanel p={0}>
-                                    <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                                    <VStack alignItems={"flex-start"} px={3} spacing={4} mt={8}>
                                         <Text as="b" color={"main.500"} fontSize={"sm"}> RANKING </Text>
                                         <Divider />
                                         {teamPlayersGoalStatsData?.map((player, index) => (
                                                     <PlayerGoalStats 
                                                         key={player.pk}
-                                                        index={index}
+                                                        index={index+1}
                                                         pk={player.pk}
                                                         avatar={player.avatar}
                                                         backnumber={player.backnumber}
