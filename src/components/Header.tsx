@@ -1,8 +1,8 @@
 import { Box, Button, Stack, HStack, IconButton, LightMode, useColorMode, useColorModeValue, useDisclosure, Menu, MenuButton, MenuList, MenuItem, useToast, ToastId } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
-import { FaFutbol, FaMoon, FaRunning, FaSun, FaUserAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaFutbol, FaMoon, FaRunning, FaSearch, FaSun, FaUserAlt } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../api";
 import useUser from "../lib/useUser";
 import LoginModal from "./LoginModal";
@@ -26,6 +26,7 @@ export default function Header() {
     const toastId = useRef<ToastId>();
         // useRef는 state에 넣고 싶지는 않은 VALue를 저장할 떄 사용함
         // 컴포넌트가 re-rendering 되어도 유지
+    const navigate = useNavigate();
 
     const logoutMutation = useMutation(logOut, {
         onMutate : () => { 
@@ -57,6 +58,10 @@ export default function Header() {
 
     const onLogOut = async() => {
         logoutMutation.mutate();
+    }
+
+    const linkToTeamSearch = () => {
+        navigate("/teams/search")
     }
 
     return (
@@ -92,6 +97,16 @@ export default function Header() {
                 </HStack>
             </Link>
             <HStack spacing={2}>
+                {/* <Link to={"teams/search"}>
+                    <Button variant={"ghost"}>
+                        <HStack>
+                            <Box >
+                                <FaSearch />
+                            </Box>
+                        </HStack>
+                    </Button>
+                </Link> */}
+                <IconButton onClick={linkToTeamSearch} aria-label="Team Search" icon={<FaSearch />} variant={"ghost"}/>
                 <IconButton onClick={toggleColorMode} aria-label="Toggle dark mode" icon={<Icon />} variant={"ghost"}/>
                                                                                                 {/* icon={colorMode === "light" ? <FaMoon /> : <FaSun />} */}
                                                                                                 {/* Dark Mode / Light Mode 에 따라 다르게 적용하는 건 이 방법도 있지만 짧은 방법도 있음, AirBnB 아이콘에서 확인 */}

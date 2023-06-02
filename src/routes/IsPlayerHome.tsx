@@ -168,20 +168,6 @@ export default function IsPlayerHome() {
                         </VStack>
                         <Empty />
                         <Empty />
-                        <VStack px={3}>
-                            <Link to={"teams/search"}>
-                                <Button variant={"ghost"}>
-                                    <HStack>
-                                        <Box >
-                                            <FaSearch />
-                                        </Box>
-                                        {/* <Text> search </Text> */}
-                                    </HStack>
-                                </Button>
-                            </Link>
-                            <Empty />
-                            <Empty />
-                        </VStack>
                     </TabPanel>
                     <TabPanel p={"0"}>
                         <VStack alignItems={"flex-start"} px={3}>
