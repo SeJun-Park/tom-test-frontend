@@ -110,9 +110,8 @@ export default function TomVoteModal ( props : TomVoteModalProps ) {
                                         is_connecting={candidate.is_connecting}
                                     />
                                     {/* {candidate.backnumber}. {candidate.name}  */}
-
+                                    <Divider />
                         </Checkbox>
-                        <Divider />
                     </Box>
                 ))}
                 <FormHelperText mt={5} fontSize={"xs"}> *본인에게 투표할 수 있습니다. </FormHelperText>

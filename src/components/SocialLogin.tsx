@@ -23,7 +23,7 @@ export default function SocialLogin() {
                 {/* my는 margin top & bottom / mx는 margin left & right */}
                 <Divider />
                     {/* 구분선 */}
-                <Text textTransform={"uppercase"} color={"gray.500"} fontSize={"xs"} as="b"> 관리자이신가요? </Text>
+                <Text textTransform={"uppercase"} color={"gray.500"} fontSize={"xs"} as="b"> 관리자 </Text>
                     {/* as="b" 는 bold 태그로 바꾸는 것을 뜻함 --> <b> = bold tag */}
                 <FaArrowDown />
                 <Divider />
