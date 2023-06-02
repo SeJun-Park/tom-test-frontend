@@ -114,7 +114,7 @@ export default function SignUpModal( props : SpvsrSignUpModalProps ) {
                     </InputGroup>
                 </VStack>
                 {signupMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> something is wrong </Text>) : null}
-                <Button isLoading={signupMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} disabled={true}> 관리자로 가입하기 </Button>
+                <Button isLoading={signupMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} isDisabled={true}> 관리자로 가입하기 </Button>
             </ModalBody>
             {/* <ModalFooter>
                 <Button onClick={onClose} colorScheme={"red"}> close </Button>
