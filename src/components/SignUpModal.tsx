@@ -114,7 +114,7 @@ export default function SignUpModal( props : SpvsrSignUpModalProps ) {
                     </InputGroup>
                 </VStack>
                 {signupMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> something is wrong </Text>) : null}
-                <Button isLoading={signupMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4}> Spvsr Sign Up </Button>
+                <Button isLoading={signupMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} disabled={true}> Spvsr Sign Up </Button>
             </ModalBody>
             {/* <ModalFooter>
                 <Button onClick={onClose} colorScheme={"red"}> close </Button>
