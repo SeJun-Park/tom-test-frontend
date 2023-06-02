@@ -44,7 +44,7 @@ export default function PlayerConnectingCancelModal ( props : PlayerConnectingCa
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> Are You Sure? </ModalHeader>
+            <ModalHeader> 연결을 해제하시겠습니까? </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
                 <VStack>

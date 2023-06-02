@@ -83,7 +83,7 @@ export default function SignUpModal( props : SpvsrSignUpModalProps ) {
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> Player Sign Up </ModalHeader>
+            <ModalHeader> 플레이어로 가입하기 </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
                 <SocialLogin />
@@ -114,7 +114,7 @@ export default function SignUpModal( props : SpvsrSignUpModalProps ) {
                     </InputGroup>
                 </VStack>
                 {signupMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> something is wrong </Text>) : null}
-                <Button isLoading={signupMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} disabled={true}> Spvsr Sign Up </Button>
+                <Button isLoading={signupMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} disabled={true}> 관리자로 가입하기 </Button>
             </ModalBody>
             {/* <ModalFooter>
                 <Button onClick={onClose} colorScheme={"red"}> close </Button>

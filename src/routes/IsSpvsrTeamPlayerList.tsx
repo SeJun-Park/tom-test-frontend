@@ -53,7 +53,7 @@ export default function IsSpvsrTeamPlayerList() {
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>
                     <Tab _selected={{color : "main.500"}}> ALL </Tab>
-                    <Tab _selected={{color : "main.500"}}> STATS </Tab>
+                    <Tab _selected={{color : "main.500"}}> 순위 </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel p={0}>

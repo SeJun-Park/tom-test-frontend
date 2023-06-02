@@ -102,7 +102,7 @@ export default function IsSpvsrTeamGameList() {
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>
                     <Tab _selected={{color : "main.500"}}> ALL </Tab>
-                    <Tab _selected={{color : "main.500"}}> RELATIVE </Tab>
+                    <Tab _selected={{color : "main.500"}}> 상대전적 </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel p={0}>
