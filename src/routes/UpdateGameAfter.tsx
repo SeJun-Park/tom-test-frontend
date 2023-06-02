@@ -186,7 +186,7 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
                 </FormControl>
                 <FormControl>
                     <FormLabel my={5}> 
-                        Participants 
+                        Line-ups 
                     </FormLabel>
                     {gameData?.participants?.map((participant) => {
 

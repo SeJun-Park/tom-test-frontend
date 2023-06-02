@@ -54,14 +54,14 @@ export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
                 <VStack>
                     <FormControl>
-                            <FormLabel fontWeight={"bold"} color={"main.500"} fontSize={"sm"} > SELECT PLAYER </FormLabel>
+                            <FormLabel fontWeight={"bold"} color={"main.500"} fontSize={"sm"} > 플레이어 선택하기 </FormLabel>
                             {/* <Select placeholder="Choose a vsteam" onChange={handleVSteamChange}> */}
                             <Select {...register("playerPk", {required:true})} placeholder="CHOOSE A PLAYER">
                                 {teamPlayersNotConnectedData?.map((player) => <option key={player.pk} value={player.pk}>{player.backnumber}. {player.name}</option>)}
                             </Select>
                     </FormControl>
                     <FormControl>
-                    <FormLabel>Team Code</FormLabel>
+                    <FormLabel> 팀 코드 </FormLabel>
                         <InputGroup>
                             <InputLeftAddon children={<FaCheck />} />
                             <Input {...register("code", {required:true})} type="number" min={0} isInvalid={Boolean(errors.code?.message)} />

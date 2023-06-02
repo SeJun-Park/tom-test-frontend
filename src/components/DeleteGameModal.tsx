@@ -41,7 +41,7 @@ export default function DeleteGameModal ( props : DeleteGameModalProps ) {
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> Are you sure? </ModalHeader>
+            <ModalHeader> 정말 삭제하시겠습니까? </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
                     <Button type={"submit"} isLoading={gameDeleteMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> Delete </Button>

@@ -144,7 +144,7 @@ export default function UploadGame() {
                 </FormControl>
                 <FormControl>
                     <FormLabel my={5}> 
-                        Participants 
+                        Line-ups 
                     </FormLabel>
                     {teamPlayersData?.map((player) => (
                         <Box key={player.pk}>

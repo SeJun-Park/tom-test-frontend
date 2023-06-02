@@ -32,7 +32,7 @@ export default function GameVoteIng( props : IGameVoteIngProps) {
                 <Heading fontSize={"xl"}>3 man Of the Match</Heading>
                 {props.vote.is_participant ? 
                                     <VStack width={"100%"}> 
-                                        <Heading fontSize={"xl"}> you already vote </Heading>
+                                        <Heading fontSize={"xl"}> 투표 완료. </Heading>
                                     </VStack>
                                          : 
                                     <VStack py={4} width={"100%"}> 
@@ -63,7 +63,7 @@ export default function GameVoteIng( props : IGameVoteIngProps) {
             <VStack>
                 <Heading fontSize={"xl"}>3 man Of the Match</Heading>
                 <VStack width={"100%"}> 
-                    <Heading fontSize={"xl"}> vote-ing </Heading>
+                    <Heading fontSize={"xl"}> 투표중.. </Heading>
                 </VStack>
                 <Divider pt={2} />
                 <Text pt={2} fontSize={"sm"}>{formatDate(props.vote.start)}부터</Text>

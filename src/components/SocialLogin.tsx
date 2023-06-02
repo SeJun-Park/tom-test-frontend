@@ -17,13 +17,13 @@ export default function SocialLogin() {
     return (
         <Box mb={4}>
             <VStack>
-                <Button as="a" href={`https://kauth.kakao.com/oauth/authorize?${kakaoParams}`} leftIcon={<FaComment />} backgroundColor={"point.500"} color={"black"} width={"100%"}> Continue with Kakao </Button>
+                <Button as="a" href={`https://kauth.kakao.com/oauth/authorize?${kakaoParams}`} leftIcon={<FaComment />} backgroundColor={"point.500"} color={"black"} width={"100%"}> 카카오로 계속하기 </Button>
             </VStack>
             <HStack my={8}>
                 {/* my는 margin top & bottom / mx는 margin left & right */}
                 <Divider />
                     {/* 구분선 */}
-                <Text textTransform={"uppercase"} color={"gray.500"} fontSize={"xs"} as="b"> supervisor </Text>
+                <Text textTransform={"uppercase"} color={"gray.500"} fontSize={"xs"} as="b"> 관리자이신가요? </Text>
                     {/* as="b" 는 bold 태그로 바꾸는 것을 뜻함 --> <b> = bold tag */}
                 <FaArrowDown />
                 <Divider />

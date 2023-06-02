@@ -78,8 +78,8 @@ export default function IsSpvsrGameDetail() {
             <Tabs variant='soft-rounded' isLazy align={"center"}>
                 <TabList>
                     <Tab _selected={{color : "black", bgColor : "point.500"}}>3OM</Tab>
-                    <Tab _selected={{color : "black", bgColor : "point.500"}}>participants</Tab>
-                    <Tab _selected={{color : "black", bgColor : "point.500"}}>medias</Tab>
+                    <Tab _selected={{color : "black", bgColor : "point.500"}}>Line-ups</Tab>
+                    <Tab _selected={{color : "black", bgColor : "point.500"}}>Related</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel p={0}>

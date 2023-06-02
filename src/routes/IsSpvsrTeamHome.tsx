@@ -62,7 +62,7 @@ export default function IsSpvsrTeamHome() {
                         </Badge>
                     </HStack>
                     <HStack justifyContent={"center"} mt={4}>
-                        <Text fontSize={"xs"}> CNTD-rate </Text>
+                        <Text fontSize={"xs"}> CNTD </Text>
                         <CircularProgress size={"65px"} thickness={"5px"} value={teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? Number(((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1)) : 0} color='main.500'>
                                         <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                         </CircularProgress>

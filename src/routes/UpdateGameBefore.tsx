@@ -137,7 +137,7 @@ export default function UpdateGameBefore( props : UpdateGameBeforeProps ) {
                 </FormControl>
                 <FormControl>
                     <FormLabel my={5}> 
-                        Participants 
+                        Line-ups 
                     </FormLabel>
                     {teamPlayersData?.map((player) => {
                                                         // const isChecked = gameData?.participants?.includes(player);
