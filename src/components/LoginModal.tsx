@@ -79,7 +79,7 @@ export default function LoginModal( props : LoginModalProps ) {
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> Player Log In </ModalHeader>
+            <ModalHeader> 플레이어로 로그인하기 </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
                 <SocialLogin />
@@ -104,7 +104,7 @@ export default function LoginModal( props : LoginModalProps ) {
                     </InputGroup>
                 </VStack>
                 {loginMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Username or Password are wrong </Text>) : null}
-                <Button isLoading={loginMutation.isLoading} type="submit" backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4}> Spvsr Log In </Button>
+                <Button isLoading={loginMutation.isLoading} type="submit" backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4}> 관리자로 로그인 </Button>
             </ModalBody>
             {/* <ModalFooter>
                 <Button onClick={onClose} colorScheme={"red"}> close </Button>

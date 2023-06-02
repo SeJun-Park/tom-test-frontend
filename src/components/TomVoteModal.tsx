@@ -93,7 +93,7 @@ export default function TomVoteModal ( props : TomVoteModalProps ) {
                     candidates 
                 </FormLabel> */}
                 {props.vote.candidates?.map((candidate) => (
-                    <Box key={candidate.pk}>
+                    <Box key={candidate.pk} width={"100%"}>
                         <Checkbox {...register("ballots", {required:true})} 
                                     onChange={handleCheckboxChange}
                                     value={candidate.pk}
@@ -110,7 +110,6 @@ export default function TomVoteModal ( props : TomVoteModalProps ) {
                                         is_connecting={candidate.is_connecting}
                                     />
                                     {/* {candidate.backnumber}. {candidate.name}  */}
-                                    <Divider />
                         </Checkbox>
                     </Box>
                 ))}
