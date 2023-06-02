@@ -21,7 +21,6 @@ export default function PlayerNoLink ( props : IPlayerNoLinkProps ) {
                         <Text as="b" fontSize={"xs"}>{props.name}</Text>
                     </HStack>
                 </HStack>
-                <Divider />
         </Box>
     )
 }

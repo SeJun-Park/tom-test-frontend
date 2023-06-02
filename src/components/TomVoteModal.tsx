@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast, VStack } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Divider, FormControl, FormHelperText, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { gameDelete, tomVoteBallot } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
@@ -112,6 +112,7 @@ export default function TomVoteModal ( props : TomVoteModalProps ) {
                                     {/* {candidate.backnumber}. {candidate.name}  */}
 
                         </Checkbox>
+                        <Divider />
                     </Box>
                 ))}
                 <FormHelperText mt={5} fontSize={"xs"}> *본인에게 투표할 수 있습니다. </FormHelperText>
