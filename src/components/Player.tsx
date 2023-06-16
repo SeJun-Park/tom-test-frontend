@@ -19,7 +19,7 @@ export default function Player ( props : IPlayerProps ) {
                     <HStack spacing={3}>
                         <Avatar src={props.avatar}></Avatar>
                         <Text as="b" fontSize={"xs"}>{props.backnumber}.</Text>
-                        <Text as="b" fontSize={"xs"}>{props.name}</Text>
+                        <Text as="b" fontSize={"sm"}>{props.name}</Text>
                     </HStack>
                     <Box>
                         <FaArrowRight size={10} />

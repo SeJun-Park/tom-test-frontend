@@ -99,13 +99,13 @@ export default function UploadGame() {
             <VStack as="form" onSubmit={handleSubmit(onSubmit)} p={10} spacing={6}>
                 <FormControl mb={5}>
                     <FormLabel>
-                        team name
+                        우리팀
                     </FormLabel>
                     <Input type={"text"} isReadOnly value={teamData?.pk} px={1} required placeholder={teamData?.name} variant={"flushed"} color={"gray.400"}/>
                 </FormControl>
                 <FormControl mb={5}>
                     <FormLabel>
-                        vsteam name
+                        상대팀
                     </FormLabel>
                     <Input {...register("vsteam", { required : true})} px={1} type={"text"} isInvalid={Boolean(errors.vsteam?.message)} required placeholder="" variant={"flushed"}/>
                     <FormHelperText fontSize={"xs"}>
@@ -114,14 +114,14 @@ export default function UploadGame() {
                 </FormControl>
                 <FormControl>
                     <FormLabel>
-                        location
+                        장소
                     </FormLabel>
                     <Input {...register("location", { required : true})} type={"text"} px={1} isInvalid={Boolean(errors.location?.message)} placeholder="" variant={"flushed"}/>
 
                 </FormControl>
                 <FormControl>
                     <FormLabel> 
-                        Date 
+                        장소 
                     </FormLabel>
                     <Box my={6}>
                         <Calendar onChange={handleDateChange} prev2Label={null} next2Label={null} minDetail="month" maxDate={new Date(Date.now() + (60*60*24*7*4*6*1000))} formatDay={(locale, date) => date.toLocaleString("en", {day : "numeric"})} />
@@ -130,14 +130,14 @@ export default function UploadGame() {
                 </FormControl>
                 <FormControl>
                     <FormLabel mb={5}>
-                        start time
+                        시작 시간
                     </FormLabel>
                     <Input {...register("start_time", { required : true })} type={"time"} step="1800" isInvalid={Boolean(errors.start_time?.message)} placeholder="" variant={"flushed"} />
 
                 </FormControl>
                 <FormControl>
                     <FormLabel mb={5}>
-                        end time
+                        종료 시간
                     </FormLabel>
                     <Input {...register("end_time", { required : true })} type={"time"} step="1800" isInvalid={Boolean(errors.end_time?.message)} placeholder="" variant={"flushed"} />
 
@@ -151,9 +151,9 @@ export default function UploadGame() {
                             <Checkbox {...register("participants", {required:true})} value={player.pk} my={1}> {player.backnumber}. {player.name} </Checkbox>
                         </Box>
                     ))}
-                    <FormHelperText mt={5} fontSize={"xs"}> *participants는 경기 종료 시간 이후 수정 불가합니다. </FormHelperText>
-                    <FormHelperText fontSize={"xs"}> *score는 경기 종료 시간 이후 등록 가능합니다. </FormHelperText>
-                    <FormHelperText fontSize={"xs"}> *goal player는 경기 종료 시간 이후 등록 가능합니다. </FormHelperText>
+                    <FormHelperText mt={5} fontSize={"xs"}> *라인업은 경기 종료 시간 이후 수정 불가합니다. </FormHelperText>
+                    <FormHelperText fontSize={"xs"}> *스코어는 경기 종료 시간 이후 등록 가능합니다. </FormHelperText>
+                    <FormHelperText fontSize={"xs"}> *골 넣은 선수는 경기 종료 시간 이후 등록 가능합니다. </FormHelperText>
                 </FormControl>
                 <Empty />
                 {uploadGameMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}

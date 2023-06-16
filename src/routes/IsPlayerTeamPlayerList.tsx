@@ -49,17 +49,17 @@ export default function IsPlayerTeamPlayerList() {
             </HStack>
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>
-                    <Tab _selected={{color : "main.500"}}> ALL </Tab>
+                    <Tab _selected={{color : "main.500"}}> 전체 </Tab>
                     <Tab _selected={{color : "main.500"}}> 순위 </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel p={0}>
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> PLAYER </Text>
+                            <Text as="b" color={"main.500"} fontSize={"md"}> 선수 </Text>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamPlayersData ? teamPlayersData.length : "0"} PLAYERS </Text>
+                                <Text as="b" fontSize={"sm"}> {teamPlayersData ? teamPlayersData.length : "0"} 명 </Text>
                             </HStack>
                         </VStack>
                         <BigDivider />

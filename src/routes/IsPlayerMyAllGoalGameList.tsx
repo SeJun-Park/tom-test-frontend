@@ -40,20 +40,20 @@ export default function IsPlayerMyAllGoalGameList() {
                 </HStack>
             </VStack>
             <VStack alignItems={"flex-start"} px={3} mt={8}>
-                <Text as="b" color={"main.500"} fontSize={"sm"}> GOAL </Text>
+                <Text as="b" color={"main.500"} fontSize={"md"}> 골 </Text>
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {playerGoalsData ? playerGoalsData.goals : "0"} GOALS </Text>
+                    <Text as="b" fontSize={"sm"}> {playerGoalsData ? playerGoalsData.goals : "0"} 골 </Text>
                 </HStack>
             </VStack>
             <SmallDivider />
             <VStack alignItems={"flex-start"} px={3} mt={8}>
-                <Text as="b" color={"main.500"} fontSize={"sm"}> GOAL GAME </Text>
+                <Text as="b" color={"main.500"} fontSize={"md"}> 내가 골 넣은 경기 </Text>
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {playerGoalGamesData ? playerGoalGamesData.length : "0"} GAMES </Text>
+                    <Text as="b" fontSize={"sm"}> {playerGoalGamesData ? playerGoalGamesData.length : "0"} 경기 </Text>
                 </HStack>
             </VStack>
             <BigDivider />

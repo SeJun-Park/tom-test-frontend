@@ -51,7 +51,7 @@ export default function PlayerTOMList() {
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {playerTomGamesData ? playerTomGamesData.length : "0"} TIMES </Text>
+                    <Text as="b" fontSize={"sm"}> {playerTomGamesData ? playerTomGamesData.length : "0"} 회 </Text>
                 </HStack>
             </VStack>
             <SmallDivider />
@@ -60,7 +60,7 @@ export default function PlayerTOMList() {
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {playerSuperplayersData ? playerSuperplayersData.length : "0"} TIMES </Text>
+                    <Text as="b" fontSize={"sm"}> {playerSuperplayersData ? playerSuperplayersData.length : "0"} 회 </Text>
                 </HStack>
             </VStack>
             <BigDivider />

@@ -15,7 +15,7 @@ export default function Team( props : ITeamProps ) {
                 <HStack justifyContent={"space-between"} mb={4} px={3}>
                     <HStack spacing={3}>
                         <Avatar src={props.avatar}></Avatar>
-                        <Text as="b" fontSize={"xs"}> {props.name} </Text>
+                        <Text as="b" fontSize={"sm"}> {props.name} </Text>
                     </HStack>
                     <Box>
                         <FaArrowRight size={10} />

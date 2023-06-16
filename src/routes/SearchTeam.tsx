@@ -60,10 +60,10 @@ export default function SearchTeam() {
                                     <FaFutbol />
                                 </Box>
                         }/>
-                            <Input {...register("name", { required : "팀 이름을 입력해주세요." })} isInvalid={Boolean(errors.name?.message)} required placeholder="Team Name" variant={"filled"}/>
+                            <Input {...register("name", { required : "팀 이름을 입력해주세요." })} isInvalid={Boolean(errors.name?.message)} required placeholder="팀 이름을 입력하세요" variant={"filled"}/>
                 </InputGroup>
                 {searchTeamMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}
-                <Button isLoading={searchTeamMutation.isLoading} type="submit"  color={"main.500"} width={"100%"} marginTop={4} variant={"unstyled"}> Search </Button>
+                <Button isLoading={searchTeamMutation.isLoading} type="submit" backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"solid"}> 검색하기 </Button>
             </VStack>
             {team && !searchTeamMutation.isLoading ? (
                 <>

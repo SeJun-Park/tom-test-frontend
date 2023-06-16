@@ -90,22 +90,22 @@ export default function IsPlayerTeamGameList() {
             </VStack>
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>
-                    <Tab _selected={{color : "main.500"}}> ALL </Tab>
+                    <Tab _selected={{color : "main.500"}}> 전체 </Tab>
                     <Tab _selected={{color : "main.500"}}> 상대전적 </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel p={0}>
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> GAME </Text>
+                            <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamGamesData ? teamGamesData.length : "0"} GAMES </Text>
+                                <Text as="b" fontSize={"sm"}> {teamGamesData ? teamGamesData.length : "0"} 경기 </Text>
                             </HStack>
                         </VStack>
                         <SmallDivider />
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> STAT </Text>
+                            <Text as="b" color={"main.500"} fontSize={"md"}> 전적 </Text>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
@@ -114,7 +114,7 @@ export default function IsPlayerTeamGameList() {
                             </HStack>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text fontSize={"sm"}> win-rate </Text>
+                                <Text fontSize={"sm"}> 승률 </Text>
                                 
                                 <CircularProgress size={"65px"} thickness={"5px"} value={teamStatsData && teamGamesData && teamGamesData.length !==0 ? Number(((teamStatsData.win/teamGamesData.length)*100).toFixed(1)) : 0} color='main.500'>
                                     <CircularProgressLabel fontSize={"xs"}>{teamStatsData && teamGamesData && teamGamesData.length !==0 ? ((teamStatsData.win/teamGamesData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
@@ -123,16 +123,16 @@ export default function IsPlayerTeamGameList() {
                         </VStack>
                         <SmallDivider />
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> GOAL </Text>
+                            <Text as="b" color={"main.500"} fontSize={"md"}> 골 </Text>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamGoalsData ? teamGoalsData.goals : "0"} GOALS </Text>
+                                <Text as="b" fontSize={"sm"}> {teamGoalsData ? teamGoalsData.goals : "0"} 골 </Text>
                             </HStack>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text fontSize={"sm"}> Goals per Game </Text>
-                                <Text fontSize={"sm"}> {teamGoalsData && teamGamesData && teamGamesData.length !==0 ? (teamGoalsData.goals/teamGamesData.length).toFixed(1) : "0"} GOAL </Text>
+                                <Text fontSize={"sm"}> 경기 당 골 </Text>
+                                <Text fontSize={"sm"}> {teamGoalsData && teamGamesData && teamGamesData.length !==0 ? (teamGoalsData.goals/teamGamesData.length).toFixed(1) : "0"} 골 </Text>
                             </HStack>
                         </VStack>
                         <BigDivider />
@@ -154,9 +154,9 @@ export default function IsPlayerTeamGameList() {
                     <TabPanel p={0}>
                         <VStack alignItems={"flex-start"} px={3} mt={8} as="form" onSubmit={handleSubmit(onSubmit)}>
                             <FormControl>
-                                    <FormLabel fontWeight={"bold"} color={"main.500"} fontSize={"sm"} > SELECT VSTEAM </FormLabel>
+                                    <FormLabel fontWeight={"bold"} color={"main.500"} fontSize={"md"}> 상대팀 선택하기 </FormLabel>
                                     {/* <Select placeholder="Choose a vsteam" onChange={handleVSteamChange}> */}
-                                    <Select {...register("vsteam", {required:true})} placeholder="Choose a vsteam">
+                                    <Select {...register("vsteam", {required:true})} placeholder="상대팀을 선택하세요">
                                         {teamVSteamsData?.vsteams.map((vsteam, index) => <option key={index} value={vsteam}>{vsteam}</option>)}
                                     </Select>
                             </FormControl>
@@ -168,16 +168,16 @@ export default function IsPlayerTeamGameList() {
                                     <Text fontSize={"xl"} as="b"> VS {currentVSteam} </Text>
                                 </VStack>
                                 <VStack alignItems={"flex-start"} px={3} mt={8}>
-                                    <Text as="b" color={"main.500"} fontSize={"sm"}> GAME </Text>
+                                    <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                        <Text as="b" fontSize={"sm"}> {teamVSteamGames ? teamVSteamGames.length : "0"} GAMES </Text>
+                                        <Text as="b" fontSize={"sm"}> {teamVSteamGames ? teamVSteamGames.length : "0"} 경기 </Text>
                                     </HStack>
                                 </VStack>
                                 <SmallDivider />
                                 <VStack alignItems={"flex-start"} px={3} mt={8}>
-                                    <Text as="b" color={"main.500"} fontSize={"sm"}> STAT </Text>
+                                    <Text as="b" color={"main.500"} fontSize={"md"}> 전적 </Text>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text as="b" fontSize={"sm"}> TOTAL </Text>
@@ -186,7 +186,7 @@ export default function IsPlayerTeamGameList() {
                                     </HStack>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
-                                        <Text fontSize={"sm"}> win-rate </Text>
+                                        <Text fontSize={"sm"}> 승률 </Text>
                                         <CircularProgress size={"65px"} thickness={"5px"} value={teamStatsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? Number(((teamStatsRelative.win/teamVSteamGames.length)*100).toFixed(1)) : 0} color='main.500'>
                                              <CircularProgressLabel fontSize={"xs"}>{teamStatsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? ((teamStatsRelative.win/teamVSteamGames.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                                         </CircularProgress>
@@ -194,17 +194,17 @@ export default function IsPlayerTeamGameList() {
                                 </VStack>
                                 <SmallDivider />
                                 <VStack alignItems={"flex-start"} px={3} mt={8}>
-                                    <Text as="b" color={"main.500"} fontSize={"sm"}> GOAL </Text>
+                                    <Text as="b" color={"main.500"} fontSize={"md"}> 골 </Text>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                        <Text as="b" fontSize={"sm"}> {teamGoalsRelative ? teamGoalsRelative.goals : "0"} GOALS </Text>
+                                        <Text as="b" fontSize={"sm"}> {teamGoalsRelative ? teamGoalsRelative.goals : "0"} 골 </Text>
                                     </HStack>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
-                                        <Text fontSize={"sm"}> Goals per game </Text>
+                                        <Text fontSize={"sm"}> 경기 당 골 </Text>
                                         <Text fontSize={"sm"}> 
-                                            {teamGoalsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} GOAL</Text>
+                                            {teamGoalsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골</Text>
                                     </HStack>
                                 </VStack>
                                 <BigDivider />

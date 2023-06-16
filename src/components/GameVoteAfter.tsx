@@ -49,7 +49,7 @@ export default function GameVoteAfter( props : IGameVoteAfterProps) {
                                               ) : null  }
             </HStack> 
             <VStack>
-                <Heading fontSize={"xl"}>3 man Of the Match </Heading>
+                <Heading fontSize={"xl"}>3man Of the Match </Heading>
                 <Divider pt={2} />
             </VStack>
             <Empty />

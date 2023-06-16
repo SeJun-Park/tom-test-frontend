@@ -22,7 +22,7 @@ export default function SpvsrPlayer ( props : ISpvsrPlayerProps ) {
                         <VStack justifyContent={"flex-start"} alignItems={"flex-start"}>
                             <HStack>
                                 <Text as="b" fontSize={"xs"}>{props.backnumber}.</Text>
-                                <Text as="b" fontSize={"xs"}>{props.name}</Text>
+                                <Text as="b" fontSize={"sm"}>{props.name}</Text>
                             </HStack>
                                 
                                 {props.is_spvsr ? (props.is_connected ? 

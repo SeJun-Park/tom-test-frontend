@@ -46,7 +46,7 @@ export default function GameVoteBefore( props : IGameVoteBeforeProps) {
                 </Box>
             </HStack>
             <VStack>
-                <Heading fontSize={"xl"}>3 man Of the Match Vote</Heading>
+                <Heading fontSize={"xl"}>3man Of the Match Vote</Heading>
                 <Divider pt={2} />
                 <Text pt={2} fontSize={"sm"}>{formatDate(props.vote.start)}부터</Text>
                 <Text fontSize={"sm"}>{formatDate(props.vote.end)}까지 </Text>

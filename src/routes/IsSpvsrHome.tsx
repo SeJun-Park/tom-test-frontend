@@ -151,8 +151,8 @@ export default function IsSpvsrHome() {
                                 </VStack>
                                 <Tabs isFitted variant='enclosed' isLazy>
                                     <TabList mb='1em'>
-                                        <Tab _selected={{color : "main.500"}}>My Team</Tab>
-                                        <Tab _selected={{color : "main.500"}}>Info</Tab>
+                                        <Tab _selected={{color : "main.500"}}>나의 팀</Tab>
+                                        <Tab _selected={{color : "main.500"}}>팀 정보</Tab>
                                     </TabList>
                                     <TabPanels>
                                         <TabPanel p={"0"}>

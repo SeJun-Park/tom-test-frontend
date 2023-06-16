@@ -57,13 +57,13 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
             <Link to={`/players/${playerData?.id}/games`}>
                 <VStack alignItems={"flex-start"} px={3} mt={8}>
                     <HStack width={"100%"} justifyContent={"space-between"}>
-                        <Text as="b" color={"main.500"} fontSize={"sm"}> GAME </Text>
+                        <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
                         <FaArrowRight size={"10"}/>
                     </HStack>
                     <Divider />
                     <HStack width={"100%"} justifyContent={"space-between"}>
                         <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                        <Text as="b" fontSize={"sm"}> {playerGamesData ? playerGamesData.length : "0"} GAMES </Text>
+                        <Text as="b" fontSize={"sm"}> {playerGamesData ? playerGamesData.length : "0"} 경기 </Text>
                     </HStack>
                 </VStack>
             </Link>
@@ -77,7 +77,7 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
                     <Divider />
                     <HStack width={"100%"} justifyContent={"space-between"}>
                         <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                        <Text as="b" fontSize={"sm"}> {playerTomGamesData ? playerTomGamesData.length : "0"} TIMES </Text>
+                        <Text as="b" fontSize={"sm"}> {playerTomGamesData ? playerTomGamesData.length : "0"} 회 </Text>
                     </HStack>
                 </VStack>
             </Link>
@@ -85,13 +85,13 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
             <Link to={`/players/${playerData?.id}/goals`}>
                 <VStack alignItems={"flex-start"} px={3} mt={8}>
                     <HStack width={"100%"} justifyContent={"space-between"}>
-                        <Text as="b" color={"main.500"} fontSize={"sm"}> GOAL </Text>
+                        <Text as="b" color={"main.500"} fontSize={"md"}> 골 </Text>
                         <FaArrowRight size={"10"}/>
                     </HStack>
                     <Divider />
                     <HStack width={"100%"} justifyContent={"space-between"}>
                         <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                        <Text as="b" fontSize={"sm"}> {playerGoalsData ? playerGoalsData.goals : "0"} GOALS </Text>
+                        <Text as="b" fontSize={"sm"}> {playerGoalsData ? playerGoalsData.goals : "0"} 골 </Text>
                     </HStack>
                 </VStack>
             </Link>

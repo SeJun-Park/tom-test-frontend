@@ -18,18 +18,18 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
             <HStack p={5} justifyContent={"flex-start"} spacing={5} width={"100%"}>
                 <Avatar size={"xl"}/>
                 <VStack alignItems={"flex-start"}>
-                    <Text as="b" fontSize={"xl"}> Connecting.. </Text>
+                    <Text as="b" fontSize={"xl"}> 연결중.. </Text>
                     <Button backgroundColor={"point.500"} color={"black"} size={"sm"} onClick={onOpen}> CANCEL </Button>
                 </VStack>
             </HStack>
             <VStack alignItems={"flex-start"} px={3}>
-                <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> LATEST </Text>
+                <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
                 <NullGame />
             </VStack>
             <BigDivider />
             <VStack alignItems={"flex-start"} px={3} mt={8}>
                 <HStack width={"100%"} justifyContent={"space-between"}>
-                    <Text as="b" color={"main.500"} fontSize={"sm"}> GAME </Text>
+                    <Text as="b" color={"main.500"} fontSize={"sm"}> 경기 </Text>
                 </HStack>
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
@@ -51,7 +51,7 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
             <SmallDivider />
             <VStack alignItems={"flex-start"} px={3} mt={8}>
                 <HStack width={"100%"} justifyContent={"space-between"}>
-                    <Text as="b" color={"main.500"} fontSize={"sm"}> GOAL </Text>
+                    <Text as="b" color={"main.500"} fontSize={"md"}> 골 </Text>
                 </HStack>
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>

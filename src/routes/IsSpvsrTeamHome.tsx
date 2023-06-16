@@ -37,7 +37,7 @@ export default function IsSpvsrTeamHome() {
             </HStack>
             <Tabs isFitted variant='enclosed'>
             <TabList mb='1em'>
-                <Tab _selected={{color : "main.500"}}> TEAM Profile </Tab>
+                <Tab _selected={{color : "main.500"}}> 팀 프로필 </Tab>
             </TabList>
             <TabPanels>
                 <TabPanel p={"0"}>
@@ -68,7 +68,7 @@ export default function IsSpvsrTeamHome() {
                         </CircularProgress>
                     </HStack>
                     <VStack alignItems={"flex-start"} px={3}>
-                        <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> LATEST </Text>
+                        <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
                         {teamGamesData ? (teamGamesData[0] ? 
                             <Game 
                                 pk={teamGamesData[0].pk} 
@@ -84,13 +84,13 @@ export default function IsSpvsrTeamHome() {
                     <Link to={`/teams/${teamPk}/players`}>
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
                             <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" color={"main.500"} fontSize={"sm"}> PLAYER </Text>
+                                <Text as="b" color={"main.500"} fontSize={"md"}> 선수 </Text>
                                 <FaArrowRight size={"10"}/>
                             </HStack>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamPlayersData ? teamPlayersData.length : "0"} PLAYERS </Text>
+                                <Text as="b" fontSize={"sm"}> {teamPlayersData ? teamPlayersData.length : "0"} 명 </Text>
                             </HStack>
                         </VStack>
                     </Link>
@@ -98,13 +98,13 @@ export default function IsSpvsrTeamHome() {
                     <Link to={`/teams/${teamPk}/games`}>
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
                             <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" color={"main.500"} fontSize={"sm"}> GAME </Text>
+                                <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
                                 <FaArrowRight size={"10"}/>
                             </HStack>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamGamesData ? teamGamesData.length : "0"} GAMES </Text>
+                                <Text as="b" fontSize={"sm"}> {teamGamesData ? teamGamesData.length : "0"} 경기 </Text>
                             </HStack>
                         </VStack>
                     </Link>
@@ -112,13 +112,16 @@ export default function IsSpvsrTeamHome() {
                     <Link to={`/teams/${teamPk}/toms`}>
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
                             <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" color={"main.500"} fontSize={"sm"}> 3OM GAME </Text>
+                                <HStack spacing={1}>
+                                    <Text as="b" color={"main.500"} fontSize={"sm"}> 3OM </Text>
+                                    <Text as="b" color={"main.500"} fontSize={"md"}> 선정 경기 </Text>
+                                </HStack>
                                 <FaArrowRight size={"10"}/>
                             </HStack>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamTomGamesData ? teamTomGamesData.length : "0"} GAMES </Text>
+                                <Text as="b" fontSize={"sm"}> {teamTomGamesData ? teamTomGamesData.length : "0"} 경기 </Text>
                             </HStack>
                         </VStack>
                     </Link>

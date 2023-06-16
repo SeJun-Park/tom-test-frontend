@@ -51,7 +51,7 @@ export default function IsSpvsrPlayerUpdateModal ( props : IsSpvsrPlayerUpdateMo
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> Player Update </ModalHeader>
+            <ModalHeader> 플레이어 업데이트 </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
                 <VStack>

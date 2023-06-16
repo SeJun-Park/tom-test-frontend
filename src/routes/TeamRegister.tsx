@@ -47,7 +47,7 @@ export default function TeamRegister() {
                                     <FaFutbol />
                                 </Box>
                         }/>
-                            <Input type={"text"} {...register("name", { required : "팀 이름을 입력해주세요." })} isInvalid={Boolean(errors.name?.message)} required placeholder="Team Name" variant={"flushed"}/>
+                            <Input type={"text"} {...register("name", { required : "팀 이름을 입력해주세요." })} isInvalid={Boolean(errors.name?.message)} required placeholder="팀 이름을 입력하세요" variant={"flushed"}/>
                 </InputGroup>
                 <InputGroup>
                             <InputLeftElement children={
@@ -55,10 +55,10 @@ export default function TeamRegister() {
                                     <FaFutbol />
                                 </Box>
                         }/>
-                            <Input type={"number"} {...register("since", { required : "창단 연도를 입력해주세요." })} isInvalid={Boolean(errors.since?.message)} required placeholder="Since Year" variant={"flushed"}/>
+                            <Input type={"number"} {...register("since", { required : "창단 연도를 입력해주세요." })} isInvalid={Boolean(errors.since?.message)} required placeholder="창단 연도를 입력하세요" variant={"flushed"}/>
                 </InputGroup>
                 {teamRegisterMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Team name is already exist </Text>) : null}
-                <Button isLoading={teamRegisterMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> Team Register </Button>
+                <Button isLoading={teamRegisterMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> 팀 등록하기 </Button>
             </VStack>
         </>
     )

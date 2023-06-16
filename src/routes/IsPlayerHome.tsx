@@ -151,8 +151,8 @@ export default function IsPlayerHome() {
             </VStack>
             <Tabs isFitted variant='enclosed' isLazy>
                 <TabList mb='1em'>
-                    <Tab _selected={{color : "main.500"}}>My Team</Tab>
-                    <Tab _selected={{color : "main.500"}}>My Game</Tab>
+                    <Tab _selected={{color : "main.500"}}>나의 팀</Tab>
+                    <Tab _selected={{color : "main.500"}}>나의 경기</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel p={"0"}>
@@ -171,7 +171,7 @@ export default function IsPlayerHome() {
                     </TabPanel>
                     <TabPanel p={"0"}>
                         <VStack alignItems={"flex-start"} px={3}>
-                            <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> LATEST </Text>
+                            <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
                             {playerGamesData ? (playerGamesData[0] ? 
                                 <Game 
                                     pk={playerGamesData[0].pk} 
@@ -187,13 +187,13 @@ export default function IsPlayerHome() {
                         <Link to={"/users/isplayer/games"}>
                             <VStack alignItems={"flex-start"} px={3} mt={8}>
                                 <HStack width={"100%"} justifyContent={"space-between"}>
-                                    <Text as="b" color={"main.500"} fontSize={"sm"}> GAME </Text>
+                                    <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
                                     <FaArrowRight size={"10"}/>
                                 </HStack>
                                 <Divider />
                                 <HStack width={"100%"} justifyContent={"space-between"}>
                                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                    <Text as="b" fontSize={"sm"}> {playerGamesData ? playerGamesData.length : "0"} GAMES </Text>
+                                    <Text as="b" fontSize={"sm"}> {playerGamesData ? playerGamesData.length : "0"} 경기 </Text>
                                 </HStack>
                             </VStack>
                         </Link>
@@ -207,7 +207,7 @@ export default function IsPlayerHome() {
                                 <Divider />
                                 <HStack width={"100%"} justifyContent={"space-between"}>
                                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                    <Text as="b" fontSize={"sm"}> {playerTomGamesData ? playerTomGamesData.length : "0"} TIMES </Text>
+                                    <Text as="b" fontSize={"sm"}> {playerTomGamesData ? playerTomGamesData.length : "0"} 회 </Text>
                                 </HStack>
                             </VStack>
                         </Link>
@@ -215,13 +215,13 @@ export default function IsPlayerHome() {
                         <Link to={"/users/isplayer/goals"}>
                             <VStack alignItems={"flex-start"} px={3} mt={8}>
                                 <HStack width={"100%"} justifyContent={"space-between"}>
-                                    <Text as="b" color={"main.500"} fontSize={"sm"}> GOAL </Text>
+                                    <Text as="b" color={"main.500"} fontSize={"md"}> 골 </Text>
                                     <FaArrowRight size={"10"}/>
                                 </HStack>
                                 <Divider />
                                 <HStack width={"100%"} justifyContent={"space-between"}>
                                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                    <Text as="b" fontSize={"sm"}> {playerGoalsData ? playerGoalsData.goals : "0"} GOALS </Text>
+                                    <Text as="b" fontSize={"sm"}> {playerGoalsData ? playerGoalsData.goals : "0"} 골 </Text>
                                 </HStack>
                             </VStack>
                         </Link>

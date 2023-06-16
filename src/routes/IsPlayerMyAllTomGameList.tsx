@@ -44,7 +44,7 @@ export default function IsPlayerMyAllTomGameList() {
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {isPlayerTomGamesData ? isPlayerTomGamesData.length : "0"} TIMES </Text>
+                    <Text as="b" fontSize={"sm"}> {isPlayerTomGamesData ? isPlayerTomGamesData.length : "0"} 회 </Text>
                 </HStack>
             </VStack>
             <SmallDivider />
@@ -53,7 +53,7 @@ export default function IsPlayerMyAllTomGameList() {
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {isPlayerSuperplayersData ? isPlayerSuperplayersData.length : "0"} TIMES </Text>
+                    <Text as="b" fontSize={"sm"}> {isPlayerSuperplayersData ? isPlayerSuperplayersData.length : "0"} 회 </Text>
                 </HStack>
             </VStack>
             <BigDivider />

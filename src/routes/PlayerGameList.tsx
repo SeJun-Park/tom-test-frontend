@@ -40,11 +40,11 @@ export default function PlayerGameList() {
                 </HStack>
             </VStack>
             <VStack alignItems={"flex-start"} px={3} mt={8}>
-                <Text as="b" color={"main.500"} fontSize={"sm"}> GAME </Text>
+                <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {playerGamesData ? playerGamesData.length : "0"} GAMES </Text>
+                    <Text as="b" fontSize={"sm"}> {playerGamesData ? playerGamesData.length : "0"} 경기 </Text>
                 </HStack>
             </VStack>
             <BigDivider />
