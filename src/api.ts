@@ -119,6 +119,12 @@ export const getTeamGoals = async ({ queryKey } : QueryFunctionContext) => {
     return response.data
 }
 
+export const getTeamGoalsAgainst = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/goals/against/`)
+    return response.data
+}
+
 export const getTeamPlayers = async ({ queryKey } : QueryFunctionContext) => {
     const [ _, teamPk ] = queryKey;
     const response = await instance.get(`teams/${teamPk}/players/`)
@@ -197,12 +203,28 @@ export const getTeamGamesRelative = ({ teamPk, vsteam } : IGetTeamGamesRelativeV
     }
     ).then((response) => response.data)
 
-    export interface IGetTeamGamesRelativeVariables {
-        teamPk : string,
-        vsteam : string,
-    }
+export interface IGetTeamGoalsRelativeVariables {
+    teamPk : string,
+    vsteam : string,
+}
     
-export const getTeamGoalsRelative = ({ teamPk, vsteam } : IGetTeamGamesRelativeVariables) => instance.post(`teams/${teamPk}/goals-relative/`, 
+export const getTeamGoalsRelative = ({ teamPk, vsteam } : IGetTeamGoalsRelativeVariables) => instance.post(`teams/${teamPk}/goals-relative/`, 
+    { vsteam }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IGetTeamGoalsAgainstRelativeVariables {
+    teamPk : string,
+    vsteam : string,
+}
+
+export const getTeamGoalsAgainstRelative = ({ teamPk, vsteam } : IGetTeamGoalsAgainstRelativeVariables) => instance.post(`teams/${teamPk}/goals-relative/against/`, 
     { vsteam }, 
     {
         headers :  {

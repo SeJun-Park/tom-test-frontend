@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamGames, getTeamGamesRelative, getTeamGoals, getTeamGoalsRelative, getTeamStats, getTeamStatsRelative, getTeamVSteams } from "../api";
+import { getTeam, getTeamGames, getTeamGamesRelative, getTeamGoals, getTeamGoalsAgainst, getTeamGoalsAgainstRelative, getTeamGoalsRelative, getTeamStats, getTeamStatsRelative, getTeamVSteams } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import Game from "../components/Game";
@@ -28,6 +28,7 @@ export default function IsPlayerTeamGameList() {
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
     const { isLoading : teamGamesLoading, data : teamGamesData, isError : teamGamesError } = useQuery<ITinyGame[]>(["teamGames", teamPk], getTeamGames);
     const { isLoading : teamGoalsLoading, data : teamGoalsData, isError : teamGoalsError } = useQuery<IGoals>(["teamGoals", teamPk], getTeamGoals);
+    const { isLoading : teamGoalsAgainstLoading, data : teamGoalsAgainstData, isError : teamGoalsAgainstError } = useQuery<IGoals>(["teamGoalsAgainst", teamPk], getTeamGoalsAgainst);
     const { isLoading : teamStatsLoading, data : teamStatsData, isError : teamStatsError } = useQuery<ITeamAllStats>(["teamStats", teamPk], getTeamStats);
     const { isLoading : teamvVSteamsLoading, data : teamVSteamsData, isError : teamVSteamsError } = useQuery<IVSteams>(["teamVSteams", teamPk], getTeamVSteams);
 
@@ -35,6 +36,7 @@ export default function IsPlayerTeamGameList() {
     const [ teamVSteamGames, setTeamVSteamGames ] = useState<ITinyGame[]>([]);
     const [ teamStatsRelative, setTeamStatsRelative ] = useState<ITeamStatsRelative>();
     const [ teamGoalsRelative, setTeamGoalsRelative ] = useState<IGoals>();
+    const [ teamGoalsAgainstRelative, setTeamGoalsAgainstRelative ] = useState<IGoals>();
 
     const teamGamesRelativeMutation = useMutation(getTeamGamesRelative, 
         {
@@ -57,6 +59,13 @@ export default function IsPlayerTeamGameList() {
             }
         })
 
+    const teamGoalsAgainstRelativeMutation = useMutation(getTeamGoalsAgainstRelative,
+        {
+            onSuccess : (data) => {
+                setTeamGoalsAgainstRelative(data)
+            }
+        })
+
     const { register, handleSubmit, formState : {errors}, reset : VSteamSelectFormReset } = useForm<IVSteamForm>();
 
     const onSubmit = (data : IVSteamForm) => {
@@ -66,6 +75,7 @@ export default function IsPlayerTeamGameList() {
             teamStatsRelativeMutation.mutate({teamPk, vsteam})
             teamGamesRelativeMutation.mutate({teamPk, vsteam})
             teamGoalsRelativeMutation.mutate({teamPk, vsteam})
+            teamGoalsAgainstRelativeMutation.mutate({teamPk, vsteam})
             VSteamSelectFormReset();
         }
     }
@@ -133,6 +143,11 @@ export default function IsPlayerTeamGameList() {
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text fontSize={"sm"}> 경기 당 골 </Text>
                                 <Text fontSize={"sm"}> {teamGoalsData && teamGamesData && teamGamesData.length !==0 ? (teamGoalsData.goals/teamGamesData.length).toFixed(1) : "0"} 골 </Text>
+                            </HStack>
+                            <Divider />
+                            <HStack width={"100%"} justifyContent={"space-between"}>
+                                <Text fontSize={"sm"}> 경기 당 실점 </Text>
+                                <Text fontSize={"sm"}> {teamGoalsAgainstData && teamGamesData && teamGamesData.length !==0 ? (teamGoalsAgainstData.goals/teamGamesData.length).toFixed(1) : "0"} 골 </Text>
                             </HStack>
                         </VStack>
                         <BigDivider />
@@ -205,6 +220,12 @@ export default function IsPlayerTeamGameList() {
                                         <Text fontSize={"sm"}> 경기 당 골 </Text>
                                         <Text fontSize={"sm"}> 
                                             {teamGoalsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골</Text>
+                                    </HStack>
+                                    <Divider />
+                                    <HStack width={"100%"} justifyContent={"space-between"}>
+                                        <Text fontSize={"sm"}> 경기 당 실점 </Text>
+                                        <Text fontSize={"sm"}> 
+                                            {teamGoalsAgainstRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsAgainstRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골</Text>
                                     </HStack>
                                 </VStack>
                                 <BigDivider />
