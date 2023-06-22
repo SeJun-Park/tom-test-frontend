@@ -26,13 +26,13 @@ export default function IsPlayerGameDetail() {
         navigate(-1)
     }
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [selectedImage, setSelectedImage] = useState("");
+    // const { isOpen, onOpen, onClose } = useDisclosure();
+    // const [selectedImage, setSelectedImage] = useState("");
   
-    const handleOpen = (src: string) => {
-      setSelectedImage(src);
-      onOpen();
-    }
+    // const handleOpen = (src: string) => {
+    //   setSelectedImage(src);
+    //   onOpen();
+    // }
 
     return (
         <>
@@ -144,22 +144,22 @@ export default function IsPlayerGameDetail() {
                         <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"}> Photos </Text>
                             <Divider />
-                            <Grid templateColumns={"repeat(3, 1fr)"} gap={2}>
+                            {/* <Grid templateColumns={"repeat(3, 1fr)"} gap={2}>
                             {gameData?.photos.map((photo, index) => (
                                 <Box key={index} boxSize="100%" onClick={() => handleOpen(photo.file)}>
                                     <Image src={photo.file} objectFit="cover" boxSize="100%" cursor="pointer" />
                                 </Box>
                                 ))}
-                            </Grid>
+                            </Grid> */}
                             <Empty />
-                            <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                            {/* <Modal isOpen={isOpen} onClose={onClose} size="xl">
                                 <ModalOverlay />
                                 <ModalContent>
                                     <ModalBody>
                                         <Image src={selectedImage} boxSize="100%" />
                                     </ModalBody>
                                 </ModalContent>
-                            </Modal>
+                            </Modal> */}
                         </VStack>
                         <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"}> Comments </Text>

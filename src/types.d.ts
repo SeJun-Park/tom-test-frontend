@@ -81,16 +81,6 @@ export interface IPlayer extends ITinyPlayer {
     connecting_at : string
 }
 
-export interface ITinyGame {
-    pk : number,
-    date : string,
-    team : ITinyTeam,
-    vsteam : string,
-    team_score : number,
-    vsteam_score : number,
-    toms : ITinyPlayer[],
-}
-
 export interface IPhoto {
     file : string,
     team : ITinyTeam,
@@ -101,6 +91,16 @@ export interface IVideo {
     file : string,
     team : ITinyTeam,
     game : ITinyGame,
+}
+
+export interface ITinyGame {
+    pk : number,
+    date : string,
+    team : ITinyTeam,
+    vsteam : string,
+    team_score : number,
+    vsteam_score : number,
+    toms : ITinyPlayer[],
 }
 
 export interface IGame extends ITinyGame {
