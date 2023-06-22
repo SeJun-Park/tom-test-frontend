@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, HStack, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Divider, Grid, HStack, Image, Modal, ModalBody, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
@@ -152,6 +152,14 @@ export default function IsPlayerGameDetail() {
                                 ))}
                             </Grid>
                             <Empty />
+                            <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                                <ModalOverlay />
+                                <ModalContent>
+                                <ModalBody>
+                                    <Image src={selectedImage} boxSize="100%" />
+                                </ModalBody>
+                                </ModalContent>
+                            </Modal>
                         </VStack>
                         <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"}> Comments </Text>
