@@ -155,9 +155,9 @@ export default function IsPlayerGameDetail() {
                             <Modal isOpen={isOpen} onClose={onClose} size="xl">
                                 <ModalOverlay />
                                 <ModalContent>
-                                <ModalBody>
-                                    <Image src={selectedImage} boxSize="100%" />
-                                </ModalBody>
+                                    <ModalBody>
+                                        <Image src={selectedImage} boxSize="100%" />
+                                    </ModalBody>
                                 </ModalContent>
                             </Modal>
                         </VStack>
