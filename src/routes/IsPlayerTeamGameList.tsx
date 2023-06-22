@@ -228,6 +228,11 @@ export default function IsPlayerTeamGameList() {
                                     </HStack>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
+                                        <Text as="b" fontSize={"md"}> 총 실점 </Text>
+                                        <Text as="b" fontSize={"sm"}> {teamGoalsAgainstRelative ? teamGoalsAgainstRelative.goals : "0"} 골 </Text>
+                                    </HStack>
+                                    <Divider />
+                                    <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text fontSize={"sm"}> 경기 당 실점 </Text>
                                         <Text fontSize={"sm"}> 
                                             {teamGoalsAgainstRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsAgainstRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골</Text>

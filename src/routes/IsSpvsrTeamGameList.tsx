@@ -157,6 +157,11 @@ export default function IsSpvsrTeamGameList() {
                             </HStack>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
+                                <Text as="b" fontSize={"md"}> 총 실점 </Text>
+                                <Text as="b" fontSize={"sm"}> {teamGoalsAgainstData ? teamGoalsAgainstData.goals : "0"} 골 </Text>
+                            </HStack>
+                            <Divider />
+                            <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text fontSize={"sm"}> 경기 당 실점 </Text>
                                 <Text fontSize={"sm"}> {teamGoalsAgainstData && teamGamesData && teamGamesData.length !==0 ? (teamGoalsAgainstData.goals/teamGamesData.length).toFixed(1) : "0"} 골 </Text>
                             </HStack>
@@ -230,14 +235,14 @@ export default function IsSpvsrTeamGameList() {
                                     </HStack>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
-                                        <Text as="b" fontSize={"md"}> 총 실점 </Text>
-                                        <Text as="b" fontSize={"sm"}> {teamGoalsAgainstData ? teamGoalsAgainstData.goals : "0"} 골 </Text>
-                                    </HStack>
-                                    <Divider />
-                                    <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text fontSize={"sm"}> 경기 당 골 </Text>
                                         <Text fontSize={"sm"}> 
                                             {teamGoalsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골</Text>
+                                    </HStack>
+                                    <Divider />
+                                    <HStack width={"100%"} justifyContent={"space-between"}>
+                                        <Text as="b" fontSize={"md"}> 총 실점 </Text>
+                                        <Text as="b" fontSize={"sm"}> {teamGoalsAgainstData ? teamGoalsAgainstData.goals : "0"} 골 </Text>
                                     </HStack>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
