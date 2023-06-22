@@ -11,6 +11,7 @@ import GameVote from "../components/GameVote";
 import GoalPlayer from "../components/GoalPlayer";
 import Player from "../components/Player";
 import { IGame } from "../types";
+import "../video.css"
 
 export default function IsPlayerGameDetail() {
 
@@ -99,7 +100,29 @@ export default function IsPlayerGameDetail() {
                         </VStack>
                     </TabPanel>
                     <TabPanel p={0}>
+                        <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                            <Divider mt={8}/>
+                        </VStack>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                            <Text as="b" color={"main.500"} fontSize={"sm"}> Videos </Text>
+                            <Divider />
+                            {gameData?.videos.map((video) => {
 
+                                if (!video.file.startsWith("https://youtu.be/")) {
+                                    // URL이 "https://youtu.be/"로 시작하지 않으면 아무것도 반환하지 않음
+                                    return null;
+                                }
+                                
+                                const parts = video.file.split("/");
+                                const videoID = parts[parts.length - 1];
+                            
+                                return (
+                                <div className="video-container">
+                                    <iframe src={`https://www.youtube.com/embed/${videoID}`} frameBorder="0" allowFullScreen></iframe>
+                                </div>
+                                )
+                            })}
+                        </VStack>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
