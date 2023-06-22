@@ -143,7 +143,7 @@ export default function IsSpvsrTeamGameList() {
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text fontSize={"sm"}> 경기 당 골 </Text>
-                                <Text fontSize={"sm"}> {teamGoalsData && teamGamesData && teamGamesData.length !==0 ? (teamGoalsData.goals/teamGamesData.length).toFixed(1) : "0"} GOAL </Text>
+                                <Text fontSize={"sm"}> {teamGoalsData && teamGamesData && teamGamesData.length !==0 ? (teamGoalsData.goals/teamGamesData.length).toFixed(1) : "0"} 골 </Text>
                             </HStack>
                         </VStack>
                         <BigDivider />

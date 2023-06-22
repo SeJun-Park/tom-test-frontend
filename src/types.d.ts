@@ -91,13 +91,20 @@ export interface ITinyGame {
     toms : ITinyPlayer[],
 }
 
+export interface IVideo {
+    file : string,
+    team : ITinyTeam,
+    game : ITinyGame,
+}
+
 export interface IGame extends ITinyGame {
     id : number,
     location : string,
     start_time : string,
     end_time : string,
     participants : ITinyPlayer[],
-    goals : IGoalPlayer[]
+    goals : IGoalPlayer[],
+    videos : IVideo[],
 }
 
 export interface IGameVote {
