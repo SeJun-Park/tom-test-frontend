@@ -83,8 +83,17 @@ export default function IsPlayerGameDetail() {
 
                     </TabPanel>
                     <TabPanel p={0}>
-                        <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                    <VStack alignItems={"flex-start"} px={3} spacing={4}>
                             <Divider mt={8}/>
+                        </VStack>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                            <Text as="b" color={"main.500"} fontSize={"sm"}> Formation </Text>
+                            <Divider />
+                            <Empty />
+                        </VStack>
+                        <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                            <Text as="b" color={"main.500"} fontSize={"sm"}> Line-ups </Text>
+                            <Divider />
                             {gameData?.participants.map((participant) => (
                                             <Player 
                                                 key={participant.pk}
@@ -122,6 +131,18 @@ export default function IsPlayerGameDetail() {
                                 </div>
                                 )
                             })}
+                            <Empty />
+                        </VStack>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                            <Text as="b" color={"main.500"} fontSize={"sm"}> Photos </Text>
+                            <Divider />
+
+                            <Empty />
+                        </VStack>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                            <Text as="b" color={"main.500"} fontSize={"sm"}> Comments </Text>
+                            <Divider />
+                            <Empty />
                         </VStack>
                     </TabPanel>
                 </TabPanels>
