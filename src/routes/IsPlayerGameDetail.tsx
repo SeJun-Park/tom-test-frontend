@@ -1,5 +1,6 @@
-import { Button, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Divider, Grid, HStack, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
@@ -25,6 +26,13 @@ export default function IsPlayerGameDetail() {
         navigate(-1)
     }
 
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [selectedImage, setSelectedImage] = useState("");
+  
+    const handleOpen = (src: string) => {
+      setSelectedImage(src);
+      onOpen();
+    }
 
     return (
         <>
@@ -136,7 +144,13 @@ export default function IsPlayerGameDetail() {
                         <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"}> Photos </Text>
                             <Divider />
-
+                            <Grid templateColumns={"repeat(3, 1fr)"} gap={2}>
+                            {gameData?.photos.map((photo, index) => (
+                                <Box key={index} boxSize="100%" onClick={() => handleOpen(photo.file)}>
+                                    <Image src={photo.file} objectFit="cover" boxSize="100%" cursor="pointer" />
+                                </Box>
+                                ))}
+                            </Grid>
                             <Empty />
                         </VStack>
                         <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>

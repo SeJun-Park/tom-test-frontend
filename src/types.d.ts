@@ -91,6 +91,12 @@ export interface ITinyGame {
     toms : ITinyPlayer[],
 }
 
+export interface IPhoto {
+    file : string,
+    team : ITinyTeam,
+    game : ITinyGame,
+}
+
 export interface IVideo {
     file : string,
     team : ITinyTeam,
@@ -105,6 +111,7 @@ export interface IGame extends ITinyGame {
     participants : ITinyPlayer[],
     goals : IGoalPlayer[],
     videos : IVideo[],
+    photos : IPhoto[],
 }
 
 export interface IGameVote {

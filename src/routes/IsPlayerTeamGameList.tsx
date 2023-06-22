@@ -217,7 +217,7 @@ export default function IsPlayerTeamGameList() {
                                     <Text as="b" color={"main.500"} fontSize={"md"}> 골 </Text>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
-                                        <Text as="b" fontSize={"sm"}> TOTAL </Text>
+                                        <Text as="b" fontSize={"md"}> 총 득점 </Text>
                                         <Text as="b" fontSize={"sm"}> {teamGoalsRelative ? teamGoalsRelative.goals : "0"} 골 </Text>
                                     </HStack>
                                     <Divider />
