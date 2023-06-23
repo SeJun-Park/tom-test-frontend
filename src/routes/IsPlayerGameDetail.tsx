@@ -1,8 +1,8 @@
-import { Box, Button, Divider, Grid, HStack, Image, Modal, ModalBody, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Divider, FormControl, Grid, HStack, Image, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaShare } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getGame } from "../api";
 import BigDivider from "../components/BigDivider";
@@ -39,10 +39,19 @@ export default function IsPlayerGameDetail() {
             <Helmet>
                 <title>{ gameData ? (`3OM | ${gameData.team.name} vs ${gameData.vsteam}`) : "Loading.." }</title>
             </Helmet>
-            <HStack height={20} px={5}>
+            <HStack justifyContent={"space-between"} height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>
                     <FaArrowLeft />
                 </Button>
+                <Menu>
+                    <MenuButton marginRight={1}>
+                        {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
+                        <FaShare />
+                    </MenuButton>
+                    <MenuList>
+                        <MenuItem> 카카오로 공유하기 </MenuItem>
+                    </MenuList>
+                </Menu>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"} mb={10}>
                 <Text fontSize={"xl"} as="b"> {gameData?.team.name} </Text>
@@ -99,6 +108,12 @@ export default function IsPlayerGameDetail() {
                             <Divider />
                             <Empty />
                         </VStack>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                            <Text as="b" color={"main.500"} fontSize={"sm"} > Roulette </Text>
+                            <Divider />
+                            <Button backgroundColor={"main.500"} color={"white"} width={"100%"}> 새로운 룰렛 돌리기 </Button>
+                            <Empty />
+                        </VStack>
                         <VStack alignItems={"flex-start"} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Line-ups </Text>
                             <Divider />
@@ -120,7 +135,7 @@ export default function IsPlayerGameDetail() {
                         <VStack alignItems={"flex-start"} px={3} spacing={4}>
                             <Divider mt={8}/>
                         </VStack>
-                        <VStack align={"flex-start"} mt={5} px={3} spacing={4}>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Videos </Text>
                             <Divider />
                             {gameData?.videos?.map((video) => {
@@ -141,7 +156,7 @@ export default function IsPlayerGameDetail() {
                             })}
                             <Empty />
                         </VStack>
-                        <VStack align={"flex-start"} mt={5} px={3} spacing={4}>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Photos </Text>
                             <Divider />
                             <Grid templateColumns={"repeat(3, 1fr)"} gap={2}>
@@ -161,9 +176,15 @@ export default function IsPlayerGameDetail() {
                                 </ModalContent>
                             </Modal>
                         </VStack>
-                        <VStack align={"flex-start"} mt={5} px={3} spacing={4}>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Comments </Text>
                             <Divider />
+                            <VStack as="form">
+                                <FormControl>
+                                    <Input type="text" placeholder={"경기에 대한 한줄평을 남겨보세요!"} variant={"flushed"} sx={{ "::placeholder": { textAlign: "center" }}} />
+                                    <Button color={"main.500"} width={"100%"} mt={1} variant={"ghost"} isDisabled={true} > 한줄평 남기기 </Button>
+                                </FormControl>
+                            </VStack>
                             <Empty />
                         </VStack>
                     </TabPanel>
