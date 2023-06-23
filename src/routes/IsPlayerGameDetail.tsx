@@ -95,12 +95,12 @@ export default function IsPlayerGameDetail() {
                             <Divider mt={8}/>
                         </VStack>
                         <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> Formation </Text>
+                            <Text as="b" color={"main.500"} fontSize={"sm"} style={{ WebkitAlignItems: "flex-start" }}> Formation </Text>
                             <Divider />
                             <Empty />
                         </VStack>
                         <VStack alignItems={"flex-start"} px={3} spacing={4}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> Line-ups </Text>
+                            <Text as="b" color={"main.500"} fontSize={"sm"} style={{ WebkitAlignItems: "flex-start" }}> Line-ups </Text>
                             <Divider />
                             {gameData?.participants.map((participant) => (
                                             <Player 
@@ -121,7 +121,7 @@ export default function IsPlayerGameDetail() {
                             <Divider mt={8}/>
                         </VStack>
                         <VStack align={"flex-start"} mt={5} px={3} spacing={4}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> Videos </Text>
+                            <Text as="b" color={"main.500"} fontSize={"sm"} style={{ WebkitAlignItems: "flex-start" }}> Videos </Text>
                             <Divider />
                             {gameData?.videos?.map((video) => {
 
@@ -142,12 +142,12 @@ export default function IsPlayerGameDetail() {
                             <Empty />
                         </VStack>
                         <VStack align={"flex-start"} mt={5} px={3} spacing={4}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> Photos </Text>
+                            <Text as="b" color={"main.500"} fontSize={"sm"} style={{ WebkitAlignItems: "flex-start" }}> Photos </Text>
                             <Divider />
                             <Grid templateColumns={"repeat(3, 1fr)"} gap={2}>
                             {gameData?.photos?.map((photo, index) => (
                                 <Box key={index} boxSize="100%" onClick={() => handleOpen(photo.file)}>
-                                    <Image src={photo.file} objectFit="cover" objectPosition="center" height="100%" boxSize="100%" cursor="pointer" />
+                                    <Image src={photo.file} objectFit="cover" objectPosition="center" height="100px" boxSize="100%" cursor="pointer" />
                                 </Box>
                                 ))}
                             </Grid>
@@ -162,7 +162,7 @@ export default function IsPlayerGameDetail() {
                             </Modal>
                         </VStack>
                         <VStack align={"flex-start"} mt={5} px={3} spacing={4}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> Comments </Text>
+                            <Text as="b" color={"main.500"} fontSize={"sm"} style={{ WebkitAlignItems: "flex-start" }}> Comments </Text>
                             <Divider />
                             <Empty />
                         </VStack>
