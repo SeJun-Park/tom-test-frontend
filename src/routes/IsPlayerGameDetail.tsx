@@ -147,7 +147,7 @@ export default function IsPlayerGameDetail() {
                             <Grid templateColumns={"repeat(3, 1fr)"} gap={2}>
                             {gameData?.photos?.map((photo, index) => (
                                 <Box key={index} boxSize="100%" onClick={() => handleOpen(photo.file)}>
-                                    <Image src={photo.file} objectFit="cover" boxSize="100%" cursor="pointer" />
+                                    <Image src={photo.file} objectFit="cover" objectPosition="center" boxSize="100%" cursor="pointer" />
                                 </Box>
                                 ))}
                             </Grid>
