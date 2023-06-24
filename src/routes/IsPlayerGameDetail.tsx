@@ -1,4 +1,4 @@
-import { Box, Button, Divider, FormControl, Grid, HStack, Image, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, FormControl, Grid, HStack, Image, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
@@ -106,6 +106,13 @@ export default function IsPlayerGameDetail() {
                         <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Formation </Text>
                             <Divider />
+                            <Center width={"100%"}>
+                                <Image 
+                                    src="https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/16eef5b5-5cf9-4cd6-7066-c12620fd5600/public" 
+                                    alt="description of image"
+                                    maxWidth="80%"
+                                />
+                            </Center>
                             <Empty />
                         </VStack>
                         <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
