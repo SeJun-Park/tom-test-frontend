@@ -103,7 +103,7 @@ export default function IsPlayerGameDetail() {
                     <VStack alignItems={"flex-start"} px={3} spacing={4}>
                             <Divider mt={8}/>
                         </VStack>
-                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                        <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Formation </Text>
                             <Divider />
                             <Center width={"100%"}>
@@ -115,13 +115,13 @@ export default function IsPlayerGameDetail() {
                             </Center>
                             <Empty />
                         </VStack>
-                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                        <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Roulette </Text>
                             <Divider />
                             <Button backgroundColor={"main.500"} color={"white"} width={"100%"}> 새로운 룰렛 돌리기 </Button>
                             <Empty />
                         </VStack>
-                        <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                        <VStack alignItems={"center"} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Line-ups </Text>
                             <Divider />
                             {gameData?.participants.map((participant) => (
@@ -142,7 +142,7 @@ export default function IsPlayerGameDetail() {
                         <VStack alignItems={"flex-start"} px={3} spacing={4}>
                             <Divider mt={8}/>
                         </VStack>
-                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                        <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Videos </Text>
                             <Divider />
                             {gameData?.videos?.map((video) => {
@@ -163,7 +163,7 @@ export default function IsPlayerGameDetail() {
                             })}
                             <Empty />
                         </VStack>
-                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                        <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Photos </Text>
                             <Divider />
                             <Grid templateColumns={"repeat(3, 1fr)"} gap={2}>
@@ -183,7 +183,7 @@ export default function IsPlayerGameDetail() {
                                 </ModalContent>
                             </Modal>
                         </VStack>
-                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
+                        <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Comments </Text>
                             <Divider />
                             <VStack as="form">
