@@ -74,24 +74,15 @@ export default function TomGame ( props : ITomGameProps ) {
                     </HStack>
                     <Divider />
                     <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10}>
-                        {gameVoteData ?
-                                    (new Date() > new Date(gameVoteData.end) && props.toms.length!==0) ? (
-                                                                                                            props.toms.map((tom) => 
-                                                                                                                <VStack>
-                                                                                                                    <Avatar src={tom.avatar} />
-                                                                                                                    <Text fontSize={"xx-small"}>{tom.name}</Text>
-                                                                                                                </VStack>
-                                                                                                                            )
-                                                                                                        ) : 
-                                                                                                            ((new Date() < new Date(gameVoteData.end) && props.toms.length!==0) ? (
-                                                                                                                                                                                    <VStack width={"100%"}>
-                                                                                                                                                                                        <Box width={"100%"} backgroundColor={"main.500"} color={"white"} textAlign={"center"}> 투표중.. </Box>                                                                                       
-                                                                                                                                                                                    {/* <Avatar src={tom.avatar} />
-                                                                                                                                                                                    <Text fontSize={"xx-small"}>{tom.name}</Text> */}
-                                                                                                                                                                                    </VStack>
-                                                                                                                                                                                    
-                                                                                                                                                                                ) : null) : null
-                                    }
+                        {(gameVoteData && props.toms.length!==0) ? (
+                                                                            props.toms.map((tom) => 
+                                                                                <VStack>
+                                                                                    <Avatar src={tom.avatar} />
+                                                                                    <Text fontSize={"xx-small"}>{tom.name}</Text>
+                                                                                </VStack>
+                                                                                            )
+                                                                        ) : null
+                                        }
                     </HStack>
                     <Divider />
                 </VStack>

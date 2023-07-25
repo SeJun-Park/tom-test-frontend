@@ -1,5 +1,6 @@
 import { Avatar, Box, Divider, Heading, HStack, Text, VStack } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query";
+import { FaUserNinja } from "react-icons/fa";
 import { getGame } from "../api";
 import { IGame } from "../types";
 import Empty from "./Empty";
@@ -38,15 +39,23 @@ export default function GameVoteAfter( props : IGameVoteAfterProps) {
         <>
             <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
                 {gameData ? (gameData.toms.length !=0 ? gameData.toms.map((tom) => 
-                                        <VStack>
-                                            <Avatar src={tom.avatar} />
-                                            <Text fontSize={"xx-small"}>{tom.name}</Text>
-                                        </VStack>
-                                            ) : 
-                                            <VStack py={4} width={"100%"}> 
-                                                <Box width={"100%"} backgroundColor={"main.500"} color={"white"} > Invalid </Box>
+                                            <VStack>
+                                                <Avatar src={tom.avatar} />
+                                                <Text fontSize={"xx-small"}>{tom.name}</Text>
                                             </VStack>
-                                              ) : null  }
+                                                ) : 
+                                                <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                </HStack>
+                                                ) : null  }
             </HStack> 
             <VStack>
                 <Heading fontSize={"xl"}>3man Of the Match </Heading>

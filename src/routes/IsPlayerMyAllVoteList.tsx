@@ -42,10 +42,10 @@ export default function IsPlayerMyAllVoteList() {
                 </TabList>
                 <TabPanels>
                     <TabPanel p={0}>
-                        <HStack padding={"5"}>
+                        <VStack padding={"5"} alignItems={"flex-end"}>
                             <Text fontSize={"xl"} > {isPlayerGamesData ? isPlayerGamesData.length : "0"} GAME {isPlayerTomGamesData ? isPlayerTomGamesData.length : "0"} TIMES </Text>
                             {/* <FaUserNinja /> */}
-                        </HStack>
+                        </VStack>
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
                             <Text as="b" color={"main.500"} fontSize={"sm"}> 3OM </Text>
                             <Divider />

@@ -21,7 +21,7 @@ export default function GameVote( props : IGameVoteProps ) {
             {gameVoteData ? 
                 (now < new Date(gameVoteData.start) ? 
                     <GameVoteBefore vote={gameVoteData} /> : (new Date(gameVoteData.start) < now && now < new Date(gameVoteData.end) ? 
-                        <GameVoteIng vote={gameVoteData} /> : <GameVoteAfter gamePk={props.gamePk} />)) : null}
+                        <GameVoteIng vote={gameVoteData} gamePk={props.gamePk} /> : <GameVoteAfter gamePk={props.gamePk} />)) : null}
             <Empty />
         </VStack>
     )

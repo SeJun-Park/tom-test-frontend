@@ -71,7 +71,7 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
             <Link to={`/players/${playerData?.id}/votes`}>
                 <VStack alignItems={"flex-start"} px={3} mt={8}>
                     <HStack width={"100%"} justifyContent={"space-between"}>
-                        <Text as="b" color={"main.500"} fontSize={"sm"}> 투표 </Text>
+                        <Text as="b" color={"main.500"} fontSize={"md"}> 투표 </Text>
                         <FaArrowRight size={"10"}/>
                     </HStack>
                     <Divider />
