@@ -198,10 +198,10 @@ export default function IsPlayerHome() {
                             </VStack>
                         </Link>
                         <SmallDivider />
-                        <Link to={"/users/isplayer/toms"}>
+                        <Link to={"/users/isplayer/votes"}>
                             <VStack alignItems={"flex-start"} px={3} mt={8}>
                                 <HStack width={"100%"} justifyContent={"space-between"}>
-                                    <Text as="b" color={"main.500"} fontSize={"sm"}> 3OM </Text>
+                                    <Text as="b" color={"main.500"} fontSize={"md"}> 투표 </Text>
                                     <FaArrowRight size={"10"}/>
                                 </HStack>
                                 <Divider />

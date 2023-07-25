@@ -109,19 +109,16 @@ export default function IsSpvsrTeamHome() {
                         </VStack>
                     </Link>
                     <SmallDivider />
-                    <Link to={`/teams/${teamPk}/toms`}>
+                    <Link to={`/teams/${teamPk}/votes`}>
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
                             <HStack width={"100%"} justifyContent={"space-between"}>
-                                <HStack spacing={1}>
-                                    <Text as="b" color={"main.500"} fontSize={"sm"}> 3OM </Text>
-                                    <Text as="b" color={"main.500"} fontSize={"md"}> 선정 경기 </Text>
-                                </HStack>
+                                <Text as="b" color={"main.500"} fontSize={"md"}> 투표 </Text>
                                 <FaArrowRight size={"10"}/>
                             </HStack>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamTomGamesData ? teamTomGamesData.length : "0"} 경기 </Text>
+                                <Text as="b" fontSize={"sm"}> {teamTomGamesData ? teamTomGamesData.length : "0"} 회 </Text>
                             </HStack>
                         </VStack>
                     </Link>

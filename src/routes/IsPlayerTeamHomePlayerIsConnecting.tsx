@@ -40,7 +40,7 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
             <SmallDivider />
             <VStack alignItems={"flex-start"} px={3} mt={8}>
                 <HStack width={"100%"} justifyContent={"space-between"}>
-                    <Text as="b" color={"main.500"} fontSize={"sm"}> 3OM </Text>
+                    <Text as="b" color={"main.500"} fontSize={"md"}> 투표 </Text>
                 </HStack>
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
