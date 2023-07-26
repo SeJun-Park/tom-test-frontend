@@ -98,10 +98,10 @@ export default function IsPlayerPlayerProfile() {
                 </VStack>
             </Link>
             <SmallDivider />
-            <Link to={`/players/${playerPk}/toms`}>
+            <Link to={`/players/${playerPk}/votes`}>
                 <VStack alignItems={"flex-start"} px={3} mt={8}>
                         <HStack width={"100%"} justifyContent={"space-between"}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"}> 3OM </Text>
+                            <Text as="b" color={"main.500"} fontSize={"md"}> 투표 </Text>
                             <FaArrowRight size={"10"}/>
                         </HStack>
                         <Divider />

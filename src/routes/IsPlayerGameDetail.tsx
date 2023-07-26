@@ -115,12 +115,6 @@ export default function IsPlayerGameDetail() {
                             </Center>
                             <Empty />
                         </VStack>
-                        <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"} > Roulette </Text>
-                            <Divider />
-                            <Button backgroundColor={"main.500"} color={"white"} width={"100%"}> 새로운 룰렛 돌리기 </Button>
-                            <Empty />
-                        </VStack>
                         <VStack alignItems={"center"} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Line-ups </Text>
                             <Divider />

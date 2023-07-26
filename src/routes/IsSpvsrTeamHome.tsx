@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowRight, FaRunning, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
-import { getTeam, getTeamGames, getTeamPlayers, getTeamPlayersConnected, getTeamTomGames, isSpvsr } from "../api";
+import { getTeam, getTeamGames, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamTomGames, isSpvsr } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import Game from "../components/Game";
@@ -17,7 +17,8 @@ export default function IsSpvsrTeamHome() {
 
     const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr); 
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
-    const { isLoading : teamPlayersConnectedLoading, data : teamPlayersConnectedData, isError : teamPlayersConnectedError } = useQuery<ITinyPlayer[]>(["teamConnectdPlayers", teamPk], getTeamPlayersConnected);
+    const { isLoading : teamPlayersConnectedLoading, data : teamPlayersConnectedData, isError : teamPlayersConnectedError } = useQuery<ITinyPlayer[]>(["teamConnectedPlayers", teamPk], getTeamPlayersConnected);
+    const { isLoading : teamPlayersConnectingLoading, data : teamPlayersConnectingData, isError : teamPlayersConnectingError } = useQuery<ITinyPlayer[]>(["teamConnectingPlayers", teamPk], getTeamPlayersConnecting);
     const { isLoading : teamGamesLoading, data : teamGamesData, isError : teamGamesError } = useQuery<ITinyGame[]>(["teamGames", teamPk], getTeamGames);
     const { isLoading : teamTomGamesLoading, data : teamTomGamesData, isError : teamTomGamesError } = useQuery<ITinyGame[]>(["teamTomGames", teamPk], getTeamTomGames);
     const { isLoading : teamPlayersLoading, data : teamPlayersData, isError : teamPlayersError } = useQuery<ITinyPlayer[]>(["teamPlayers", teamPk], getTeamPlayers);
@@ -84,7 +85,14 @@ export default function IsSpvsrTeamHome() {
                     <Link to={`/teams/${teamPk}/players`}>
                         <VStack alignItems={"flex-start"} px={3} mt={8}>
                             <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" color={"main.500"} fontSize={"md"}> 선수 </Text>
+                                <HStack>
+                                    <Text as="b" color={"main.500"} fontSize={"md"}> 선수 </Text>
+                                    {teamPlayersConnectingData && teamPlayersConnectingData?.length !== 0 ?                             
+                                                                    <Box justifyContent={"center"}>
+                                                                        <Badge ml={1} bg={"point.500"} color={"black"}> {teamPlayersConnectingData.length} </Badge>
+                                                                    </Box>
+                                                                : null}
+                                </HStack>
                                 <FaArrowRight size={"10"}/>
                             </HStack>
                             <Divider />

@@ -155,6 +155,12 @@ export const getTeamPlayersNotConnected = async ({ queryKey } : QueryFunctionCon
     return response.data
 }
 
+export const getTeamPlayersConnecting = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/players/connecting/`)
+    return response.data
+}
+
 export const getTeamSuperplayers = async ({ queryKey } : QueryFunctionContext) => {
     const [ _, teamPk ] = queryKey;
     const response = await instance.get(`teams/${teamPk}/superplayers/`)
