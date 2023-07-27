@@ -1,7 +1,7 @@
-import { Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
+import { Badge, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaRunning } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPlayer, getPlayerGames } from "../api";
 import BigDivider from "../components/BigDivider";
@@ -37,6 +37,14 @@ export default function PlayerGameList() {
                 <HStack>
                     <Text fontSize={"xl"}> {playerData?.backnumber}.</Text>
                     <Text fontSize={"xl"}> {playerData?.name}</Text>
+                </HStack>
+                <HStack>
+                    <Badge backgroundColor={"main.500"} color={"white"}>
+                        <HStack>
+                            <FaRunning />
+                            <Text>{playerGamesData ? playerGamesData.length : "0"}</Text>
+                        </HStack>
+                    </Badge>
                 </HStack>
             </VStack>
             <VStack alignItems={"flex-start"} px={3} mt={8}>

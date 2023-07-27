@@ -67,16 +67,20 @@ export default function SearchTeam() {
             </VStack>
             {team && !searchTeamMutation.isLoading ? (
                 <>
-                    <VStack alignItems={"flex-start"} px={3} spacing={3} mt={8}>
-                        {teams?.map((team) => (
-                            <Team 
-                                key={team.pk}
-                                pk={team.pk}
-                                avatar={team.avatar}
-                                name={team.name}
-                            />
-                        ))}
-                    </VStack>
+                    {teams.length !==0 ? teams.map((team) => (
+                            <VStack alignItems={"flex-start"} px={3} spacing={3} mt={8}>
+                                <Team 
+                                    key={team.pk}
+                                    pk={team.pk}
+                                    avatar={team.avatar}
+                                    name={team.name}
+                                />
+                            </VStack>
+                        )) : 
+                        <VStack>
+                            <Text> 검색 결과가 없습니다. </Text>
+                        </VStack>
+                        }
                     <Empty />
                 </>
             ) : null}

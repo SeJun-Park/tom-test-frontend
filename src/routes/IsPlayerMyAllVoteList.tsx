@@ -1,4 +1,4 @@
-import { Button, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Badge, Button, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaUserNinja } from "react-icons/fa";
@@ -12,7 +12,7 @@ import TomGame from "../components/TomGame";
 import { IPlayerUser, ISuperplayer, ITinyGame } from "../types";
 
 export default function IsPlayerMyAllVoteList() {
-    const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayerUser>(["isPlayer"], isPlayer);
+    const { isLoading : isPlayerLoading, data : isPlayerData, isError : isPlayerError } = useQuery<IPlayerUser>(["isPlayer"], isPlayer);
     const { isLoading : isPlayerGamesLoading, data : isPlayerGamesData, isError : isPlayerGamesError } = useQuery<ITinyGame[]>(["isPlayerGames"], isPlayerGames);
     const { isLoading : isPlayerTomGamesLoading, data : isPlayerTomGamesData, isError : isPlayerTomGamesError } = useQuery<ITinyGame[]>(["isPlayerTomGames"], isPlayerTomGames);
     const { isLoading : isPlayerSuperplayersLoading, data : isPlayerSuperplayersData, isError : isPlayerSuperplayersError } = useQuery<ISuperplayer[]>(["isPlayerSuperplayers"], isPlayerSuperplayers);
@@ -25,7 +25,7 @@ export default function IsPlayerMyAllVoteList() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ playerData ? ("3OM | 3OM Game List") : "Loading.." }</title>
+                <title>{ isPlayerData ? ("3OM | 3OM Game List") : "Loading.." }</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>
@@ -33,7 +33,15 @@ export default function IsPlayerMyAllVoteList() {
                 </Button>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                <Text fontSize={"xl"} as="b"> {playerData?.username} </Text>
+                <Text fontSize={"xl"} as="b"> {isPlayerData?.username} </Text>
+                <HStack>
+                    <Badge backgroundColor={"point.500"} color={"black"}>
+                        <HStack>
+                            <FaUserNinja />
+                            <Text>{isPlayerTomGamesData ? isPlayerTomGamesData.length : "0"}</Text>
+                        </HStack>
+                    </Badge>
+                </HStack>
             </VStack>
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>

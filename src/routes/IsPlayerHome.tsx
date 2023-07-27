@@ -15,16 +15,16 @@ import { IGoals, IPlayerUser, ITinyGame, ITinyTeam } from "../types"
 
 export default function IsPlayerHome() {
 
-    const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayerUser>(["isPlayer"], isPlayer); 
-    const { isLoading : playerTeamsLoading, data : playerTeamsData, isError : playerTeamsError } = useQuery<ITinyTeam[]>(["isPlayerTeams"], isPlayerTeams);
-    const { isLoading : playerGamesLoading, data : playerGamesData, isError : playerGamesError } = useQuery<ITinyGame[]>(["isPlayerGames"], isPlayerGames);
-    const { isLoading : playerTomGamesLoading, data : playerTomGamesData, isError : playerTomGamesError } = useQuery<ITinyGame[]>(["isPlayerTomGames"], isPlayerTomGames);
-    const { isLoading : playerGoalsLoading, data : playerGoalsData, isError : playerGoalsError } = useQuery<IGoals>(["isPlayerGoals"], isPlayerGoals);
+    const { isLoading : isPlayerLoading, data : isPlayerData, isError : isPlayerError } = useQuery<IPlayerUser>(["isPlayer"], isPlayer); 
+    const { isLoading : isPlayerTeamsLoading, data : isPlayerTeamsData, isError : isPlayerTeamsError } = useQuery<ITinyTeam[]>(["isPlayerTeams"], isPlayerTeams);
+    const { isLoading : isPlayerGamesLoading, data : isPlayerGamesData, isError : isPlayerGamesError } = useQuery<ITinyGame[]>(["isPlayerGames"], isPlayerGames);
+    const { isLoading : isPlayerTomGamesLoading, data : isPlayerTomGamesData, isError : isPlayerTomGamesError } = useQuery<ITinyGame[]>(["isPlayerTomGames"], isPlayerTomGames);
+    const { isLoading : isPlayerGoalsLoading, data : isPlayerGoalsData, isError : isPlayerGoalsError } = useQuery<IGoals>(["isPlayerGoals"], isPlayerGoals);
 
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ playerData ? ("3OM | Home") : "Loading.." }</title>
+                <title>{ isPlayerData ? ("3OM | Home") : "Loading.." }</title>
             </Helmet>
             <VStack alignItems={"flex-start"} padding={"5"}>
                 {/* <VStack position="relative" width="100%" height="75" mt={0}>
@@ -120,34 +120,34 @@ export default function IsPlayerHome() {
                     </Box>
                 </HStack> */}
                 <Empty />
-                <Text fontSize={"xl"} as="b"> {playerData?.username} </Text>
+                <Text fontSize={"xl"} as="b"> {isPlayerData?.username} </Text>
                 <HStack>
                     <Badge ml={1} backgroundColor={"gray.100"} color={"black"}>
                         <HStack>
                             <FaUserFriends />
-                            <Text>{playerTeamsData ? playerTeamsData.length : "0"}</Text>
+                            <Text>{isPlayerTeamsData ? isPlayerTeamsData.length : "0"}</Text>
                         </HStack>
                     </Badge>
                     <Badge ml={1} backgroundColor={"main.500"} color={"white"}>
                         <HStack>
                             <FaRunning />
-                            <Text>{playerGamesData ? playerGamesData.length : "0"}</Text>
+                            <Text>{isPlayerGamesData ? isPlayerGamesData.length : "0"}</Text>
                         </HStack>
                     </Badge>
                     <Badge ml={1} backgroundColor={"point.500"} color={"black"}>
                         <HStack>
                             <FaUserNinja />
-                            <Text>{playerTomGamesData ? playerTomGamesData.length : "0"}</Text>
+                            <Text>{isPlayerTomGamesData ? isPlayerTomGamesData.length : "0"}</Text>
                         </HStack>
                     </Badge>
                     <Badge ml={1} backgroundColor={"black"} color={"white"}>
                         <HStack>
                             <FaFutbol />
-                            <Text>{playerGoalsData ? playerGoalsData.goals : "0"}</Text>
+                            <Text>{isPlayerGoalsData ? isPlayerGoalsData.goals : "0"}</Text>
                         </HStack>
                     </Badge>
                 </HStack>
-                {/* <Text fontSize={"xl"} > {playerTeamsData ? playerTeamsData.length : "0"} TEAM {playerGamesData ? playerGamesData.length : "0"} GAMES </Text> */}
+                {/* <Text fontSize={"xl"} > {isPlayerTeamsData ? isPlayerTeamsData.length : "0"} TEAM {isPlayerGamesData ? isPlayerGamesData.length : "0"} GAMES </Text> */}
             </VStack>
             <Tabs isFitted variant='enclosed' isLazy>
                 <TabList mb='1em'>
@@ -157,7 +157,7 @@ export default function IsPlayerHome() {
                 <TabPanels>
                     <TabPanel p={"0"}>
                         <VStack alignItems={"flex-start"} px={3} spacing={3} mt={8}>
-                            {playerTeamsData?.map((team) => (
+                            {isPlayerTeamsData?.map((team) => (
                                 <Team 
                                     key={team.pk}
                                     pk={team.pk}
@@ -172,14 +172,14 @@ export default function IsPlayerHome() {
                     <TabPanel p={"0"}>
                         <VStack alignItems={"flex-start"} px={3}>
                             <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
-                            {playerGamesData ? (playerGamesData[0] ? 
+                            {isPlayerGamesData ? (isPlayerGamesData[0] ? 
                                 <Game 
-                                    pk={playerGamesData[0].pk} 
-                                    date={playerGamesData[0].date} 
-                                    team={playerGamesData[0].team} 
-                                    vsteam={playerGamesData[0].vsteam}
-                                    team_score={playerGamesData[0].team_score}
-                                    vsteam_score={playerGamesData[0].vsteam_score}
+                                    pk={isPlayerGamesData[0].pk} 
+                                    date={isPlayerGamesData[0].date} 
+                                    team={isPlayerGamesData[0].team} 
+                                    vsteam={isPlayerGamesData[0].vsteam}
+                                    team_score={isPlayerGamesData[0].team_score}
+                                    vsteam_score={isPlayerGamesData[0].vsteam_score}
                                     /> 
                                     : <NullGame />) : <NullGame />}
                         </VStack>
@@ -193,7 +193,7 @@ export default function IsPlayerHome() {
                                 <Divider />
                                 <HStack width={"100%"} justifyContent={"space-between"}>
                                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                    <Text as="b" fontSize={"sm"}> {playerGamesData ? playerGamesData.length : "0"} 경기 </Text>
+                                    <Text as="b" fontSize={"sm"}> {isPlayerGamesData ? isPlayerGamesData.length : "0"} 경기 </Text>
                                 </HStack>
                             </VStack>
                         </Link>
@@ -207,7 +207,7 @@ export default function IsPlayerHome() {
                                 <Divider />
                                 <HStack width={"100%"} justifyContent={"space-between"}>
                                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                    <Text as="b" fontSize={"sm"}> {playerTomGamesData ? playerTomGamesData.length : "0"} 회 </Text>
+                                    <Text as="b" fontSize={"sm"}> {isPlayerTomGamesData ? isPlayerTomGamesData.length : "0"} 회 </Text>
                                 </HStack>
                             </VStack>
                         </Link>
@@ -221,7 +221,7 @@ export default function IsPlayerHome() {
                                 <Divider />
                                 <HStack width={"100%"} justifyContent={"space-between"}>
                                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                    <Text as="b" fontSize={"sm"}> {playerGoalsData ? playerGoalsData.goals : "0"} 골 </Text>
+                                    <Text as="b" fontSize={"sm"}> {isPlayerGoalsData ? isPlayerGoalsData.goals : "0"} 골 </Text>
                                 </HStack>
                             </VStack>
                         </Link>

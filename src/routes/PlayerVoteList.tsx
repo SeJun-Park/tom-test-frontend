@@ -1,7 +1,7 @@
-import { Button, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Badge, Button, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaUserNinja } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPlayer, getPlayerGames, getPlayerSuperplayers, getPlayerTomGames } from "../api";
 import BigDivider from "../components/BigDivider";
@@ -40,6 +40,14 @@ export default function PlayerVoteList() {
                 <HStack>
                     <Text fontSize={"xl"}> {playerData?.backnumber}.</Text>
                     <Text fontSize={"xl"}> {playerData?.name}</Text>
+                </HStack>
+                <HStack>
+                    <Badge backgroundColor={"point.500"} color={"black"}>
+                        <HStack>
+                            <FaUserNinja />
+                            <Text>{playerTomGamesData ? playerTomGamesData.length : "0"}</Text>
+                        </HStack>
+                    </Badge>
                 </HStack>
             </VStack>
             <Tabs isFitted my={5} isLazy>

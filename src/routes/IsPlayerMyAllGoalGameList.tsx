@@ -1,7 +1,7 @@
-import { Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
+import { Badge, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft, FaFutbol } from "react-icons/fa";
+import { FaArrowLeft, FaFutbol, FaUserNinja } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { isPlayer, isPlayerGames, isPlayerGoalGames, isPlayerGoals } from "../api";
 import BigDivider from "../components/BigDivider";
@@ -12,10 +12,10 @@ import SmallDivider from "../components/SmallDivider";
 import { IGoals, IPlayerUser, ITinyGame, ITinyTeam } from "../types";
 
 export default function IsPlayerMyAllGoalGameList() {
-    const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayerUser>(["isPlayer"], isPlayer);
-    const { isLoading : playerGamesLoading, data : playerGamesData, isError : playerGamesError } = useQuery<ITinyGame[]>(["isPlayerGames"], isPlayerGames);
-    const { isLoading : playerGoalsLoading, data : playerGoalsData, isError : playerGoalsError } = useQuery<IGoals>(["isPlayerGoals"], isPlayerGoals);
-    const { isLoading : playerGoalGamesLoading, data : playerGoalGamesData, isError : playerGoalGamesError } = useQuery<ITinyGame[]>(["isPlayerGoalGames"], isPlayerGoalGames);
+    const { isLoading : isPlayerLoading, data : isPlayerData, isError : isPlayerError } = useQuery<IPlayerUser>(["isPlayer"], isPlayer);
+    const { isLoading : isPlayerGamesLoading, data : isPlayerGamesData, isError : isPlayerGamesError } = useQuery<ITinyGame[]>(["isPlayerGames"], isPlayerGames);
+    const { isLoading : isPlayerGoalsLoading, data : isPlayerGoalsData, isError : isPlayerGoalsError } = useQuery<IGoals>(["isPlayerGoals"], isPlayerGoals);
+    const { isLoading : isPlayerGoalGamesLoading, data : isPlayerGoalGamesData, isError : isPlayerGoalGamesError } = useQuery<ITinyGame[]>(["isPlayerGoalGames"], isPlayerGoalGames);
 
     const navigate = useNavigate();
     const onClickBack = () => {
@@ -25,7 +25,7 @@ export default function IsPlayerMyAllGoalGameList() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ playerData ? ("3OM | GoalGameList") : "Loading.." }</title>
+                <title>{ isPlayerData ? ("3OM | GoalGameList") : "Loading.." }</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>
@@ -33,18 +33,27 @@ export default function IsPlayerMyAllGoalGameList() {
                 </Button>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                <Text fontSize={"xl"} as="b"> {playerData?.username} </Text>
+                <Text fontSize={"xl"} as="b"> {isPlayerData?.username} </Text>
                 <HStack>
-                    <Text fontSize={"xl"} > {playerGamesData ? playerGamesData.length : "0"} GAME {playerGoalsData ? playerGoalsData.goals : "0"} GOALS </Text>
-                    {/* <FaFutbol /> */}
+                    <Badge backgroundColor={"black"} color={"white"}>
+                        <HStack>
+                            <FaFutbol />
+                            <Text>{isPlayerGoalsData ? isPlayerGoalsData.goals : "0"}</Text>
+                        </HStack>
+                    </Badge>
                 </HStack>
+            </VStack>
+            <Divider />
+            <VStack alignItems={"flex-end"} padding={"5"}>
+                <Text fontSize={"xl"} > {isPlayerGamesData ? isPlayerGamesData.length : "0"} GAME {isPlayerGoalsData ? isPlayerGoalsData.goals : "0"} GOALS </Text>
+                {/* <FaFutbol /> */}
             </VStack>
             <VStack alignItems={"flex-start"} px={3} mt={8}>
                 <Text as="b" color={"main.500"} fontSize={"md"}> 골 </Text>
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {playerGoalsData ? playerGoalsData.goals : "0"} 골 </Text>
+                    <Text as="b" fontSize={"sm"}> {isPlayerGoalsData ? isPlayerGoalsData.goals : "0"} 골 </Text>
                 </HStack>
             </VStack>
             <SmallDivider />
@@ -53,13 +62,13 @@ export default function IsPlayerMyAllGoalGameList() {
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> {playerGoalGamesData ? playerGoalGamesData.length : "0"} 경기 </Text>
+                    <Text as="b" fontSize={"sm"}> {isPlayerGoalGamesData ? isPlayerGoalGamesData.length : "0"} 경기 </Text>
                 </HStack>
             </VStack>
             <BigDivider />
             <VStack alignItems={"flex-start"} px={3} spacing={5}>
                 <Text as="b" color={"main.500"} fontSize={"sm"}> ALL </Text>
-                {playerGoalGamesData ? playerGoalGamesData.map((game) => 
+                {isPlayerGoalGamesData ? isPlayerGoalGamesData.map((game) => 
                                             <Game 
                                                 key={game.pk}
                                                 pk={game.pk}
