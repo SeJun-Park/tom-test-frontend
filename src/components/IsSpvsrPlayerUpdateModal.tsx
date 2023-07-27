@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { Button, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {  getPlayer, playerUpdate } from "../api";
-import { FaCheck, FaUserAlt } from "react-icons/fa";
+import { FaCheck, FaStream, FaUserAlt } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { IPlayer } from "../types";
 
