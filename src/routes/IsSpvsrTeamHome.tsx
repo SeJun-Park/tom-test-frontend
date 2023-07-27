@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, CircularProgress, CircularProgressLabel, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Card, CardBody, CircularProgress, CircularProgressLabel, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowRight, FaRunning, FaUser } from "react-icons/fa";
@@ -68,6 +68,15 @@ export default function IsSpvsrTeamHome() {
                                         <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                         </CircularProgress>
                     </HStack>
+                    {teamData?.description && (
+                        <VStack>
+                            <Card my={4} width={"90%"} textAlign={"center"}>
+                                <CardBody>
+                                    <Text fontSize={"sm"}>{teamData.description}</Text>
+                                </CardBody>
+                            </Card>
+                        </VStack>
+                    )}
                     <VStack alignItems={"flex-start"} px={3}>
                         <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
                         {teamGamesData ? (teamGamesData[0] ? 

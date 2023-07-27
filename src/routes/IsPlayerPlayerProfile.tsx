@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Button, Card, CardBody, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaArrowRight, FaFutbol, FaRunning, FaUser, FaUserNinja } from "react-icons/fa";
@@ -70,6 +70,15 @@ export default function IsPlayerPlayerProfile() {
                     </Badge>
                 </HStack>
             </VStack>
+            {playerData?.description && (
+                <VStack>
+                    <Card my={4} width={"90%"} textAlign={"center"}>
+                        <CardBody>
+                            <Text fontSize={"sm"}>{playerData.description}</Text>
+                        </CardBody>
+                    </Card>
+                </VStack>
+            )}
             <VStack alignItems={"flex-start"} px={3}>
                 <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
                 {playerGamesData ? (playerGamesData[0] ? 

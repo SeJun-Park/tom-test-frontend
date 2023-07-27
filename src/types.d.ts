@@ -21,6 +21,7 @@ export interface ITinyTeam {
     pk : number,
     code : number,
     avatar : string,
+    description : string,
     name : string,
     since : number,
     plan : string,
@@ -72,6 +73,7 @@ export interface ITinyPlayer {
 
 export interface IPlayer extends ITinyPlayer {
     id : number,
+    description : string,
     games : ITinyGame[],
     tom_games : ITinyGame[],
     superplayers : ISuperplayer[],

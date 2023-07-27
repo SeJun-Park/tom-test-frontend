@@ -14,6 +14,7 @@ interface IsSpvsrPlayerUpdateModalProps {
 interface IPlayerUpdateForm {
     name : string;
     backnumber : number;
+    description? : string;
 }
 
 export default function IsSpvsrPlayerUpdateModal ( props : IsSpvsrPlayerUpdateModalProps ) {
@@ -39,9 +40,9 @@ export default function IsSpvsrPlayerUpdateModal ( props : IsSpvsrPlayerUpdateMo
         },
     });
 
-    const onSubmit = ({ name, backnumber }:IPlayerUpdateForm) => {
+    const onSubmit = ({ name, backnumber, description }:IPlayerUpdateForm) => {
         if(playerPk){
-            playerUpdateMutation.mutate({ playerPk, name, backnumber });
+            playerUpdateMutation.mutate({ playerPk, name, backnumber, description });
         }
     }
 
@@ -65,6 +66,12 @@ export default function IsSpvsrPlayerUpdateModal ( props : IsSpvsrPlayerUpdateMo
                         <InputGroup>
                             <InputLeftAddon children={<FaCheck />} />
                             <Input {...register("backnumber", {required:true})} type="number" min={0} isInvalid={Boolean(errors.backnumber?.message)} placeholder={playerData?.backnumber.toString()} />
+                        </InputGroup>
+                    </FormControl>
+                    <FormControl>
+                        <InputGroup>
+                            <InputLeftAddon children={<FaStream />} />
+                            <Input {...register("description")} type="text" maxLength={20} isInvalid={Boolean(errors.description?.message)} placeholder={playerData?.description ? playerData.description : "설명을 입력해보세요 (선택, 20자 이내)"} />
                         </InputGroup>
                     </FormControl>
                     {playerUpdateMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> name & backnumber required </Text>) : null}

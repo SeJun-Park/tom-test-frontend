@@ -243,11 +243,12 @@ export const getTeamGoalsAgainstRelative = ({ teamPk, vsteam } : IGetTeamGoalsAg
 export interface ISpvsrTeamRegsiterVariables {
     name : string;
     since : number;
+    description? : string;
 }
 
-export const teamRegister = ({ name, since } : ISpvsrTeamRegsiterVariables ) => 
+export const teamRegister = ({ name, since, description } : ISpvsrTeamRegsiterVariables ) => 
     instance.post("/teams/", 
-                { name, since }, 
+                { name, since, description }, 
                 {
                     headers :  {
                         "X-CSRFToken" : Cookie.get("csrftoken") || ""
@@ -342,10 +343,11 @@ export const playerConnectingCancel = ({ playerPk } : IPlayerConnectingCancelVar
 export interface IPlayerAddVariables {
     teamPk : string,
     name : string,
-    backnumber : number
+    backnumber : number,
+    description? : string
 }
 
-export const playerAdd = ({ teamPk, name, backnumber } : IPlayerAddVariables) => instance.post(`teams/${teamPk}/players/`, { name, backnumber }, 
+export const playerAdd = ({ teamPk, name, backnumber, description } : IPlayerAddVariables) => instance.post(`teams/${teamPk}/players/`, { name, backnumber, description }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""
@@ -358,10 +360,11 @@ export const playerAdd = ({ teamPk, name, backnumber } : IPlayerAddVariables) =>
 export interface IPlayerUpdateVariables {
     playerPk : string,
     name : string,
-    backnumber : number
+    backnumber : number,
+    description? : string
 }
 
-export const playerUpdate = ({ playerPk, name, backnumber } : IPlayerUpdateVariables) => instance.put(`players/${playerPk}/`, { name, backnumber }, 
+export const playerUpdate = ({ playerPk, name, backnumber, description } : IPlayerUpdateVariables) => instance.put(`players/${playerPk}/`, { name, backnumber, description }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""

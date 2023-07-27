@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Button, Card, CardBody, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { FaArrowRight, FaFutbol, FaRunning, FaUserNinja } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -50,6 +50,15 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
                     </HStack>
                 </Badge>
             </HStack>
+            {playerData?.description && (
+                <VStack>
+                    <Card my={4} width={"90%"} textAlign={"center"}>
+                        <CardBody>
+                            <Text fontSize={"sm"}>{playerData.description}</Text>
+                        </CardBody>
+                    </Card>
+                </VStack>
+            )}
             <VStack justifyContent={"center"} pt={5}>
                     <Button backgroundColor={"gray.100"} color={"black"} size={"sm"} onClick={onOpen}> disconnect </Button>
             </VStack>

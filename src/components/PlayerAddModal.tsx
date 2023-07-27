@@ -3,7 +3,7 @@ import { Box, Button, FormControl, FormLabel, Input, InputGroup, InputLeftAddon,
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTeamPlayersNotConnected, playerAdd, playerConnecting } from "../api";
 import { ITinyPlayer } from "../types";
-import { FaCheck, FaUserAlt } from "react-icons/fa";
+import { FaCheck, FaStream, FaUserAlt } from "react-icons/fa";
 
 interface PlayerAddModalProps {
     isOpen : boolean;
@@ -14,6 +14,7 @@ interface PlayerAddModalProps {
 interface IPlayerAddForm {
     name : string;
     backnumber : number;
+    description? : string;
 }
 
 export default function PlayerAddModal ( props : PlayerAddModalProps ) {
@@ -39,9 +40,9 @@ export default function PlayerAddModal ( props : PlayerAddModalProps ) {
         },
     });
 
-    const onSubmit = ({ name, backnumber }:IPlayerAddForm) => {
+    const onSubmit = ({ name, backnumber, description }:IPlayerAddForm) => {
         const teamPk = props.teamPk
-        playerAddMutation.mutate({ teamPk, name, backnumber });
+        playerAddMutation.mutate({ teamPk, name, backnumber, description });
         // data:ILogInForm 으로 받고, mutation.mutate({ data.username, data.password }) 로 받고 싶은데 안됨
         // console.log(data)
     }
@@ -66,6 +67,12 @@ export default function PlayerAddModal ( props : PlayerAddModalProps ) {
                         <InputGroup>
                             <InputLeftAddon children={<FaCheck />} />
                             <Input {...register("backnumber", {required:true})} type="number" min={0} isInvalid={Boolean(errors.backnumber?.message)} placeholder={"BACKNUMBER"} />
+                        </InputGroup>
+                    </FormControl>
+                    <FormControl>
+                        <InputGroup>
+                            <InputLeftAddon children={<FaStream />} />
+                            <Input {...register("description")} type="text" maxLength={20} isInvalid={Boolean(errors.description?.message)} placeholder={"설명을 입력해보세요 (선택, 20자 이내)"} />
                         </InputGroup>
                     </FormControl>
                     {playerAddMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> name & backnumber required </Text>) : null}

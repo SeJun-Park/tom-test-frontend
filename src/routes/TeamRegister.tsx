@@ -2,13 +2,14 @@ import { Box, Button, Input, InputGroup, InputLeftElement, Text, useToast, VStac
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
-import { FaFutbol } from "react-icons/fa";
+import { FaFutbol, FaStream } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { teamRegister } from "../api";
 
 interface ISpvsrTeamRegisterForm {
     name : string;
     since : number;
+    description? : string
 }
 
 export default function TeamRegister() {
@@ -30,8 +31,8 @@ export default function TeamRegister() {
         }
     })
 
-    const onSubmit = ({ name, since } : ISpvsrTeamRegisterForm) => {
-        teamRegisterMutation.mutate({ name, since });
+    const onSubmit = ({ name, since, description } : ISpvsrTeamRegisterForm) => {
+        teamRegisterMutation.mutate({ name, since, description });
         TeamRegisterFormReset();
     }
 
@@ -56,6 +57,14 @@ export default function TeamRegister() {
                                 </Box>
                         }/>
                             <Input type={"number"} {...register("since", { required : "창단 연도를 입력해주세요." })} isInvalid={Boolean(errors.since?.message)} required placeholder="창단 연도를 입력하세요" variant={"flushed"}/>
+                </InputGroup>
+                <InputGroup>
+                            <InputLeftElement children={
+                                <Box color={"gray.500"}>
+                                    <FaStream />
+                                </Box>
+                        }/>
+                            <Input type={"text"} {...register("description")} maxLength={20} isInvalid={Boolean(errors.description?.message)} placeholder="설명을 입력해보세요 (선택, 20자 이내)" variant={"flushed"}/>
                 </InputGroup>
                 {teamRegisterMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Team name is already exist </Text>) : null}
                 <Button isLoading={teamRegisterMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> 팀 등록하기 </Button>

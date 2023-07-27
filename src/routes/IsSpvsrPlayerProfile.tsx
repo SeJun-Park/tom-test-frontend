@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Button, Card, CardBody, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { FaArrowLeft, FaArrowRight, FaFutbol, FaRunning, FaUserNinja } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -59,6 +59,38 @@ export default function IsSpvsrPlayerProfile() {
                     <Text as="b" fontSize={"xl"}>{playerData?.name}</Text>
                 </VStack>
             </HStack>
+            <VStack>
+                <HStack>
+                    {playerData?.connected_user ? <Badge ml={1} backgroundColor={"main.500"} color={"white"} variant={"outline"}> CNTD </Badge> : <Badge ml={1} backgroundColor={"white"} color={"gray.400"} variant={"outline"}> NOT CNTD </Badge>}
+                    <Badge ml={1} backgroundColor={"main.500"} color={"white"}>
+                        <HStack>
+                            <FaRunning />
+                            <Text>{playerGamesData ? playerGamesData.length : "0"}</Text>
+                        </HStack>
+                    </Badge>
+                    <Badge ml={1} backgroundColor={"point.500"} color={"black"}>
+                        <HStack>
+                            <FaUserNinja />
+                            <Text>{playerTomGamesData ? playerTomGamesData.length : "0"}</Text>
+                        </HStack>
+                    </Badge>
+                    <Badge ml={1} backgroundColor={"black"} color={"white"}>
+                        <HStack>
+                            <FaFutbol />
+                            <Text>{playerGoalsData ? playerGoalsData.goals : "0"}</Text>
+                        </HStack>
+                    </Badge>
+                </HStack>
+            </VStack>
+            {playerData?.description && (
+                <VStack>
+                    <Card my={4} width={"90%"} textAlign={"center"}>
+                        <CardBody>
+                            <Text fontSize={"sm"}>{playerData.description}</Text>
+                        </CardBody>
+                    </Card>
+                </VStack>
+            )}
             {spvsrData?.team.name === playerData?.team.name ? (
                 <HStack justifyContent={"center"}>
                     {playerData?.connected_user ? <Button onClick={connectionModalonOpen} backgroundColor={"main.500"} color={"white"} size={"sm"}> Connection </Button> 
@@ -68,29 +100,7 @@ export default function IsSpvsrPlayerProfile() {
                     <Button onClick={deleteModalonOpen} backgroundColor={"black"} color={"white"} size={"sm"}> Delete </Button>
                 </HStack>
             ) : 
-                <VStack>
-                    <HStack>
-                        {playerData?.connected_user ? <Badge ml={1} backgroundColor={"main.500"} color={"white"} variant={"outline"}> CNTD </Badge> : <Badge ml={1} backgroundColor={"white"} color={"gray.400"} variant={"outline"}> NOT CNTD </Badge>}
-                        <Badge ml={1} backgroundColor={"main.500"} color={"white"}>
-                            <HStack>
-                                <FaRunning />
-                                <Text>{playerGamesData ? playerGamesData.length : "0"}</Text>
-                            </HStack>
-                        </Badge>
-                        <Badge ml={1} backgroundColor={"point.500"} color={"black"}>
-                            <HStack>
-                                <FaUserNinja />
-                                <Text>{playerTomGamesData ? playerTomGamesData.length : "0"}</Text>
-                            </HStack>
-                        </Badge>
-                        <Badge ml={1} backgroundColor={"black"} color={"white"}>
-                            <HStack>
-                                <FaFutbol />
-                                <Text>{playerGoalsData ? playerGoalsData.goals : "0"}</Text>
-                            </HStack>
-                        </Badge>
-                    </HStack>
-                </VStack>
+                null
                 }
             <VStack alignItems={"flex-start"} px={3}>
                 <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
