@@ -166,11 +166,6 @@ export default function IsSpvsrHome() {
                                             <VStack spacing={5}>
                                                 <Text fontSize={"xl"} as="b" mt={3}> {spvsrTeamData?.name} </Text>
                                                 <Avatar src={spvsrTeamData ? spvsrTeamData.avatar : ""} size={"2xl"} />
-                                                {/* <Link to={`teams/${spvsrTeamData?.pk}/update`}> */}
-                                                <Box>
-                                                    <Button isLoading={spvsrTeamLoading} backgroundColor={"point.500"} color={"black"} width={"100%"} disabled={true}> Update </Button>
-                                                </Box>
-                                                {/* </Link> */}
                                             </VStack>
                                             <VStack alignItems={"flex-start"} px={3}>
                                                 <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> SINCE </Text>
@@ -195,6 +190,12 @@ export default function IsSpvsrHome() {
                                                 <Text fontSize={"sm"}> {spvsrTeamData ? (spvsrTeamData.code) : "-"} </Text>
                                                 <Divider />
                                              </VStack>
+                                             <Empty />
+                                                {/* <Link to={`teams/${spvsrTeamData?.pk}/update`}> */}
+                                                <VStack>
+                                                    <Button isLoading={spvsrTeamLoading} backgroundColor={"point.500"} color={"black"} width={"80%"} disabled={true}> Update </Button>
+                                                </VStack>
+                                                {/* </Link> */}
                                              <Empty />
                                         </TabPanel>
                                     </TabPanels>
