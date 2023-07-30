@@ -38,7 +38,7 @@ export default function GameVoteAfter( props : IGameVoteAfterProps) {
     return (
         <>
             <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
-                {gameData ? (gameData.toms.length !=0 ? gameData.toms.map((tom) => 
+                {gameData ? (gameData.toms.length !==0 ? gameData.toms.map((tom) => 
                                             <VStack>
                                                 <Avatar src={tom.avatar} />
                                                 <Text fontSize={"xx-small"}>{tom.name}</Text>

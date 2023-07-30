@@ -21,24 +21,26 @@ export default function GameVoteIng( props : IGameVoteIngProps) {
         <>
         {props.vote.is_candidate ? 
             <>
-            {gameData ? (gameData.toms.length !=0 ? gameData.toms.map((tom) => 
-                                        <VStack>
-                                            <Avatar src={tom.avatar} />
-                                            <Text fontSize={"xx-small"}>{tom.name}</Text>
-                                        </VStack>
-                                            ) : 
-                                            <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
-                                                <Box color={"main.500"}>
-                                                    <FaUserNinja size={"25"} />
-                                                </Box>
-                                                <Box color={"main.500"}>
-                                                    <FaUserNinja size={"25"} />
-                                                </Box>
-                                                <Box color={"main.500"}>
-                                                    <FaUserNinja size={"25"} />
-                                                </Box>
-                                            </HStack>
-                                              ) : null  }
+            <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
+                {gameData ? (gameData.toms.length !=0 ? gameData.toms.map((tom) => 
+                                            <VStack>
+                                                <Avatar src={tom.avatar} />
+                                                <Text fontSize={"xx-small"}>{tom.name}</Text>
+                                            </VStack>
+                                                ) : 
+                                                <>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                </>
+                                                ) : null  }
+            </HStack>
             <VStack>
                 <Heading fontSize={"xl"}>3man Of the Match</Heading>
                 {props.vote.is_participant ? 
@@ -61,7 +63,7 @@ export default function GameVoteIng( props : IGameVoteIngProps) {
             :
             <>
                 <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
-                {gameData ? (gameData.toms.length !=0 ? gameData.toms.map((tom) => 
+                {gameData ? (gameData.toms.length !==0 ? gameData.toms.map((tom) => 
                                                         <VStack>
                                                             <Avatar src={tom.avatar} />
                                                             <Text fontSize={"xx-small"}>{tom.name}</Text>
