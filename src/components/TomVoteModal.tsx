@@ -38,6 +38,7 @@ export default function TomVoteModal ( props : TomVoteModalProps ) {
             });
             props.onClose();
             queryClient.refetchQueries(["gameVote"])
+            queryClient.refetchQueries(["game"])
 
         },
     });

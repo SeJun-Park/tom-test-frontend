@@ -44,7 +44,7 @@ export default function GameVoteAfter( props : IGameVoteAfterProps) {
                                                 <Text fontSize={"xx-small"}>{tom.name}</Text>
                                             </VStack>
                                                 ) : 
-                                                <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
+                                                <>
                                                     <Box color={"main.500"}>
                                                         <FaUserNinja size={"25"} />
                                                     </Box>
@@ -54,7 +54,7 @@ export default function GameVoteAfter( props : IGameVoteAfterProps) {
                                                     <Box color={"main.500"}>
                                                         <FaUserNinja size={"25"} />
                                                     </Box>
-                                                </HStack>
+                                                </>
                                                 ) : null  }
             </HStack> 
             <VStack>
