@@ -65,7 +65,7 @@ export default function IsPlayerTeamHome() {
                         </Badge>
                     </HStack>
                     <HStack justifyContent={"center"} mt={4}>
-                        <Text fontSize={"xs"}> CNTD </Text>
+                        <Text fontSize={"xs"}> 연결된 선수 </Text>
                         <CircularProgress size={"65px"} thickness={"5px"} value={teamPlayersConnectedData && teamPlayersData && teamPlayersData.length !==0 ? Number(((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1)) : 0} color='main.500'>
                                         <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData.length !==0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                         </CircularProgress>

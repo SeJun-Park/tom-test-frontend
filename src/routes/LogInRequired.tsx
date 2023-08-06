@@ -42,16 +42,16 @@ export default function LogInRequired() {
                 padding={2}
                 >
                   <Heading size="xl" color="white">
-                    LogIn Required
+                    로그인이 필요합니다
                   </Heading>
                   {/* <Text color="black" mt={2}>
                     Please Log In / Sign Up
                   </Text> */}
                   <HStack spacing={4} mt={4}>
-                    <Button onClick={onLoginOpen}>Log In</Button>
+                    <Button onClick={onLoginOpen}>로그인</Button>
                     <LightMode>
                       <Button onClick={onSignUpOpen} backgroundColor="main.500" color="white">
-                        Sign Up
+                        가입하기
                       </Button>
                     </LightMode>
                   </HStack>

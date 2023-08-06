@@ -144,7 +144,7 @@ export default function IsSpvsrHome() {
                                     <HStack>
                                         <Text fontSize={"xl"} as="b"> {spvsrData?.username} </Text> 
                                         <Box justifyContent={"center"}>
-                                            <Badge ml={1} bg={"main.500"} color={"white"}> spvsr </Badge>
+                                            <Badge ml={1} bg={"main.500"} color={"white"}> 관리자 </Badge>
                                         </Box>
                                     </HStack>
                                     {/* <Text fontSize={"xl"} > {spvsrTeamData ? "1" : "0"} TEAM {spvsrGamesData ? spvsrGamesData.length : "0"} GAMES </Text> */}

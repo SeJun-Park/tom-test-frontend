@@ -94,7 +94,7 @@ export default function SignUpModal( props : SpvsrSignUpModalProps ) {
                                 <FaEnvelope />
                             </Box>
                     }/>
-                        <Input {...register("email", { required : "이메일을 입력해주세요." })} isInvalid={Boolean(errors.email?.message)} required placeholder="Email" variant={"filled"}/>
+                        <Input {...register("email", { required : "이메일을 입력해주세요." })} isInvalid={Boolean(errors.email?.message)} required placeholder="이메일" variant={"filled"}/>
                     </InputGroup>
                     <InputGroup>
                         <InputLeftElement children={
@@ -102,7 +102,7 @@ export default function SignUpModal( props : SpvsrSignUpModalProps ) {
                                 <FaUserNinja />
                             </Box>
                     }/>
-                        <Input {...register("username", { required : "username을 입력해주세요." })} isInvalid={Boolean(errors.username?.message)} required placeholder="Username" variant={"filled"}/>
+                        <Input {...register("username", { required : "username을 입력해주세요." })} isInvalid={Boolean(errors.username?.message)} required placeholder="사용자 이름" variant={"filled"}/>
                     </InputGroup>
                     <InputGroup>
                         <InputLeftElement children={
@@ -110,7 +110,7 @@ export default function SignUpModal( props : SpvsrSignUpModalProps ) {
                                 <FaLock />
                             </Box>
                     }/>
-                        <Input type={"password"} {...register("password", { required : "패스워드를 입력해주세요." })} isInvalid={Boolean(errors.password?.message)} required placeholder="Password" variant={"filled"}/>
+                        <Input type={"password"} {...register("password", { required : "패스워드를 입력해주세요." })} isInvalid={Boolean(errors.password?.message)} required placeholder="비밀번호" variant={"filled"}/>
                     </InputGroup>
                 </VStack>
                 {signupMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> something is wrong </Text>) : null}

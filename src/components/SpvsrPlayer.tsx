@@ -26,9 +26,9 @@ export default function SpvsrPlayer ( props : ISpvsrPlayerProps ) {
                             </HStack>
                                 
                                 {props.is_spvsr ? (props.is_connected ? 
-                                                        <Badge ml={1} backgroundColor={"main.500"} color={"white"} variant={"outline"}> CNTD </Badge>
-                                                                : (props.is_connecting ? <Badge ml={1} backgroundColor={"point.500"} color={"black"} variant={"outline"}> CNTING.. </Badge>
-                                                                                : <Badge ml={1} backgroundColor={"white"} color={"gray.400"} variant={"outline"}> NOT CNTD </Badge>)) : null}
+                                                        <Badge ml={1} backgroundColor={"main.500"} color={"white"} variant={"outline"}> 연결됨 </Badge>
+                                                                : (props.is_connecting ? <Badge ml={1} backgroundColor={"point.500"} color={"black"} variant={"outline"}> 연결중.. </Badge>
+                                                                                : <Badge ml={1} backgroundColor={"white"} color={"gray.400"} variant={"outline"}> 연결 안됨 </Badge>)) : null}
                         </VStack>
                     </HStack>
                     <Box>

@@ -61,7 +61,7 @@ export default function IsSpvsrPlayerProfile() {
             </HStack>
             <VStack>
                 <HStack>
-                    {playerData?.connected_user ? <Badge ml={1} backgroundColor={"main.500"} color={"white"} variant={"outline"}> CNTD </Badge> : <Badge ml={1} backgroundColor={"white"} color={"gray.400"} variant={"outline"}> NOT CNTD </Badge>}
+                    {playerData?.connected_user ? <Badge ml={1} backgroundColor={"main.500"} color={"white"} variant={"outline"}> 연결됨 </Badge> : <Badge ml={1} backgroundColor={"white"} color={"gray.400"} variant={"outline"}> 연결 안됨 </Badge>}
                     <Badge ml={1} backgroundColor={"main.500"} color={"white"}>
                         <HStack>
                             <FaRunning />
@@ -93,9 +93,9 @@ export default function IsSpvsrPlayerProfile() {
             )}
             {spvsrData?.team.name === playerData?.team.name ? (
                 <HStack justifyContent={"center"}>
-                    {playerData?.connected_user ? <Button onClick={connectionModalonOpen} backgroundColor={"main.500"} color={"white"} size={"sm"}> Connection </Button> 
-                                                        : (playerData?.connecting_user ? <Button onClick={connectingModalonOpen} backgroundColor={"point.500"} color={"black"} size={"sm"}> Connecting.. </Button>
-                                                        : <Button backgroundColor={"white"} color={"gray.400"} size={"sm"} disabled={true} > No Connection </Button>) }
+                    {playerData?.connected_user ? <Button onClick={connectionModalonOpen} backgroundColor={"main.500"} color={"white"} size={"sm"}> 연결 상태 </Button> 
+                                                        : (playerData?.connecting_user ? <Button onClick={connectingModalonOpen} backgroundColor={"point.500"} color={"black"} size={"sm"}> 연결중.. </Button>
+                                                        : <Button backgroundColor={"white"} color={"gray.400"} size={"sm"} disabled={true} > 연결 상태 없음 </Button>) }
                     <Button onClick={updateModalonOpen} backgroundColor={"point.500"} color={"black"} size={"sm"}> Update </Button>
                     <Button onClick={deleteModalonOpen} backgroundColor={"black"} color={"white"} size={"sm"}> Delete </Button>
                 </HStack>

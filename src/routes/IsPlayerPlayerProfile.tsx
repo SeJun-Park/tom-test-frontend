@@ -49,7 +49,7 @@ export default function IsPlayerPlayerProfile() {
             </HStack>
             <VStack>
                 <HStack>
-                    {playerData?.connected_user ? <Badge ml={1} backgroundColor={"main.500"} color={"white"} variant={"outline"}> CNTD </Badge> : <Badge ml={1} backgroundColor={"white"} color={"gray.400"} variant={"outline"}> NOT CNTD </Badge>}
+                    {playerData?.connected_user ? <Badge ml={1} backgroundColor={"main.500"} color={"white"} variant={"outline"}> 연결됨 </Badge> : <Badge ml={1} backgroundColor={"white"} color={"gray.400"} variant={"outline"}> 연결 안됨 </Badge>}
                     <Badge ml={1} backgroundColor={"main.500"} color={"white"}>
                         <HStack>
                             <FaRunning />
