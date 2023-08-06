@@ -33,7 +33,7 @@ export default function IsPlayerTeamHome() {
                 <Text fontSize={"xl"} as="b"> {teamData?.name} </Text>
                 {teamData?.is_connected ? 
                                 <Box justifyContent={"center"}>
-                                    <Badge ml={1} bg={"point.500"} color={"black"}> myteam </Badge>
+                                    <Badge ml={1} bg={"point.500"} color={"black"}> 나의 팀 </Badge>
                                 </Box> 
                                         : null}
             </HStack>
