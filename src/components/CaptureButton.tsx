@@ -103,7 +103,7 @@ export default function CaptureButton() {
         try {
             const canvas = await html2canvas(targetElement, { useCORS: true });
             const imgData = canvas.toDataURL('image/png');
-            
+        
             if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
                 // 모바일 브라우저에서 실행 중인 경우
                 if (navigator.share) {
@@ -112,13 +112,27 @@ export default function CaptureButton() {
                         .then(blob => {
                             const file = new File([blob], 'screenshot.png', { type: 'image/png' });
                             const filesArray = [file];
-                            navigator.share({
+                            return navigator.share({
                                 files: filesArray,
                                 title: 'Screenshot',
-                                text: 'Here is the screenshot',
+                                text: '이제 스크린샷을 저장/공유할 수 있습니다.',
                             });
                         })
-                        .catch((error) => console.error('Sharing failed', error));
+                        .then(() => {
+                            toast({
+                                title: "캡쳐 성공",
+                                status: "success",
+                                duration: 1000,
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Sharing failed', error);
+                            toast({
+                                title: "캡쳐 실패",
+                                status: "error",
+                                duration: 1000,
+                            });
+                        });
                 } else {
                     window.alert('Sharing is not supported in this browser');
                 }
@@ -130,13 +144,12 @@ export default function CaptureButton() {
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+                toast({
+                    title: "캡쳐 성공",
+                    status: "success",
+                    duration: 1000,
+                });
             }
-        
-            toast({
-                title: "캡쳐 성공",
-                status: "success",
-                duration: 1000,
-            });
         } catch (error) {
             console.error(error);
             toast({
@@ -147,6 +160,7 @@ export default function CaptureButton() {
         } finally {
             setIsLoading(false);
         }
+        
         
         
     };
