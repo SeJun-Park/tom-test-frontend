@@ -102,11 +102,26 @@ export default function CaptureButton() {
 
         try {
             const canvas = await html2canvas(targetElement, { useCORS: true });
-            const imgData = canvas.toDataURL();
-        
+            const imgData = canvas.toDataURL('image/png');
+            
             if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
                 // 모바일 브라우저에서 실행 중인 경우
-                window.open(imgData, '_blank');
+                if (navigator.share) {
+                    fetch(imgData)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            const file = new File([blob], 'screenshot.png', { type: 'image/png' });
+                            const filesArray = [file];
+                            navigator.share({
+                                files: filesArray,
+                                title: 'Screenshot',
+                                text: 'Here is the screenshot',
+                            });
+                        })
+                        .catch((error) => console.error('Sharing failed', error));
+                } else {
+                    window.alert('Sharing is not supported in this browser');
+                }
             } else {
                 // 데스크톱 브라우저에서 실행 중인 경우
                 const link = document.createElement('a');
@@ -132,6 +147,7 @@ export default function CaptureButton() {
         } finally {
             setIsLoading(false);
         }
+        
         
     };
 
