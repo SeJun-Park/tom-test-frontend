@@ -67,7 +67,8 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
         onSuccess : (data) => {
             toast({
                 title : "경기 수정 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             navigate(-1)
         }

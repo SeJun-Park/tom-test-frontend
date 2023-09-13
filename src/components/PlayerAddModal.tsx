@@ -29,7 +29,8 @@ export default function PlayerAddModal ( props : PlayerAddModalProps ) {
             // data.ok
             toast({
                 title : "플레이어 추가 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             playerAddFormReset()
             props.onClose();

@@ -19,7 +19,8 @@ export default function PlayerConnectingCancelModal ( props : PlayerConnectingCa
             // data.ok
             toast({
                 title : "플레이어 연결 요청 취소 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             queryClient.refetchQueries(["team"])

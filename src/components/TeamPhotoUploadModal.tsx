@@ -29,6 +29,7 @@ export default function TeamPhotoUploadModal ( props : TeamPhotoUploadModalProps
             toast({
                 status : "success",
                 title : "팀 프로필 사진 등록 완료",
+                duration : 1000
                 // isClosable : true
             });
             props.onClose();

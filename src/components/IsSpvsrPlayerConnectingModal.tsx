@@ -24,7 +24,8 @@ export default function IsSpvsrPlayerConnectingModal ( props : IsSpvsrPlayerConn
             // data.ok
             toast({
                 title : "플레이어 연결 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             queryClient.refetchQueries(["player"])
@@ -37,7 +38,8 @@ export default function IsSpvsrPlayerConnectingModal ( props : IsSpvsrPlayerConn
             // data.ok
             toast({
                 title : "플레이어 연결 해제 요청 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             queryClient.refetchQueries(["player"])

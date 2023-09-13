@@ -25,7 +25,8 @@ export default function FeedAddModal( props : FeedAddModalProps ) {
         onSuccess : (data) => {
             toast({
                 title : "피드 업로드 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             queryClient.refetchQueries(["teamFeeds"])

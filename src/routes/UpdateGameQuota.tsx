@@ -42,7 +42,8 @@ export default function UpdateGameQuota() {
         onSuccess : (data) => {
             toast({
                 title : "쿼터 수정 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             navigate(-1)
         }

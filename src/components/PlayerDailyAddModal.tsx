@@ -29,7 +29,8 @@ export default function PlayerDailyAddModal ( props : PlayerDailyAddModalProps )
             // data.ok
             toast({
                 title : "용병 추가 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             playerDailyAddFormReset()
             props.onClose();

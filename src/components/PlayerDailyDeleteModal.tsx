@@ -23,7 +23,8 @@ export default function PlayerDailyDeleteModal ( props : PlayerDailyDeleteModalP
             // data.ok
             toast({
                 title : "용병 삭제 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             queryClient.refetchQueries(["game"])

@@ -22,7 +22,8 @@ export default function IsSpvsrPlayerDeleteModal ( props : IsSpvsrPlayerDeleteMo
             // data.ok
             toast({
                 title : "플레이어 삭제 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             navigate(-1)

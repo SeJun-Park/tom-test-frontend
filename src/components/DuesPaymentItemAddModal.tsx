@@ -30,7 +30,8 @@ export default function DuesPaymentItemAddModal ( props : DuesPaymentItemAddModa
             // data.ok
             toast({
                 title : "회비 납부 현황 항목 추가 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             queryClient.refetchQueries(["duesPaymentItemsExtra"])

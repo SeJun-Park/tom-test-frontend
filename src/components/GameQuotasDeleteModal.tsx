@@ -25,7 +25,8 @@ export default function GameQuotasDeleteModal ( props : GameQuotasDeleteModalPro
             // data.ok
             toast({
                 title : "쿼터 전체 삭제 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();   
             queryClient.refetchQueries(["game"]) 
