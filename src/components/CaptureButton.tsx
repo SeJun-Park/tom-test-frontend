@@ -103,10 +103,10 @@ export default function CaptureButton() {
         try {
             const canvas = await html2canvas(targetElement, { useCORS: true });
             const imgData = canvas.toDataURL();
-
+        
             if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
                 // 모바일 브라우저에서 실행 중인 경우
-                window.location.href = imgData;
+                window.open(imgData, '_blank');
             } else {
                 // 데스크톱 브라우저에서 실행 중인 경우
                 const link = document.createElement('a');
@@ -116,7 +116,7 @@ export default function CaptureButton() {
                 link.click();
                 document.body.removeChild(link);
             }
-
+        
             toast({
                 title: "캡쳐 성공",
                 status: "success",
@@ -132,6 +132,7 @@ export default function CaptureButton() {
         } finally {
             setIsLoading(false);
         }
+        
     };
 
     return (
