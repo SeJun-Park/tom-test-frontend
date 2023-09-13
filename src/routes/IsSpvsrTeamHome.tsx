@@ -306,9 +306,9 @@ const navigate = useNavigate();
                                     {teamSchedulesMonth?.map((yearMonth) => <option key={yearMonth} value={yearMonth}>{yearMonth}</option>)}
                                 </Select>
                                 <Box id="captureTarget">
-                                <VStack px={3} spacing={4} mb={5}>
+                                <VStack alignItems={"flex-start"} px={3} spacing={4} mb={5}>
                                     <Divider />
-                                    <HStack justifyContent={"flex-start"}>
+                                    <HStack>
                                         <Text as="b" color={"black"} fontSize={"sm"} > {teamData?.name} </Text>
                                         <Text as="b" color={"main.500"} fontSize={"sm"} > | {selectedSchedulesDate} 일정 </Text>
                                     </HStack>

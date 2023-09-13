@@ -23,7 +23,7 @@ export default function Noti( props : INotiProps ) {
         <Card maxW='xs' minW='xs'>
             <CardHeader>
                 <Flex gap="4">
-                <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                <Flex flex='1' gap='4' flexWrap='wrap'>
                     <Avatar src={tomAvatar} />
 
                     <Box>
@@ -36,7 +36,7 @@ export default function Noti( props : INotiProps ) {
                 </Flex>
             </CardHeader>
             <CardBody pt={0}>
-                <Stack spacing='3' alignItems={"flex-start"}>
+                <Stack spacing='3' justifyContent={"flex-start"}>
                     {/* <Text fontSize={"xs"}>2023년 07월 28일</Text> */}
                     <Divider />
                     <Text fontSize={"xs"}>{formatCardsDate(props.dateTime)}</Text>

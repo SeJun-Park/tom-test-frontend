@@ -288,13 +288,13 @@ export default function IsPlayerTeamHome() {
                                 <Select mb={5} onChange={handleChangeSchedulesDate} value={selectedSchedulesDate}>
                                     {teamSchedulesMonth?.map((yearMonth) => <option key={yearMonth} value={yearMonth}>{yearMonth}</option>)}
                                 </Select>
-                                <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                                <VStack alignItems={"flex-start"} px={3} spacing={4} mb={5}>
                                     <Divider />
                                     <HStack>
-                                    <Text as="b" color={"black"} fontSize={"sm"} > {teamData?.name} </Text>
-                                    <Text as="b" color={"main.500"} fontSize={"sm"} > | {selectedSchedulesDate} 일정 </Text>
+                                        <Text as="b" color={"black"} fontSize={"sm"} > {teamData?.name} </Text>
+                                        <Text as="b" color={"main.500"} fontSize={"sm"} > | {selectedSchedulesDate} 일정 </Text>
                                     </HStack>
-                                    <Divider mb={5} />
+                                    <Divider />
                                 </VStack>
                                 <VStack spacing={5}>
                                     {teamData && teamSchedulesByMonth && teamSchedulesByMonth.length !== 0 ? teamSchedulesByMonth.map((schedule, index) => 
