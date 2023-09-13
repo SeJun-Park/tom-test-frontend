@@ -1,7 +1,7 @@
-import { Avatar, Badge, Box, Button, Card, CardBody, Divider, HStack, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Button, Card, CardBody, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft, FaArrowRight, FaFutbol, FaRunning, FaUser, FaUserNinja } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaFutbol, FaRunning, FaUserNinja } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getPlayer, getPlayerGames, getPlayerGoals, getPlayerTomGames } from "../api";
 import BigDivider from "../components/BigDivider";
@@ -10,7 +10,6 @@ import Game from "../components/Game";
 import NullGame from "../components/NullGame";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
-import useUser from "../lib/useUser";
 import { IGoals, IPlayer, ITinyGame } from "../types";
 
 export default function IsPlayerPlayerProfile() {

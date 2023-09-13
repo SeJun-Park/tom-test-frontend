@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
-import { Box, Button, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useToast, VStack } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTeamPlayersNotConnected, playerAdd, playerConnecting } from "../api";
-import { ITinyPlayer } from "../types";
+import { Button, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { playerAdd } from "../api";
 import { FaCheck, FaStream, FaUserAlt } from "react-icons/fa";
 
 interface PlayerAddModalProps {
@@ -29,7 +28,7 @@ export default function PlayerAddModal ( props : PlayerAddModalProps ) {
             console.log("player add successful")
             // data.ok
             toast({
-                title : "플레이어 생성 성공",
+                title : "플레이어 추가 성공",
                 status : "success"
             });
             playerAddFormReset()
@@ -43,8 +42,6 @@ export default function PlayerAddModal ( props : PlayerAddModalProps ) {
     const onSubmit = ({ name, backnumber, description }:IPlayerAddForm) => {
         const teamPk = props.teamPk
         playerAddMutation.mutate({ teamPk, name, backnumber, description });
-        // data:ILogInForm 으로 받고, mutation.mutate({ data.username, data.password }) 로 받고 싶은데 안됨
-        // console.log(data)
     }
 
     return (
@@ -60,13 +57,13 @@ export default function PlayerAddModal ( props : PlayerAddModalProps ) {
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children={<FaUserAlt />} />
-                            <Input {...register("name", {required:true})} type="text" isInvalid={Boolean(errors.name?.message)} placeholder={"PLAYER NAME"} />
+                            <Input {...register("name", {required:true})} type="text" isInvalid={Boolean(errors.name?.message)} placeholder={"플레이어 이름"} />
                         </InputGroup>
                     </FormControl>
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children={<FaCheck />} />
-                            <Input {...register("backnumber", {required:true})} type="number" min={0} isInvalid={Boolean(errors.backnumber?.message)} placeholder={"BACKNUMBER"} />
+                            <Input {...register("backnumber", {required:true})} type="number" min={0} isInvalid={Boolean(errors.backnumber?.message)} placeholder={"등번호"} />
                         </InputGroup>
                     </FormControl>
                     <FormControl>
@@ -75,8 +72,8 @@ export default function PlayerAddModal ( props : PlayerAddModalProps ) {
                             <Input {...register("description")} type="text" maxLength={20} isInvalid={Boolean(errors.description?.message)} placeholder={"설명을 입력해보세요 (선택, 20자 이내)"} />
                         </InputGroup>
                     </FormControl>
-                    {playerAddMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> name & backnumber required </Text>) : null}
-                    <Button type="submit" isLoading={playerAddMutation.isLoading} size={"md"} width="100%" backgroundColor={"point.500"} color={"black"}> Add </Button>
+                    {playerAddMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> 필수 항목입니다. </Text>) : null}
+                    <Button type="submit" isLoading={playerAddMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> 플레이어 추가하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>

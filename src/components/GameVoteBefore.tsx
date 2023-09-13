@@ -10,28 +10,6 @@ interface IGameVoteBeforeProps {
 
 export default function GameVoteBefore( props : IGameVoteBeforeProps) {
 
-    // const start = new Date(props.vote.start);
-    // start.setHours(start.getHours() - start.getTimezoneOffset() / 60);
-    // const formattedStart = start.toLocaleString("ko-KR", {
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     hour12: false,
-    //     timeZone: "Asia/Seoul",
-    //   });
-
-    // const end = new Date(props.vote.end);
-    // end.setHours(end.getHours() - end.getTimezoneOffset() / 60);
-    // const formattedEnd = end.toLocaleString("ko-KR", {
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     hour12: false,
-    //     timeZone: "Asia/Seoul",
-    //   });
-
     return (
         <>
             <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>

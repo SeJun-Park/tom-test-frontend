@@ -1,25 +1,22 @@
-import { Box, Button, Stack, HStack, IconButton, LightMode, useColorMode, useColorModeValue, useDisclosure, Menu, MenuButton, MenuList, MenuItem, useToast, ToastId } from "@chakra-ui/react";
+import { Stack, HStack, IconButton, useColorMode, useColorModeValue, useDisclosure, Menu, MenuButton, MenuList, MenuItem, useToast, ToastId, Image } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
-import { FaFutbol, FaMoon, FaRunning, FaSearch, FaSun, FaUserAlt } from "react-icons/fa";
+import { FaMoon, FaSearch, FaSun, FaUserAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../api";
 import useUser from "../lib/useUser";
-import LoginModal from "./LoginModal";
-import SignUpModal from "./SignUpModal";
 
 export default function Header() {
     const { userLoading, isLoggedIn, user} = useUser();
         // 로그인 여부를 확인하고 로그인 유저의 정보를 가져오는 Hook
         // 이 때 받아오는 userLoading은 users/me의 useQuery의 property isLoading을 그대로 받아오는 것임
-    const { isOpen:isLoginOpen, onClose:onLoginClose, onOpen:onLoginOpen } = useDisclosure();
-    const { isOpen:isSignUpOpen, onClose:onSignUpClose, onOpen:onSignUpOpen } = useDisclosure();
         // 이런 식으로 두 개의 모달에 모두 prop을 넘겨줄 수 있음
     const { colorMode, toggleColorMode } = useColorMode();  
         // colorMode, colorMode를 Toggle 시키는 함수를 줌
     const logoColor = useColorModeValue("main.500", "white");
         // 첫 번째 인자는 light 모드일 떄 반환되고, 두 번째 인자는 dark 모드일 때 반환됨
     const Icon = useColorModeValue(FaMoon, FaSun);
+    const logoImage = useColorModeValue("https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/0fcc2adf-9241-47f3-1ffb-3efa798fb100/public", "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/bc5f42c2-c0c7-4cd9-6f9d-b09f81186f00/public");
 
     const toast = useToast();
     const queryClient = useQueryClient()
@@ -31,8 +28,7 @@ export default function Header() {
     const logoutMutation = useMutation(logOut, {
         onMutate : () => { 
             toastId.current = toast({
-            title: "LogOut...",
-            description: "Bye...",
+            title: "로그아웃...",
             status: "loading",
             position : "bottom-right",
             // duration: 2000,
@@ -45,8 +41,8 @@ export default function Header() {
         if(toastId.current){
             toast.update(toastId.current, {
                 status : "success",
-                title : "Done!",
-                description : "See you later"
+                title : "로그아웃 성공!",
+                description : "다음에 만나요."
             })
         }
 
@@ -87,14 +83,21 @@ export default function Header() {
             {/* py는 수직방향 padding, px는 수평방향 padding */}
             {/* "" 없이 숫자로만 적는 것과 "" 안에 적는 건 무슨 차이지? HStack은 Chakra의 것, FaAirbnb는 React-icons의 것이라 다른 듯? Chakra의 경우 숫자만 적으면 rem으로 적용되는 듯 */}
             <Link to={"/"}>
-                <HStack color={logoColor} alignItems={"flex-end"} spacing={0}>
+                <HStack boxSize="16" justifyContent={"center"} alignItems={"center"}>
+                    <Image 
+                        src={logoImage} // 여기에 실제 이미지 경로를 넣으세요.
+                        alt="Logo"
+                        objectFit="cover"  // 이미지가 컨테이너를 가득 채우면서 비율을 유지합니다.
+                    />
+                </HStack>
+                {/* <HStack color={logoColor} alignItems={"flex-end"} spacing={0}>
                     <FaRunning size={"24"} />
-                    <FaFutbol size={"6"} />
+                    <FaFutbol size={"6"} /> */}
                     {/* <Image src={logo} alt="Logo" boxSize={"24"} /> */}
                     {/* <FaAirbnb size={"48"} /> */}
                     {/* 해당 아이콘은 Chakra의 것이 아니므로 react-icons의 룰을 따라야 함 */}
                     {/* 따라서 Box로 감싸서 Chakra의 룰을 따를 수 있도록 하고 있음, 편의성, 일관성을 위해서 */}
-                </HStack>
+                {/* </HStack> */}
             </Link>
             <HStack spacing={2}>
                 {/* <Link to={"teams/search"}>
@@ -130,15 +133,16 @@ export default function Header() {
                         <FaUserAlt />
                     </MenuButton>
                     <MenuList>
-                        <MenuItem onClick={onLogOut}> Log Out </MenuItem>
+                        <Link to={"/help"}>
+                            <MenuItem> 고객센터 </MenuItem>
+                        </Link>
+                        <MenuItem onClick={onLogOut}> 로그아웃 </MenuItem>
                     </MenuList>
                 </Menu>
                 )
                     ) : null}
                 
             </HStack>
-            {/* <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} /> */}
-            {/* <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose}/> */}
         </Stack>
     );
 }

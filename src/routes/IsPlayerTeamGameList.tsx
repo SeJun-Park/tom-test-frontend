@@ -9,7 +9,6 @@ import { getTeam, getTeamGames, getTeamGamesRelative, getTeamGoals, getTeamGoals
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import Game from "../components/Game";
-import NullGame from "../components/NullGame";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
 import { IGoals, ITeam, ITeamAllStats, ITeamStatsRelative, ITinyGame, IVSteams } from "../types";
@@ -120,7 +119,7 @@ export default function IsPlayerTeamGameList() {
                             <HStack width={"100%"} justifyContent={"space-between"}>
                                 <Text as="b" fontSize={"sm"}> TOTAL </Text>
                                 <Text as="b" fontSize={"sm"}> 
-                                    {teamStatsData ? teamStatsData.win : "0"} 승 {teamStatsData ? teamStatsData.draw : "0"} 무 {teamStatsData ? teamStatsData.lose : "0"} 패 {teamStatsData ? teamStatsData.not : "0"} N  </Text>
+                                    {teamStatsData ? teamStatsData.win : "0"} 승 {teamStatsData ? teamStatsData.draw : "0"} 무 {teamStatsData ? teamStatsData.lose : "0"} 패 {teamStatsData ? teamStatsData.not : "0"} N </Text>
                             </HStack>
                             <Divider />
                             <HStack width={"100%"} justifyContent={"space-between"}>
@@ -174,13 +173,13 @@ export default function IsPlayerTeamGameList() {
                     <TabPanel p={0}>
                         <VStack alignItems={"flex-start"} px={3} mt={8} as="form" onSubmit={handleSubmit(onSubmit)}>
                             <FormControl>
-                                    <FormLabel fontWeight={"bold"} color={"main.500"} fontSize={"md"}> 상대팀 선택하기 </FormLabel>
+                                    <FormLabel fontWeight={"bold"} color={"main.500"} fontSize={"md"} > 상대팀 선택하기 </FormLabel>
                                     {/* <Select placeholder="Choose a vsteam" onChange={handleVSteamChange}> */}
                                     <Select {...register("vsteam", {required:true})} placeholder="상대팀을 선택하세요">
                                         {teamVSteamsData?.vsteams.map((vsteam, index) => <option key={index} value={vsteam}>{vsteam}</option>)}
                                     </Select>
                             </FormControl>
-                            <Button type="submit" isLoading={teamStatsRelativeMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> SUBMIT </Button>
+                            <Button type="submit" isLoading={teamStatsRelativeMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> 상대전적 확인하기 </Button>
                         </VStack>
                         {currentVSteam && !teamGamesRelativeMutation.isLoading && !teamStatsRelativeMutation.isLoading ? (
                             <>
@@ -202,7 +201,7 @@ export default function IsPlayerTeamGameList() {
                                     <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text as="b" fontSize={"sm"}> TOTAL </Text>
                                         <Text as="b" fontSize={"sm"}> 
-                                            {teamStatsRelative ? teamStatsRelative.win : "0"} 승 {teamStatsRelative ? teamStatsRelative.draw : "0"} 무 {teamStatsRelative ? teamStatsRelative.lose : "0"} 패 {teamStatsRelative ? teamStatsRelative.not : "0"} N  </Text>
+                                            {teamStatsRelative ? teamStatsRelative.win : "0"} 승 {teamStatsRelative ? teamStatsRelative.draw : "0"} 무 {teamStatsRelative ? teamStatsRelative.lose : "0"} 패 {teamStatsRelative ? teamStatsRelative.not : "0"} N </Text>
                                     </HStack>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>

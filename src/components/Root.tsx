@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useEffect} from "react";
 import { Outlet, useLocation } from "react-router-dom";

@@ -60,7 +60,7 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
                 </VStack>
             )}
             <VStack justifyContent={"center"} pt={5}>
-                    <Button backgroundColor={"gray.100"} color={"black"} size={"sm"} onClick={onOpen}> disconnect </Button>
+                    <Button backgroundColor={"gray.100"} color={"black"} size={"sm"} onClick={onOpen}> 플레이어 연결 해제하기 </Button>
             </VStack>
             <BigDivider />
             <Link to={`/players/${playerData?.id}/games`}>

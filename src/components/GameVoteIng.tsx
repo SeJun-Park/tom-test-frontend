@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Divider, Heading, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
-import { FaCrown, FaQuestion, FaUserNinja } from "react-icons/fa"
+import { FaUserNinja } from "react-icons/fa"
 import { getGame } from "../api"
 import { formatDate } from "../lib/utils"
 import { IGame, IGameVote } from "../types"
@@ -8,7 +8,7 @@ import Empty from "./Empty"
 import TomVoteModal from "./TomVoteModal"
 
 interface IGameVoteIngProps {
-    vote : IGameVote,
+    vote : IGameVote
     gamePk : string
 }
 
@@ -23,22 +23,22 @@ export default function GameVoteIng( props : IGameVoteIngProps) {
             <>
             <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
                 {gameData ? (gameData.toms.length !=0 ? gameData.toms.map((tom) => 
-                                            <VStack>
+                                            <VStack key={tom.pk}>
                                                 <Avatar src={tom.avatar} />
                                                 <Text fontSize={"xx-small"}>{tom.name}</Text>
                                             </VStack>
                                                 ) : 
-                                                <>
-                                                    <Box color={"main.500"}>
-                                                        <FaUserNinja size={"25"} />
-                                                    </Box>
-                                                    <Box color={"main.500"}>
-                                                        <FaUserNinja size={"25"} />
-                                                    </Box>
-                                                    <Box color={"main.500"}>
-                                                        <FaUserNinja size={"25"} />
-                                                    </Box>
-                                                </>
+                                                    <>
+                                                        <Box color={"main.500"}>
+                                                            <FaUserNinja size={"25"} />
+                                                        </Box>
+                                                        <Box color={"main.500"}>
+                                                            <FaUserNinja size={"25"} />
+                                                        </Box>
+                                                        <Box color={"main.500"}>
+                                                            <FaUserNinja size={"25"} />
+                                                        </Box>
+                                                    </>
                                                 ) : null  }
             </HStack>
             <VStack>
@@ -63,24 +63,24 @@ export default function GameVoteIng( props : IGameVoteIngProps) {
             :
             <>
                 <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10} my={2}>
-                {gameData ? (gameData.toms.length !==0 ? gameData.toms.map((tom) => 
-                                                        <VStack>
-                                                            <Avatar src={tom.avatar} />
-                                                            <Text fontSize={"xx-small"}>{tom.name}</Text>
-                                                        </VStack>
-                                                            ) : 
-                                                                <>
-                                                                    <Box color={"main.500"}>
-                                                                        <FaUserNinja size={"25"} />
-                                                                    </Box>
-                                                                    <Box color={"main.500"}>
-                                                                        <FaUserNinja size={"25"} />
-                                                                    </Box>
-                                                                    <Box color={"main.500"}>
-                                                                        <FaUserNinja size={"25"} />
-                                                                    </Box>
-                                                                </>
-                                                            ) : null  }
+                    {gameData ? (gameData.toms.length !=0 ? gameData.toms.map((tom) => 
+                                            <VStack>
+                                                <Avatar src={tom.avatar} />
+                                                <Text fontSize={"xx-small"}>{tom.name}</Text>
+                                            </VStack>
+                                                ) : 
+                                                <>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                    <Box color={"main.500"}>
+                                                        <FaUserNinja size={"25"} />
+                                                    </Box>
+                                                </>
+                                                ) : null  }
                 </HStack>
                 <VStack>
                     <Heading fontSize={"xl"}>3man Of the Match</Heading>

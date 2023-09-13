@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, CircularProgressLabel, Divider, FormControl, FormHelperText, FormLabel, HStack, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, CircularProgress, CircularProgressLabel, Divider, FormControl, FormLabel, HStack, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
@@ -9,7 +9,6 @@ import { getTeam, getTeamGames, getTeamGamesRelative, getTeamGoals, getTeamGoals
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import Game from "../components/Game";
-import NullGame from "../components/NullGame";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
 import { IGoals, ISpvsrUser, ITeam, ITeamAllStats, ITeamStatsRelative, ITinyGame, IVSteams } from "../types";
@@ -193,7 +192,7 @@ export default function IsSpvsrTeamGameList() {
                                         {teamVSteamsData?.vsteams.map((vsteam, index) => <option key={index} value={vsteam}>{vsteam}</option>)}
                                     </Select>
                             </FormControl>
-                            <Button type="submit" isLoading={teamStatsRelativeMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> SUBMIT </Button>
+                            <Button type="submit" isLoading={teamStatsRelativeMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> 상대전적 확인하기 </Button>
                         </VStack>
                         {currentVSteam && !teamGamesRelativeMutation.isLoading && !teamStatsRelativeMutation.isLoading ? (
                             <>
@@ -237,7 +236,7 @@ export default function IsSpvsrTeamGameList() {
                                     <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text fontSize={"sm"}> 경기 당 골 </Text>
                                         <Text fontSize={"sm"}> 
-                                            {teamGoalsRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골</Text>
+                                            {teamGoalsAgainstRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsAgainstRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골 </Text>
                                     </HStack>
                                     <Divider />
                                     <HStack width={"100%"} justifyContent={"space-between"}>
@@ -248,7 +247,7 @@ export default function IsSpvsrTeamGameList() {
                                     <HStack width={"100%"} justifyContent={"space-between"}>
                                         <Text fontSize={"sm"}> 경기 당 실점 </Text>
                                         <Text fontSize={"sm"}> 
-                                            {teamGoalsAgainstRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsAgainstRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골</Text>
+                                            {teamGoalsAgainstRelative && teamVSteamGames && teamVSteamGames.length !==0 ? (teamGoalsAgainstRelative.goals/teamVSteamGames.length).toFixed(1) : "0"} 골 </Text>
                                     </HStack>
                                 </VStack>
                                 <BigDivider />
@@ -256,6 +255,7 @@ export default function IsSpvsrTeamGameList() {
                                     <Text as="b" color={"main.500"} fontSize={"sm"}> ALL </Text>
                                     {teamVSteamGames ? teamVSteamGames.map((game) => 
                                                                 <Game 
+                                                                    key={game.pk}
                                                                     pk={game.pk}
                                                                     date={game.date}
                                                                     team={game.team}

@@ -1,7 +1,8 @@
-import { Heading, VStack, Text, Tabs, TabList, Tab, TabPanels, TabPanel, Divider, HStack, Box, Button, Badge, Image } from "@chakra-ui/react"
+import { VStack, Text, Tabs, TabList, Tab, TabPanels, TabPanel, Divider, HStack, Box, Badge, Image } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
+import { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
-import { FaArrowRight, FaFutbol, FaRunning, FaSearch, FaUser, FaUserFriends, FaUserNinja } from "react-icons/fa"
+import { FaArrowRight, FaFutbol, FaRunning, FaUserFriends, FaUserNinja } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import { isPlayer, isPlayerGames, isPlayerGoals, isPlayerTeams, isPlayerTomGames } from "../api"
 import BigDivider from "../components/BigDivider"
@@ -21,42 +22,20 @@ export default function IsPlayerHome() {
     const { isLoading : isPlayerTomGamesLoading, data : isPlayerTomGamesData, isError : isPlayerTomGamesError } = useQuery<ITinyGame[]>(["isPlayerTomGames"], isPlayerTomGames);
     const { isLoading : isPlayerGoalsLoading, data : isPlayerGoalsData, isError : isPlayerGoalsError } = useQuery<IGoals>(["isPlayerGoals"], isPlayerGoals);
 
+    const [tabIndex, setTabIndex] = useState(Number(localStorage.getItem('tabIndex')) || 0);
+
+    useEffect(() => {
+      localStorage.setItem('tabIndex', tabIndex.toString());
+    }, [tabIndex]);
+
     return (
         <ProtectedPage>
             <Helmet>
                 <title>{ isPlayerData ? ("3OM | Home") : "Loading.." }</title>
             </Helmet>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                {/* <VStack position="relative" width="100%" height="75" mt={0}>
-                    <Link to={"/"}>
-                        <Box position="absolute" top={0} left={0} right={0} bottom={0}>
-                            <Box
-                            backgroundImage="url(https://www.pixelstalk.net/wp-content/uploads/2016/06/Nike-3D-Background.jpg)"
-                            backgroundSize="cover"
-                            backgroundPosition="center"
-                            width="100%"
-                            height="100%"
-                            borderRadius="xl"
-                            textAlign={"center"}
-                            display={"flex"}
-                            flexDirection={"column"}
-                            justifyContent={"flex-end"}
-                            alignItems={"end"}
-                            padding={2}
-                            >
-                                <HStack>
-                                    <Text fontSize="xs" color="white">
-                                        sponsored
-                                    </Text>
-                                    <Box color={"white"}>
-                                    </Box>
-                                </HStack>
-                            </Box>
-                        </Box>
-                    </Link>
-                </VStack> */}
                 <VStack position="relative" width="100%" height="75">
-                    <Link to={"/"}>
+                    <Link to={"/community"}>
                         <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                             <Box
                             backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/3e881f4e-0d99-4087-77a2-236600d78700/public)"
@@ -84,41 +63,6 @@ export default function IsPlayerHome() {
                         </Box>
                     </Link>
                 </VStack>
-                
-                {/* <VStack position="relative" width="100%" height="75" mt={0}>
-                    <Link to={"/"}>
-                        <Box position="absolute" top={0} left={0} right={0} bottom={0}>
-                            <Box
-                            backgroundImage="url(https://lf19-cdn-tos.tiktokcdn-us.com/obj/i18nblog-tx/tt4b_cms/ko/tipdilz7wysq-2g3mbzPxQ6s9ryhwnHUxkB.jpeg)"
-                            backgroundSize="cover"
-                            backgroundPosition="center"
-                            width="100%"
-                            height="100%"
-                            borderRadius="xl"
-                            textAlign={"center"}
-                            display={"flex"}
-                            flexDirection={"column"}
-                            justifyContent={"flex-end"}
-                            alignItems={"end"}
-                            padding={2}
-                            >
-                                <HStack>
-                                    <Text fontSize="xs" color="white">
-                                        sponsored
-                                    </Text>
-                                    <Box color={"white"}>
-                                    </Box>
-                                </HStack>
-                            </Box>
-                        </Box>
-                    </Link>
-                </VStack> */}
-            
-                {/* <HStack width={"100%"} height={"100"} border={"0"} borderRadius={"lg"} justifyContent={"center"} my={10} backgroundColor={"main.500"}>
-                    <Box>
-                        <Text fontSize={"3xl"} as="b" color={"white"}> GO COMMUNITY &rarr; </Text>
-                    </Box>
-                </HStack> */}
                 <Empty />
                 <Text fontSize={"xl"} as="b"> {isPlayerData?.username} </Text>
                 <HStack>
@@ -147,9 +91,8 @@ export default function IsPlayerHome() {
                         </HStack>
                     </Badge>
                 </HStack>
-                {/* <Text fontSize={"xl"} > {isPlayerTeamsData ? isPlayerTeamsData.length : "0"} TEAM {isPlayerGamesData ? isPlayerGamesData.length : "0"} GAMES </Text> */}
             </VStack>
-            <Tabs isFitted variant='enclosed' isLazy>
+            <Tabs isFitted variant='enclosed' isLazy index={tabIndex} onChange={setTabIndex}>
                 <TabList mb='1em'>
                     <Tab _selected={{color : "main.500"}}>나의 팀</Tab>
                     <Tab _selected={{color : "main.500"}}>나의 경기</Tab>
@@ -165,6 +108,7 @@ export default function IsPlayerHome() {
                                     name={team.name}
                                 />
                             ))}
+                            {isPlayerTeamsData?.length === 0 ? <Text>연결된 팀이 없습니다. <br/> 상단 검색 버튼으로 나의 팀을 검색해보세요! </Text> : null}
                         </VStack>
                         <Empty />
                         <Empty />

@@ -2,7 +2,7 @@ import { Avatar, Box, Container, Divider, Grid, HStack, Text, VStack } from "@ch
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { getGameVote } from "../api";
-import { formatDate_pl } from "../lib/utils";
+import { formatGamesDate } from "../lib/utils";
 import { IGameVote, ITinyPlayer, ITinyTeam } from "../types";
 
 interface ITomGameProps {
@@ -35,13 +35,15 @@ export default function TomGame ( props : ITomGameProps ) {
         }
     }
 
+    const now = new Date()
+
     return (
         <Box width={"100%"}>
             <Link to={`/games/${props.pk}`}>
             {/* <Box width={"100%"} height={"1"} bgGradient="linear(to-b, main.500, main.500, point.500)" my={0}> </Box> */}
                 <VStack alignItems={"flex-start"} px={3} mb={4}>
                     <Divider />
-                    <Text as="b" fontSize={"sm"}> {props.date ? (formatDate_pl(props.date)) : null} </Text>
+                    <Text as="b" fontSize={"sm"}> {props.date ? (formatGamesDate(props.date)) : null} </Text>
                     <Divider />
                     <HStack width={"100%"} height={"10"}>
                         <Container>
@@ -75,14 +77,15 @@ export default function TomGame ( props : ITomGameProps ) {
                     <Divider />
                     <HStack height={"10"} justifyContent={"center"} width={"100%"} p={10} spacing={10}>
                         {(gameVoteData && props.toms.length!==0) ? (
-                                                                            props.toms.map((tom) => 
-                                                                                <VStack>
-                                                                                    <Avatar src={tom.avatar} />
-                                                                                    <Text fontSize={"xx-small"}>{tom.name}</Text>
-                                                                                </VStack>
-                                                                                            )
-                                                                        ) : null
-                                        }
+                                                                        props.toms.map((tom) => 
+                                                                            <VStack>
+                                                                                <Avatar src={tom.avatar} />
+                                                                                <Text fontSize={"xx-small"}>{tom.name}</Text>
+                                                                            </VStack>
+                                                                                        )
+                                                                    ) : null
+                                    }
+                                    
                     </HStack>
                     <Divider />
                 </VStack>

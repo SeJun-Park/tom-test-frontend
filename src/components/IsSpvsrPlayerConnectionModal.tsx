@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useToast, VStack } from "@chakra-ui/react";
+import { Avatar, Button, Divider, FormLabel, HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getPlayer, playerConnectingCancel } from "../api";
 import { IPlayer } from "../types";
@@ -46,7 +46,7 @@ export default function IsSpvsrPlayerConnectionModal ( props : IsSpvsrPlayerConn
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> Connection </ModalHeader>
+            <ModalHeader> 연결 상태 </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
                 <VStack>
@@ -67,11 +67,12 @@ export default function IsSpvsrPlayerConnectionModal ( props : IsSpvsrPlayerConn
                         </HStack>
                     </HStack>
                     <Divider />
-                    <Button onClick={onCloseBtnClick} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> Close </Button>
-                    <Button onClick={onDisconnectBtnClick} type="submit" isLoading={playerConnectingCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> Disconnect </Button>
+                    <Button onClick={onCloseBtnClick} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> 닫기 </Button>
+                    <Button onClick={onDisconnectBtnClick} type="submit" isLoading={playerConnectingCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 연결 취소하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>
     </Modal>
     )
 }
+

@@ -26,10 +26,11 @@ export default function SearchTeam() {
     const searchTeamMutation = useMutation(searchTeam, {
         onSuccess : (data) => {
             setTeams(data)
-            // toast({
-            //     title : "team search success.",
-            //     status : "success"
-            // });
+            toast({
+                title : "팀 검색 성공",
+                status : "success",
+                duration : 1000
+            });
         }
     })
 
@@ -63,14 +64,13 @@ export default function SearchTeam() {
                             <Input {...register("name", { required : "팀 이름을 입력해주세요." })} isInvalid={Boolean(errors.name?.message)} required placeholder="팀 이름을 입력하세요" variant={"filled"}/>
                 </InputGroup>
                 {searchTeamMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}
-                <Button isLoading={searchTeamMutation.isLoading} type="submit" backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"solid"}> 검색하기 </Button>
+                <Button isLoading={searchTeamMutation.isLoading} type="submit" backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={1} variant={"solid"}> 검색하기 </Button>
             </VStack>
             {team && !searchTeamMutation.isLoading ? (
                 <>
-                    {teams.length !==0 ? teams.map((team) => (
-                            <VStack alignItems={"flex-start"} px={3} spacing={3} mt={8}>
+                        {teams.length !==0 ? teams.map((team, index) => (
+                            <VStack key={index} alignItems={"flex-start"} px={3} spacing={3} mt={8}>
                                 <Team 
-                                    key={team.pk}
                                     pk={team.pk}
                                     avatar={team.avatar}
                                     name={team.name}

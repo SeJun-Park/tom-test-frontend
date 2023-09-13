@@ -1,5 +1,4 @@
 import { Avatar, Button, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import NullGame from "../components/NullGame";
@@ -18,8 +17,8 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
             <HStack p={5} justifyContent={"flex-start"} spacing={5} width={"100%"}>
                 <Avatar size={"xl"}/>
                 <VStack alignItems={"flex-start"}>
-                    <Text as="b" fontSize={"xl"}> 연결중.. </Text>
-                    <Button backgroundColor={"point.500"} color={"black"} size={"sm"} onClick={onOpen}> CANCEL </Button>
+                    <Text as="b" fontSize={"xl"}> 연결 요청중.. </Text>
+                    <Button backgroundColor={"point.500"} color={"black"} size={"sm"} onClick={onOpen}> 취소하기 </Button>
                 </VStack>
             </HStack>
             <VStack alignItems={"flex-start"} px={3}>
@@ -29,12 +28,12 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
             <BigDivider />
             <VStack alignItems={"flex-start"} px={3} mt={8}>
                 <HStack width={"100%"} justifyContent={"space-between"}>
-                    <Text as="b" color={"main.500"} fontSize={"sm"}> 경기 </Text>
+                    <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
                 </HStack>
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> 0 GAMES </Text>
+                    <Text as="b" fontSize={"sm"}> 0 경기 </Text>
                 </HStack>
             </VStack>
             <SmallDivider />
@@ -45,7 +44,7 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> 0 TIMES </Text>
+                    <Text as="b" fontSize={"sm"}> 0 회 </Text>
                 </HStack>
             </VStack>
             <SmallDivider />
@@ -56,7 +55,7 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> 0 GOALS </Text>
+                    <Text as="b" fontSize={"sm"}> 0 골 </Text>
                 </HStack>
             </VStack>
             <Empty />

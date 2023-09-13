@@ -1,15 +1,13 @@
 import { Box, Button, Checkbox, FormControl, FormHelperText, FormLabel, HStack, Input, Text, useDisclosure, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft  } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { gameUpdate, getGame, getTeam, getTeamPlayers, isSpvsr } from "../api";
-import DeleteGameModal from "../components/DeleteGameModal";
+import { gameUpdate, getGame, getTeam, getTeamPlayers } from "../api";
 import Empty from "../components/Empty";
 import ProtectedPage from "../components/ProtectedPage";
-import { IGame, ISpvsrUser, ITeam, ITinyPlayer } from "../types";
+import { IGame, ITeam, ITinyPlayer } from "../types";
 
 interface UpdateGameBeforeProps {
     teamPk : number
@@ -27,7 +25,6 @@ export default function UpdateGameBefore( props : UpdateGameBeforeProps ) {
 
     const { gamePk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
 
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", props.teamPk], getTeam);
@@ -38,44 +35,28 @@ export default function UpdateGameBefore( props : UpdateGameBeforeProps ) {
                                                                                                                                                     }});
     console.log(watch())
     const navigate = useNavigate();
-    const toast = useToast();
+    const toast = useToast();                                                                                                                                             
 
-    const { isOpen, onOpen, onClose } = useDisclosure()                                                                                                                                                
-
-    // const [ date, setDate ] = useState<Date | undefined>();
 
     const updateGameMutation = useMutation(gameUpdate, {
         onSuccess : (data) => {
             toast({
-                title : "game upload success.",
+                title : "경기 수정 성공",
                 status : "success"
             });
             navigate(-1)
         }
     })
 
-    // const handleDateChange = (date : any) => {
-    //     setDate(date.toISOString().split("T")[0])
-    //     console.log(date)
-    //   };
-
     const onSubmit = ( { vsteam, location, start_time, end_time, participants } : IUpdateGameForm) => {
-        // setTeam(name)
-        // teamSearchMutation.mutate({ name, participants, date});
         
         if (gamePk && gameData) {
             updateGameMutation.mutate({gamePk, vsteam, location, start_time, end_time,participants})
         }
-
-        // uploadGameFormReset();
     }
 
     const onClickBack = () => {
         navigate(-1)
-    }
-
-    if (spvsrData?.team.name !== gameData?.team.name) {
-        navigate("/")
     }
 
     return (
@@ -89,7 +70,7 @@ export default function UpdateGameBefore( props : UpdateGameBeforeProps ) {
                 </Button>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                <Text fontSize={"xl"} as="b"> Update Game </Text>
+                <Text fontSize={"xl"} as="b"> 경기 수정하기 </Text>
             </VStack>
             <VStack as="form" onSubmit={handleSubmit(onSubmit)} p={10} spacing={6}>
                 <FormControl mb={5}>
@@ -139,7 +120,7 @@ export default function UpdateGameBefore( props : UpdateGameBeforeProps ) {
                     <FormLabel my={5}> 
                         Line-ups 
                     </FormLabel>
-                    {teamPlayersData?.map((player) => {
+                    {teamPlayersData?.sort((a, b) => a.backnumber - b.backnumber).map((player) => {
                                                         // const isChecked = gameData?.participants?.includes(player);
                                                         const isChecked = gameData?.participants.some((participant) => participant.pk === player.pk);
 
@@ -160,11 +141,9 @@ export default function UpdateGameBefore( props : UpdateGameBeforeProps ) {
                 </FormControl>
                 <Empty />
                 {updateGameMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}
-                <Button isLoading={updateGameMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> Update </Button>
-                <Button onClick={onOpen} isLoading={updateGameMutation.isLoading} backgroundColor={"black"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> Delete </Button>
+                <Button isLoading={updateGameMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> 수정하기 </Button>
             </VStack>
             <Empty />
-            <DeleteGameModal isOpen={isOpen} onClose={onClose}/>
         </ProtectedPage>
     )
 }

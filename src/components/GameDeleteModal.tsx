@@ -3,12 +3,12 @@ import { useMutation } from "@tanstack/react-query";
 import { gameDelete } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-interface DeleteGameModalProps {
+interface GameDeleteModalProps {
     isOpen : boolean;
     onClose : () => void;
 }
 
-export default function DeleteGameModal ( props : DeleteGameModalProps ) {
+export default function GameDeleteModal ( props : GameDeleteModalProps ) {
 
     const { gamePk } = useParams();
     const { register, handleSubmit, formState : {errors}, reset : deleteGameFormReset } = useForm();

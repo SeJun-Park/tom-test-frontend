@@ -1,9 +1,9 @@
-import { Box, Button, Center, Divider, FormControl, Grid, HStack, Image, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, Grid, HStack, Image, Modal, ModalBody, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft, FaShare } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getGame } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
@@ -20,11 +20,15 @@ export default function IsPlayerGameDetail() {
 
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
 
+
     const navigate = useNavigate();
 
     const onClickBack = () => {
         navigate(-1)
     }
+
+
+    const [tabIndexGame, setTabIndexGame] = useState(Number(localStorage.getItem('tabIndexGame')) || 0);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [selectedImage, setSelectedImage] = useState("");
@@ -33,6 +37,7 @@ export default function IsPlayerGameDetail() {
       setSelectedImage(src);
       onOpen();
     }
+
 
     return (
         <>
@@ -43,15 +48,6 @@ export default function IsPlayerGameDetail() {
                 <Button variant={"unstyled"} onClick={onClickBack}>
                     <FaArrowLeft />
                 </Button>
-                <Menu>
-                    <MenuButton marginRight={1}>
-                        {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
-                        <FaShare />
-                    </MenuButton>
-                    <MenuList>
-                        <MenuItem> 카카오로 공유하기 </MenuItem>
-                    </MenuList>
-                </Menu>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"} mb={10}>
                 <Text fontSize={"xl"} as="b"> {gameData?.team.name} </Text>
@@ -84,7 +80,7 @@ export default function IsPlayerGameDetail() {
                     <Divider />
             </VStack>
             <BigDivider />
-            <Tabs variant='soft-rounded' isLazy align={"center"}>
+            <Tabs variant='soft-rounded' isLazy align={"center"} index={tabIndexGame} onChange={setTabIndexGame}>
                 <TabList>
                     <Tab _selected={{color : "black", bgColor : "point.500"}}>3OM</Tab>
                     <Tab _selected={{color : "black", bgColor : "point.500"}}>Line-ups</Tab>
@@ -100,25 +96,46 @@ export default function IsPlayerGameDetail() {
 
                     </TabPanel>
                     <TabPanel p={0}>
-                    <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                        <VStack alignItems={"flex-start"} mt={5} px={3} spacing={4}>
                             <Divider mt={8}/>
-                        </VStack>
-                        <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Formation </Text>
                             <Divider />
-                            <Center width={"100%"}>
+                            <Center width={"100%"} position="relative" height="auto">
                                 <Image 
-                                    src="https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/16eef5b5-5cf9-4cd6-7066-c12620fd5600/public" 
+                                    src="https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/cb4c0a34-5e82-40df-ff6d-adfb94aad700/public" 
                                     alt="description of image"
-                                    maxWidth="80%"
+                                    maxWidth="90%"
                                 />
+                                {gameData && 
+                                            gameData.quotas.length !== 0 ?
+                                                                            <VStack position="absolute" top="40%" align="center" width="100%">
+                                                                                <Link to={`/games/${gamePk}/quotas`}>
+                                                                                    <Button backgroundColor={"main.500"} color={"white"} size={"md"}>포메이션 확인하기</Button>
+                                                                                </Link>
+                                                                            </VStack>
+                                                                        : 
+                                                                            <VStack position="absolute" top="45%" align="center" width="100%">
+                                                                                <Text as="b" color={"white"}>등록된 포메이션이 없습니다.</Text>
+                                                                            </VStack>
+                                                                                }
                             </Center>
                             <Empty />
                         </VStack>
-                        <VStack alignItems={"center"} px={3} spacing={4}>
+                        <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                            <Divider mt={8}/>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Line-ups </Text>
                             <Divider />
-                            {gameData?.participants.map((participant) => (
+                            {gameData?.participants.sort((a, b) => {
+                                                                        // 둘 중 하나만 is_daily가 true인 경우
+                                                                        if (a.is_daily && !b.is_daily) {
+                                                                            return -1; // a를 앞에 배치
+                                                                        }
+                                                                        if (!a.is_daily && b.is_daily) {
+                                                                            return 1; // b를 앞에 배치
+                                                                        }
+                                                                        // 둘 다 is_daily가 true이거나 false인 경우
+                                                                        return a.backnumber - b.backnumber;
+                            }).map((participant) => (
                                             <Player 
                                                 key={participant.pk}
                                                 pk={participant.pk}
@@ -127,6 +144,8 @@ export default function IsPlayerGameDetail() {
                                                 name={participant.name}
                                                 is_connecting={participant.is_connecting}
                                                 is_connected={participant.is_connected}
+                                                is_daily={participant.is_daily}
+                                                is_spvsr={false}
                                             />
                                         ))}
                         <Empty />
@@ -145,7 +164,7 @@ export default function IsPlayerGameDetail() {
                                     // URL이 "https://youtu.be/"로 시작하지 않으면 아무것도 반환하지 않음
                                     return null;
                                 }
-                                
+
                                 const parts = video.file.split("/");
                                 const videoID = parts[parts.length - 1];
                             
@@ -155,6 +174,7 @@ export default function IsPlayerGameDetail() {
                                 </div>
                                 )
                             })}
+                            {gameData?.videos.length === 0 && <Text>등록된 비디오가 없습니다.</Text>}
                             <Empty />
                         </VStack>
                         <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
@@ -167,6 +187,7 @@ export default function IsPlayerGameDetail() {
                                 </Box>
                                 ))}
                             </Grid>
+                            {gameData?.photos.length === 0 && <Text>등록된 사진이 없습니다.</Text>}
                             <Empty />
                             <Modal isOpen={isOpen} onClose={onClose} size="xl">
                                 <ModalOverlay />
@@ -177,17 +198,7 @@ export default function IsPlayerGameDetail() {
                                 </ModalContent>
                             </Modal>
                         </VStack>
-                        <VStack alignItems={"center"} mt={5} px={3} spacing={4}>
-                            <Text as="b" color={"main.500"} fontSize={"sm"} > Comments </Text>
-                            <Divider />
-                            <VStack as="form">
-                                <FormControl>
-                                    <Input type="text" placeholder={"경기에 대한 한줄평을 남겨보세요!"} variant={"flushed"} sx={{ "::placeholder": { textAlign: "center" }}} />
-                                    <Button color={"main.500"} width={"100%"} mt={1} variant={"ghost"} isDisabled={true} > 한줄평 남기기 </Button>
-                                </FormControl>
-                            </VStack>
-                            <Empty />
-                        </VStack>
+                        <Empty />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

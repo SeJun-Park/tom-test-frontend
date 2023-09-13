@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersGoalStats, getTeamPlayersTOMStats } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
-import NullPlayer from "../components/NullPlayer";
 import Player from "../components/Player";
 import PlayerGoalStats from "../components/PlayerGoalStats";
 import PlayerTOMStats from "../components/PlayerTOMStats";
@@ -42,7 +41,7 @@ export default function IsPlayerTeamPlayerList() {
                 <Text fontSize={"xl"} as="b"> {teamData?.name} </Text>
             </VStack>
             <HStack justifyContent={"center"}>
-                <Text fontSize={"sm"}> 연결된 선수 </Text>
+                <Text fontSize={"sm"}> CNTD </Text>
                 <CircularProgress size={"65px"} thickness={"5px"} value={teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? Number(((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1)) : 0} color='main.500'>
                                 <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                 </CircularProgress>
@@ -75,6 +74,8 @@ export default function IsPlayerTeamPlayerList() {
                                                 name={player.name}
                                                 is_connecting={player.is_connecting}
                                                 is_connected={player.is_connected}
+                                                is_daily={player.is_daily}
+                                                is_spvsr={false}
                                             />
                                         ))}
                         </VStack>

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { Button, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
+import { Button, FormControl, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {  getPlayer, playerUpdate } from "../api";
+import { getPlayer, playerUpdate } from "../api";
 import { FaCheck, FaStream, FaUserAlt } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { IPlayer } from "../types";
@@ -22,7 +22,7 @@ export default function IsSpvsrPlayerUpdateModal ( props : IsSpvsrPlayerUpdateMo
     const { playerPk } = useParams();
     const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayer>(["player", playerPk], getPlayer);
 
-    const { register, handleSubmit, formState : {errors}, reset : playerConnectFormReset } = useForm<IPlayerUpdateForm>();
+    const { register, handleSubmit, formState : {errors}, reset : playerUpdateFormReset } = useForm<IPlayerUpdateForm>();
 
     const toast = useToast();
     const queryClient = useQueryClient()
@@ -33,7 +33,8 @@ export default function IsSpvsrPlayerUpdateModal ( props : IsSpvsrPlayerUpdateMo
             // data.ok
             toast({
                 title : "플레이어 업데이트 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             queryClient.refetchQueries(["player"])
@@ -59,23 +60,23 @@ export default function IsSpvsrPlayerUpdateModal ( props : IsSpvsrPlayerUpdateMo
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children={<FaUserAlt />} />
-                            <Input {...register("name", {required:true})} type="text" isInvalid={Boolean(errors.name?.message)} placeholder={playerData?.name} />
+                            <Input {...register("name", {required:true})} type="text" isInvalid={Boolean(errors.name?.message)} placeholder={playerData?.name} defaultValue={playerData?.name} />
                         </InputGroup>
                     </FormControl>
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children={<FaCheck />} />
-                            <Input {...register("backnumber", {required:true})} type="number" min={0} isInvalid={Boolean(errors.backnumber?.message)} placeholder={playerData?.backnumber.toString()} />
+                            <Input {...register("backnumber", {required:true})} type="number" min={0} isInvalid={Boolean(errors.backnumber?.message)} placeholder={playerData?.backnumber.toString()} defaultValue={playerData?.backnumber} />
                         </InputGroup>
                     </FormControl>
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children={<FaStream />} />
-                            <Input {...register("description")} type="text" maxLength={20} isInvalid={Boolean(errors.description?.message)} placeholder={playerData?.description ? playerData.description : "설명을 입력해보세요 (선택, 20자 이내)"} />
+                            <Input {...register("description")} type="text" maxLength={20} isInvalid={Boolean(errors.description?.message)} placeholder={playerData?.description ? playerData.description : "설명을 입력해보세요 (선택, 20자 이내)"} defaultValue={playerData?.description} />
                         </InputGroup>
                     </FormControl>
                     {playerUpdateMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> name & backnumber required </Text>) : null}
-                    <Button type="submit" isLoading={playerUpdateMutation.isLoading} size={"md"} width="100%" backgroundColor={"point.500"} color={"black"}> Update </Button>
+                    <Button type="submit" isLoading={playerUpdateMutation.isLoading} size={"md"} width="100%" backgroundColor={"point.500"} color={"black"}> 업데이트 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>

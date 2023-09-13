@@ -1,4 +1,4 @@
-import { Heading, position, Spinner, Text, useToast, VStack } from "@chakra-ui/react";
+import { Heading, Spinner, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -49,8 +49,8 @@ export default function KakaoConfirm() {
 
     return (
     <VStack justifyContent={"center"} mt={40}>
-        <Heading> Processing... </Heading>
-        <Text> Don't go anywhere </Text>
+        <Heading> 로그인 중... </Heading>
+        <Text> 3OM에 오신 걸 환영합니다. </Text>
         <Spinner size={"lg"} />
     </VStack>
     // NotFound 코드 복사해옴

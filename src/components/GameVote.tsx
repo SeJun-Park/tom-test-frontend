@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { getGameVote } from "../api";
-import { IGame, IGameVote } from "../types";
+import { IGameVote } from "../types";
 import Empty from "./Empty";
 import GameVoteAfter from "./GameVoteAfter";
 import GameVoteBefore from "./GameVoteBefore";

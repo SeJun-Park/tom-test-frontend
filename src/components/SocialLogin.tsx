@@ -1,5 +1,5 @@
-import { Box, Divider, HStack, VStack, Button, Text } from "@chakra-ui/react";
-import { FaArrowDown, FaComment } from "react-icons/fa";
+import { Box, Divider, HStack, VStack, Button } from "@chakra-ui/react";
+import { FaComment } from "react-icons/fa";
 
 export default function SocialLogin() {
 

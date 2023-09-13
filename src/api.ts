@@ -1,7 +1,7 @@
 import { QueryFunctionContext } from "@tanstack/react-query";
 import axios from "axios";
 import Cookie from "js-cookie";
-import { formatDate } from "./lib/utils";
+import { IGameQuota } from "./types";
 
 const instance = axios.create({
     baseURL : process.env.NODE_ENV === "development" ? "http://127.0.0.1:8001/api/v1/" : "https://api.3manofthematch.com/api/v1/",
@@ -104,6 +104,12 @@ export const getTeam = async ({ queryKey } : QueryFunctionContext) => {
 export const getTeamGames = async ({ queryKey } : QueryFunctionContext) => {
     const [ _, teamPk ] = queryKey;
     const response = await instance.get(`teams/${teamPk}/games/`)
+    return response.data
+}
+
+export const getTeamTomVoteIngGames = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/tomvoteing/`)
     return response.data
 }
 
@@ -210,8 +216,8 @@ export const getTeamGamesRelative = ({ teamPk, vsteam } : IGetTeamGamesRelativeV
     ).then((response) => response.data)
 
 export interface IGetTeamGoalsRelativeVariables {
-    teamPk : string,
-    vsteam : string,
+        teamPk : string,
+        vsteam : string,
 }
     
 export const getTeamGoalsRelative = ({ teamPk, vsteam } : IGetTeamGoalsRelativeVariables) => instance.post(`teams/${teamPk}/goals-relative/`, 
@@ -224,11 +230,11 @@ export const getTeamGoalsRelative = ({ teamPk, vsteam } : IGetTeamGoalsRelativeV
     }
     ).then((response) => response.data)
 
-
 export interface IGetTeamGoalsAgainstRelativeVariables {
-    teamPk : string,
-    vsteam : string,
+        teamPk : string,
+        vsteam : string,
 }
+
 
 export const getTeamGoalsAgainstRelative = ({ teamPk, vsteam } : IGetTeamGoalsAgainstRelativeVariables) => instance.post(`teams/${teamPk}/goals-relative/against/`, 
     { vsteam }, 
@@ -240,15 +246,525 @@ export const getTeamGoalsAgainstRelative = ({ teamPk, vsteam } : IGetTeamGoalsAg
     }
     ).then((response) => response.data)
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const getTeamVotes = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/votes/`)
+    return response.data
+}
+
+export const getTeamFeeds = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/feeds/`)
+    return response.data
+}
+
+export const getTeamFeed = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, feedPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/feeds/${feedPk}/`)
+    return response.data
+}
+
+
+export const getTeamNotisMonth = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/notis/month/`)
+    return response.data
+}
+
+export interface IGetTeamNotisByMonthVariables {
+    teamPk : string,
+    year : string,
+    month : string
+}
+
+export const getTeamNotisByMonth = ({ teamPk, year, month } : IGetTeamNotisByMonthVariables) => instance.post(`teams/${teamPk}/notis/bymonth/`, { year, month }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+export const getTeamSchedulesMonth = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/schedules/month/`)
+    return response.data
+}
+
+export interface IGetTeamSchedulesByMonthVariables {
+    teamPk : string,
+    year : string,
+    month : string
+}
+
+export const getTeamSchedulesByMonth = ({ teamPk, year, month } : IGetTeamSchedulesByMonthVariables) => instance.post(`teams/${teamPk}/schedules/bymonth/`, { year, month }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export const getTeamDuesPaymentList = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/payments/list/`)
+    return response.data
+}
+
+export interface IDuesPaymentAddVariables {
+    teamPk : string,
+    title : string,
+    memo? : string
+}
+
+export const duesPaymentAdd = ({ teamPk, title, memo } : IDuesPaymentAddVariables) => instance.post(`teams/${teamPk}/dues/payments/`, 
+    { title, memo }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+export const getTeamDuesDetailList = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/details/list/`)
+    return response.data
+}
+
+export const getTeamDuesDetail = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, detailPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/details/${detailPk}/`)
+    return response.data
+}
+
+export interface IDuesDetailAddVariables {
+    teamPk : string,
+    title : string,
+    memo? : string,
+    carry_over? : number
+}
+
+export const duesDetailAdd = ({ teamPk, title, memo, carry_over } : IDuesDetailAddVariables) => instance.post(`teams/${teamPk}/dues/details/`, 
+    { title, memo, carry_over }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IDuesDetailDeleteVariables {
+    teamPk : string,
+    detailPk : string,
+}
+
+export const duesDetailDelete = ({ teamPk, detailPk } : IDuesDetailDeleteVariables) => instance.delete(`teams/${teamPk}/dues/details/${detailPk}/`, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ICarryOverAddVariables {
+    teamPk : string,
+    detailPk : string,
+    carry_over : number
+}
+
+export const carryOverAdd = ({ teamPk, detailPk, carry_over } : ICarryOverAddVariables) => instance.put(`teams/${teamPk}/dues/details/${detailPk}/`, { carry_over }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IDuesDetailUpdateVariables {
+    teamPk : string,
+    detailPk : string,
+    title : string,
+    memo? : string
+}
+
+export const duesDetailUpdate = ({ teamPk, detailPk, title, memo } : IDuesDetailUpdateVariables) => instance.put(`teams/${teamPk}/dues/details/${detailPk}/`, { title, memo }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export const getTeamDuesInItems = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, detailPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/details/${detailPk}/in/items/`)
+    return response.data
+}
+
+export const getTeamDuesOutItems = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, detailPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/details/${detailPk}/out/items/`)
+    return response.data
+}
+
+export interface IDuesInItemAddVariables {
+    teamPk : string,
+    detailPk : string,
+    title : string,
+    date : string,
+    amount : number,
+    note? : string,
+}
+
+export const duesInItemAdd = ({ teamPk, detailPk, title, date, amount, note } : IDuesInItemAddVariables) => instance.post(`teams/${teamPk}/dues/details/${detailPk}/in/items/`, 
+    { title, date, amount, note }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IDuesOutItemAddVariables {
+    teamPk : string,
+    detailPk : string,
+    title : string,
+    date : string,
+    amount : number,
+    note? : string,
+}
+
+export const duesOutItemAdd = ({ teamPk, detailPk, title, date, amount, note } : IDuesOutItemAddVariables) => instance.post(`teams/${teamPk}/dues/details/${detailPk}/out/items/`, 
+    { title, date, amount, note }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+export interface IDuesInItemDeleteVariables {
+    teamPk : string,
+    itemPk : string,
+}
+
+export const duesInItemDelete = ({ teamPk, itemPk } : IDuesInItemDeleteVariables) => instance.delete(`teams/${teamPk}/dues/details/in/${itemPk}/`, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IDuesOutItemDeleteVariables {
+    teamPk : string,
+    itemPk : string,
+}
+
+export const duesOutItemDelete = ({ teamPk, itemPk } : IDuesOutItemDeleteVariables) => instance.delete(`teams/${teamPk}/dues/details/out/${itemPk}/`, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export const getTeamDuesInAmount = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, detailPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/details/${detailPk}/in/amount/`)
+    return response.data
+}
+
+export const getTeamDuesOutAmount = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, detailPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/details/${detailPk}/out/amount/`)
+    return response.data
+}
+
+export const getTeamDuesPayment = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, paymentPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/payments/${paymentPk}/`)
+    return response.data
+}
+
+export const getTeamDuesPaymentItems = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, paymentPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/payments/${paymentPk}/items/`)
+    return response.data
+}
+
+export const getTeamDuesPaymentItemsExtra = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, paymentPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/payments/${paymentPk}/items/extra/`)
+    return response.data
+}
+
+
+export interface IDuesPaymentDeleteVariables {
+    teamPk : string,
+    paymentPk : string,
+}
+
+export const duesPaymentDelete = ({ teamPk, paymentPk } : IDuesPaymentDeleteVariables) => instance.delete(`teams/${teamPk}/dues/payments/${paymentPk}/`, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IDuesPaymentUpdateVariables {
+    teamPk : string,
+    paymentPk : string,
+    title : string,
+    memo? : string
+}
+
+export const duesPaymentUpdate = ({ teamPk, paymentPk, title, memo } : IDuesPaymentUpdateVariables) => instance.put(`teams/${teamPk}/dues/details/${paymentPk}/`, { title, memo }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+
+export const getTeamDuesPaymentItemDetail = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, itemPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/payments/items/${itemPk}/`)
+    return response.data
+}
+
+
+export interface IDuesPaymentItemDeleteVariables {
+    teamPk : string,
+    itemPk : string,
+}
+
+export const duesPaymentItemDelete = ({ teamPk, itemPk } : IDuesPaymentItemDeleteVariables) => instance.delete(`teams/${teamPk}/dues/payments/items/${itemPk}/`, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IDuesPaymentItemUpdateVariables {
+    teamPk : string,
+    itemPk : string,
+    payment : string
+}
+
+export const duesPaymentItemUpdate = ({ teamPk, itemPk, payment } : IDuesPaymentItemUpdateVariables) => instance.put(`teams/${teamPk}/dues/payments/items/${itemPk}/`, { payment }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IDuesPaymentItemExtraAddVariables {
+    teamPk : string,
+    paymentPk : string,
+    player : number
+}
+
+export const duesPaymentItemExtraAdd = ({ teamPk, paymentPk, player } : IDuesPaymentItemExtraAddVariables) => instance.post(`teams/${teamPk}/dues/payments/${paymentPk}/items/`, { player },
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ISpvsrFeedAddVariables {
+    teamPk : string,
+    title : string,
+    payload : string
+}
+
+export const feedAdd = ({ teamPk, title, payload } : ISpvsrFeedAddVariables ) => 
+    instance.post(`teams/${teamPk}/feeds/`, 
+                { title, payload }, 
+                {
+                    headers :  {
+                        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                            // post 관련해서는 항상 보내줘야 하는 듯
+                    },
+                }
+                ).then((response) => response.data)
+
+export interface IFeedUpdateVariables {
+    teamPk : string,
+    feedPk : string,
+    title : string,
+    payload : string
+}
+
+export const feedUpdate = ({ teamPk, feedPk, title, payload } : IFeedUpdateVariables) => instance.put(`teams/${teamPk}/feeds/${feedPk}/`, { title, payload }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ISpvsrFeedDeleteVariables {
+    teamPk : string,
+    feedPk : string,
+}
+                
+export const feedDelete = ({ teamPk, feedPk } : ISpvsrFeedDeleteVariables ) => 
+    instance.delete(`teams/${teamPk}/feeds/${feedPk}/`, 
+                {
+                    headers :  {
+                        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                            // post 관련해서는 항상 보내줘야 하는 듯
+                    },
+                }
+                ).then((response) => response.data)
+
+
+export interface ICreateFeedPhotoVariables {
+    teamPk : string;
+    feedPk : string;
+    file : string;
+}
+
+export const createFeedPhoto = ({ teamPk, feedPk, file } : ICreateFeedPhotoVariables ) => instance.post(`teams/${teamPk}/feeds/${feedPk}/photos/`, { file }, {
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // logIn 관련해서는 항상 보내줘야 하는 듯
+            // post 관련해서 항상 보내줘야 함
+    },
+}).then((response) => response.data); 
+
+    
+export interface IPhotoDeleteVariables {
+    photoPk : string;
+}
+
+
+export interface ISpvsrScheduleAddVariables {
+    teamPk : string,
+    title : string,
+    date : string,
+    time : string,
+    category : string,
+}
+
+export const scheduleAdd = ({ teamPk, title, date, time, category } : ISpvsrScheduleAddVariables ) => 
+    instance.post(`teams/${teamPk}/schedules/`, 
+                { title, date, time, category }, 
+                {
+                    headers :  {
+                        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                            // post 관련해서는 항상 보내줘야 하는 듯
+                    },
+                }
+                ).then((response) => response.data)
+
+
+export interface ISpvsrScheduleDeleteVariables {
+    teamPk : string,
+    schedulePk : string,
+}
+                
+export const scheduleDelete = ({ teamPk, schedulePk } : ISpvsrScheduleDeleteVariables ) => 
+    instance.delete(`teams/${teamPk}/schedules/${schedulePk}/`, 
+                {
+                    headers :  {
+                        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                            // post 관련해서는 항상 보내줘야 하는 듯
+                    },
+                }
+                ).then((response) => response.data)
+
+
+export interface ITeamUpdateVariables {
+    description? : string;
+    since? : number;
+    code : number;
+}
+
+export const teamUpdate = ({ description, since, code } : ITeamUpdateVariables) => instance.put(`users/isspvsr/team/`, { description, since, code }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ITeamPhotoUploadVariables {
+    avatar : string;
+}
+
+export const teamPhotoUpload = ({ avatar } : ITeamPhotoUploadVariables) => instance.put(`users/isspvsr/team/photo/`, { avatar }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+export const teamPhotoDelete = () => instance.delete(`users/isspvsr/team/photo/`, 
+{
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // post 관련해서는 항상 보내줘야 하는 듯
+    },
+}
+).then((response) => response.data)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export interface ISpvsrTeamRegsiterVariables {
     name : string;
     since : number;
     description? : string;
+    code : number;
 }
 
-export const teamRegister = ({ name, since, description } : ISpvsrTeamRegsiterVariables ) => 
+export const teamRegister = ({ name, since, description, code } : ISpvsrTeamRegsiterVariables ) => 
     instance.post("/teams/", 
-                { name, since, description }, 
+                { name, since, description, code }, 
                 {
                     headers :  {
                         "X-CSRFToken" : Cookie.get("csrftoken") || ""
@@ -357,6 +873,21 @@ export const playerAdd = ({ teamPk, name, backnumber, description } : IPlayerAdd
     ).then((response) => response.data)
 
 
+export interface IPlayerDailyAddVariables {
+    gamePk : string,
+    name : string,
+}
+
+export const playerDailyAdd = ({ gamePk, name } : IPlayerDailyAddVariables) => instance.post(`games/${gamePk}/players/`, { name }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
 export interface IPlayerUpdateVariables {
     playerPk : string,
     name : string,
@@ -399,6 +930,35 @@ export const playerConnect = ({ playerPk } : IPlayerConnectVariables) => instanc
         },
     }
     ).then((response) => response.data)
+
+
+export interface IPlayerPhotoUploadVariables {
+    playerPk : string;
+    avatar : string;
+}
+
+export const playerPhotoUpload = ({ playerPk, avatar } : IPlayerPhotoUploadVariables) => instance.put(`players/${playerPk}/photo/`, { avatar }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IPlayerPhotoDeleteVariables {
+    playerPk : string;
+}
+
+export const playerPhotoDelete = ({ playerPk } : IPlayerPhotoDeleteVariables) => instance.delete(`players/${playerPk}/photo/`, 
+{
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // post 관련해서는 항상 보내줘야 하는 듯
+    },
+}
+).then((response) => response.data)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -459,7 +1019,7 @@ export interface IGameUpdateVariables {
         location : string,
         start_time : string,
         end_time : string,
-        participants? : number[],
+        participants : number[],
         goals? : number[]
     }
 
@@ -487,4 +1047,153 @@ export const gameDelete = ({ gamePk } : IGameDeleteVariables) => instance.delete
     ).then((response) => response.data)
 
 
+export interface IGameVideoAddVariables {
+    gamePk : string,
+    file : string
+}
+
+export const gameVideoAdd = ({ gamePk, file } : IGameVideoAddVariables) => instance.post(`games/${gamePk}/videos/`, { file },
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ICreateGamePhotoVariables {
+    gamePk : string;
+    file : string;
+}
+
+export const createGamePhoto = ({gamePk, file } : ICreateGamePhotoVariables ) => instance.post(`games/${gamePk}/photos/`, { file }, {
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // logIn 관련해서는 항상 보내줘야 하는 듯
+            // post 관련해서 항상 보내줘야 함
+    },
+}).then((response) => response.data); 
+
+    
+export interface IPhotoDeleteVariables {
+    photoPk : string;
+}
+
+export const photoDelete = ({ photoPk } : IPhotoDeleteVariables) => instance.delete(`medias/photos/${photoPk}/`, 
+{
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // post 관련해서는 항상 보내줘야 하는 듯
+    },
+}
+).then((response) => response.data)
+
+
+export interface IVideoDeleteVariables {
+    videoPk : string;
+}
+
+export const videoDelete = ({ videoPk } : IVideoDeleteVariables) => instance.delete(`medias/videos/${videoPk}/`, 
+{
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // post 관련해서는 항상 보내줘야 하는 듯
+    },
+}
+).then((response) => response.data)
+
+
+export const getGameQuotas = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, gamePk ] = queryKey;
+    const response = await instance.get(`games/${gamePk}/quotas/`)
+    return response.data;
+}
+
+export const getGameQuota = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, gamePk, quotaPk ] = queryKey;
+    const response = await instance.get(`games/${gamePk}/quotas/${quotaPk}/`)
+    return response.data;
+}
+
+
+export interface IGameQuotaUploadVariables {
+    gamePk : string,
+    quotasData : IGameQuota[],
+}
+
+export const gameQuotaUpload = ({ gamePk, quotasData } : IGameQuotaUploadVariables) => instance.post(`games/${gamePk}/quotas/`, quotasData, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || "",
+                // post 관련해서는 항상 보내줘야 하는 듯
+            "Content-Type": "application/json"
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IGameQuotaUpdateVariables {
+    gamePk : string,
+    quotaPk : string,
+    formation : string,
+    lineups : number[],
+    memo? : string
+}
+
+export const gameQuotaUpdate = ({ gamePk, quotaPk, formation ,lineups ,memo } : IGameQuotaUpdateVariables) => instance.put(`games/${gamePk}/quotas/${quotaPk}/`, { formation ,lineups ,memo }, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || "",
+                // post 관련해서는 항상 보내줘야 하는 듯
+            "Content-Type": "application/json"
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface IGameQuotasDeleteVariables {
+    gamePk : string;
+}
+
+export const gameQuotasDelete = ({ gamePk } : IGameQuotasDeleteVariables) => instance.delete(`games/${gamePk}/quotas/`, 
+{
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // post 관련해서는 항상 보내줘야 하는 듯
+    },
+}
+).then((response) => response.data)
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 진짜 그냥 URL만 요청하는 Post request라 args가 없음 (logout마냥)
+export const getUploadURL = () => instance.post("medias/photos/get-url/", null, {
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // logIn 관련해서는 항상 보내줘야 하는 듯
+            // post 할 떄 항상 보내주는 듯!
+    },
+}).then((response) => response.data)
+
+
+export interface IUploadImageVariables {
+    file : FileList;
+    uploadURL : string;
+}
+
+// 실제 upload 하는 request
+export const uploadImage = async ( { file, uploadURL } : IUploadImageVariables ) => {
+    const formData = new FormData();
+        // form을 강제로 추가하고 (진짜 HTML form을 만드는 것처럼)
+    formData.append("file", file[0]);
+        // 'file' -> 파일 이름을 적는 input을 추가, FileList 형태의 file을 입력받아 file의 첫 번째 요소인 이미지를 입력받은 것처럼 강제로 만들고 있음, 여러 개일 경우 index를 여러 개 뽑아주면 됨
+        // 우리가 파일을 업로드 하면, 그 파일은 file(FileList)의 첫 번째 항목에 들어감
+    return axios.post(uploadURL, formData, {
+        headers : {
+            "Content-Type" : "multipart/form-data",
+            // 이건 CloudFlare에게 우리가 파일을 업로드한다고 알려주는 것
+        }
+    }).then((response) => response.data)
+}

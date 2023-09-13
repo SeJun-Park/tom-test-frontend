@@ -1,6 +1,6 @@
-import { Avatar, Badge, Button, Card, CardBody, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Button, Card, CardBody, Divider, HStack, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { FaArrowLeft, FaArrowRight, FaFutbol, FaRunning, FaUserNinja } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaCamera, FaEllipsisV, FaFutbol, FaRunning, FaTrashAlt, FaUserNinja } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getPlayer, getPlayerGames, getPlayerGoals, getPlayerTomGames, isSpvsr } from "../api";
 import BigDivider from "../components/BigDivider";
@@ -13,9 +13,10 @@ import IsSpvsrPlayerUpdateModal from "../components/IsSpvsrPlayerUpdateModal";
 import NullGame from "../components/NullGame";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
-import useUser from "../lib/useUser";
 import { IGoals, IPlayer, ISpvsrUser, ITinyGame } from "../types";
 import { Helmet } from "react-helmet";
+import PlayerPhotoUploadModal from "../components/PlayerPhotoUploadModal";
+import PlayerPhotoDeleteModal from "../components/PlayerPhotoDeleteModal";
 
 export default function IsSpvsrPlayerProfile() {
 
@@ -33,6 +34,8 @@ export default function IsSpvsrPlayerProfile() {
     const { isOpen : connectingModalisOpen, onOpen : connectingModalonOpen, onClose : connectingModalonClose} = useDisclosure()
     const { isOpen : updateModalisOpen, onOpen : updateModalonOpen, onClose : updateModalonClose} = useDisclosure()
     const { isOpen : deleteModalisOpen, onOpen : deleteModalonOpen, onClose : deleteModalonClose} = useDisclosure()
+    const { isOpen : isPhotoOpen, onOpen : onPhotoOpen, onClose : onPhotoClose } = useDisclosure()
+    const { isOpen : isPhotoDeleteOpen, onOpen : onPhotoDeleteOpen, onClose : onPhotoDeleteClose } = useDisclosure()
 
     const navigate = useNavigate();
     const onClickBack = () => {
@@ -44,16 +47,53 @@ export default function IsSpvsrPlayerProfile() {
             <Helmet>
                 <title>{ playerData ? (`3OM | ${playerData.team.name} / ${playerData.backnumber}.${playerData.name}`) : "Loading.." }</title>
             </Helmet>
-            <HStack height={20} px={5}>
+            <HStack justifyContent={"space-between"} height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>
                     <FaArrowLeft />
                 </Button>
+                {spvsrData?.team.name === playerData?.team.name ? 
+                                                                        <Menu>
+                                                                            <MenuButton marginRight={1}>
+                                                                                {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
+                                                                                <FaEllipsisV />
+                                                                            </MenuButton>
+                                                                            <MenuList>
+                                                                                <MenuItem onClick={updateModalonOpen}> 수정하기 </MenuItem>
+                                                                                <MenuItem onClick={deleteModalonOpen}> 삭제하기 </MenuItem>
+                                                                            </MenuList>
+                                                                            <IsSpvsrPlayerUpdateModal isOpen={updateModalisOpen} onClose={updateModalonClose}/>
+                                                                            <IsSpvsrPlayerDeleteModal isOpen={deleteModalisOpen} onClose={deleteModalonClose} />
+                                                                        </Menu> : null}
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
                 <Text fontSize={"xl"} as="b"> {playerData?.team.name} </Text>
             </VStack>
             <HStack p={5} justifyContent={"flex-start"} spacing={5} width={"100%"}>
-                <Avatar size={"xl"} src={playerData?.avatar} />
+                <HStack alignItems={"flex-end"}  position={"relative"} overflow={"hidden"}>
+                    <Avatar src={playerData?.avatar} size={"xl"} />
+                    {/* <Avatar src={"https://prodigits.co.uk/thumbs/wallpapers/p2ls/drawings/26/5761411112242453.jpg"} size={"sm"} ml={-10} showBorder={true} /> */}
+                    
+                    { spvsrData?.team.name === playerData?.team.name ? 
+                                                                        playerData?.avatar ?
+                                                                                            <VStack justifyContent={"center"}>
+                                                                                                <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"}>
+                                                                                                    <FaCamera size="20px" />
+                                                                                                </Button>
+                                                                                                <Button onClick={onPhotoDeleteOpen} variant={"outline"} color={"gray"}>
+                                                                                                    <FaTrashAlt size="20px" />
+                                                                                                </Button>
+                                                                                                <PlayerPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
+                                                                                                <PlayerPhotoDeleteModal isOpen={isPhotoDeleteOpen} onClose={onPhotoDeleteClose} />
+                                                                                            </VStack>  
+                                                                                            :
+                                                                                            <HStack justifyContent={"center"}>
+                                                                                                <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"}>
+                                                                                                    <FaCamera size="20px" />
+                                                                                                </Button>
+                                                                                                <PlayerPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
+                                                                                            </HStack>
+                                                                                            : null}
+                </HStack>
                 <VStack alignItems={"flex-start"}>
                     <Text fontSize={"xl"}>{playerData?.backnumber}.</Text>
                     <Text as="b" fontSize={"xl"}>{playerData?.name}</Text>
@@ -91,17 +131,38 @@ export default function IsSpvsrPlayerProfile() {
                     </Card>
                 </VStack>
             )}
-            {spvsrData?.team.name === playerData?.team.name ? (
-                <HStack justifyContent={"center"}>
-                    {playerData?.connected_user ? <Button onClick={connectionModalonOpen} backgroundColor={"main.500"} color={"white"} size={"sm"}> 연결 상태 </Button> 
-                                                        : (playerData?.connecting_user ? <Button onClick={connectingModalonOpen} backgroundColor={"point.500"} color={"black"} size={"sm"}> 연결중.. </Button>
-                                                        : <Button backgroundColor={"white"} color={"gray.400"} size={"sm"} disabled={true} > 연결 상태 없음 </Button>) }
-                    <Button onClick={updateModalonOpen} backgroundColor={"point.500"} color={"black"} size={"sm"}> Update </Button>
-                    <Button onClick={deleteModalonOpen} backgroundColor={"black"} color={"white"} size={"sm"}> Delete </Button>
+            {/* <VStack my={6} alignItems={"flex-start"}>
+                <HStack ml={4}>
+                    <Card textAlign={"center"} variant={"filled"} size={"sm"}>
+                        <CardBody>
+                            <Text fontSize={"sm"}>골을 잘 넣어요</Text>
+                        </CardBody>
+                    </Card>
+                    <Text fontSize={"xs"}>
+                        1
+                    </Text>
                 </HStack>
-            ) : 
-                null
-                }
+                <HStack ml={4}>
+                    <Card textAlign={"center"} variant={"filled"} size={"sm"}>
+                        <CardBody>
+                            <Text fontSize={"sm"}>패스를 잘 해요</Text>
+                        </CardBody>
+                    </Card>
+                    <Text fontSize={"xs"}>
+                        2
+                    </Text>
+                </HStack>
+            </VStack> */}
+            {spvsrData?.team.name === playerData?.team.name ? (
+                <HStack mt={4} justifyContent={"center"}>
+                    {playerData?.connected_user ? <Button onClick={connectionModalonOpen} color={"main.500"} size={"sm"} variant={"ghost"}> 연결 상태 보기</Button> 
+                                                        : (playerData?.connecting_user ? <Button onClick={connectingModalonOpen} backgroundColor={"point.500"} color={"black"} size={"sm"}> 연결중.. </Button>
+                                                        : <Button color={"gray.400"} size={"sm"} disabled={true} variant={"ghost"}> 연결 상태 없음 </Button>) }
+                    <IsSpvsrPlayerConnectionModal isOpen={connectionModalisOpen} onClose={connectionModalonClose}/>
+                    <IsSpvsrPlayerConnectingModal isOpen={connectingModalisOpen} onClose={connectingModalonClose}/>
+                </HStack>
+            ) : null
+            }
             <VStack alignItems={"flex-start"} px={3}>
                 <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
                 {playerGamesData ? (playerGamesData[0] ? 
@@ -157,10 +218,6 @@ export default function IsSpvsrPlayerProfile() {
                     </HStack>
                 </VStack>
             </Link>
-            <IsSpvsrPlayerConnectionModal isOpen={connectionModalisOpen} onClose={connectionModalonClose}/>
-            <IsSpvsrPlayerConnectingModal isOpen={connectingModalisOpen} onClose={connectingModalonClose}/>
-            <IsSpvsrPlayerUpdateModal isOpen={updateModalisOpen} onClose={updateModalonClose}/>
-            <IsSpvsrPlayerDeleteModal isOpen={deleteModalisOpen} onClose={deleteModalonClose} />
             <Empty />
         </ProtectedPage>
     )

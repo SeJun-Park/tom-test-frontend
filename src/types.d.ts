@@ -68,7 +68,8 @@ export interface ITinyPlayer {
     backnumber : number,
     name : string,
     is_connecting : boolean,
-    is_connected : boolean
+    is_connected : boolean,
+    is_daily : boolean
 }
 
 export interface IPlayer extends ITinyPlayer {
@@ -83,16 +84,18 @@ export interface IPlayer extends ITinyPlayer {
     connecting_at : string
 }
 
-export interface IPhoto {
+export interface IVideo {
+    id : number,
     file : string,
-    team : ITinyTeam,
     game : ITinyGame,
+    team : ITinyTeam,
 }
 
-export interface IVideo {
+export interface IPhoto {
+    id : number,
     file : string,
-    team : ITinyTeam,
     game : ITinyGame,
+    team : ITinyTeam
 }
 
 export interface ITinyGame {
@@ -114,6 +117,7 @@ export interface IGame extends ITinyGame {
     goals : IGoalPlayer[],
     videos : IVideo[],
     photos : IPhoto[],
+    quotas : IGameQuota[]
 }
 
 export interface IGameVote {
@@ -131,3 +135,102 @@ export interface ISuperplayer {
     player : ITinyPlayer,
     team : ITinyTeam,
 }
+
+export interface IFeed {
+    id : number,
+    team : ITinyTeam,
+    created_at : string,
+    title : string,
+    payload : string,
+    photos : IPhoto[],
+}
+
+export interface INoti {
+    pk : number,
+    team : ITinyTeam,
+    name : string,
+    description : string,
+    dateTime : string,
+    title : string,
+    category : string,
+    payload : string,
+}
+
+export interface ISchedule {
+    id : number,
+    team : ITinyTeam,
+    dateTime : string,
+    category : string,
+    title : string,
+}
+
+export interface ITeamVote {
+    pk : number,
+    team : ITinyTeam,
+    start : string,
+    title : string,
+    description : string,
+    candidates : ITinyPlayer[],
+    participants : number[],
+    winners : ITinyPlayer[],
+}
+
+export interface IDuesDetail {
+    id : number,
+    team : ITinyTeam,
+    title : string,
+    memo : string,
+    carry_over : number,
+}
+
+export interface IDuesInItem {
+    id : number,
+    dues_detail : IDuesDetail,
+    title : string,
+    date : string,
+    amount : number,
+    note : string,
+}
+
+export interface IDuesOutItem {
+    id : number,
+    dues_detail : IDuesDetail,
+    title : string,
+    date : string,
+    amount : number,
+    note : string,
+}
+
+export interface IDuesPayment {
+    id : number,
+    team : ITinyTeam,
+    title : string,
+    memo : string
+}
+
+export interface IDuesPaymentItem {
+    id : number,
+    dues_payment : IDuesPayment,
+    player : ITinyPlayer,
+    payment : string
+}
+
+export interface IDuesPaymentItemExtra {
+    id : number,
+    name : string,
+    backnumber : number
+}
+
+export interface IGameQuota {
+    id : number,
+    game : ITinyGame,
+    formation : string,
+    lineups : ITinyPlayer[],
+    memo : string,
+}
+
+export interface IAmount {
+    amount : number;
+}
+
+export type Formation = '4-2-3-1' | '4-4-2' | '3-5-2'; // 여기에 모든 가능한 포메이션들을 추가합니다.

@@ -3,13 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaUserNinja } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPlayer, getPlayerGames, getPlayerSuperplayers, getPlayerTomGames } from "../api";
+import { getPlayer, getPlayerGames, getPlayerTomGames } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import ProtectedPage from "../components/ProtectedPage";
-import SmallDivider from "../components/SmallDivider";
 import TomGame from "../components/TomGame";
-import { IPlayer, ISuperplayer, ITinyGame } from "../types";
+import { IPlayer, ITinyGame } from "../types";
 
 export default function PlayerVoteList() {
 
@@ -18,7 +17,6 @@ export default function PlayerVoteList() {
     const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayer>(["player", playerPk], getPlayer);
     const { isLoading : playeGamesLoading, data : playerGamesData, isError : playerGamesError } = useQuery<ITinyGame[]>(["playerGames", playerPk], getPlayerGames);
     const { isLoading : playeTomGamesLoading, data : playerTomGamesData, isError : playerTomGamesError } = useQuery<ITinyGame[]>(["playerTomGames", playerPk], getPlayerTomGames);
-    const { isLoading : playerSuperplayersLoading, data : playerSuperplayersData, isError : playerSuperplayersError } = useQuery<ISuperplayer[]>(["playerSuperplayers", playerPk], getPlayerSuperplayers);
 
     const navigate = useNavigate();
     const onClickBack = () => {
@@ -42,7 +40,7 @@ export default function PlayerVoteList() {
                     <Text fontSize={"xl"}> {playerData?.name}</Text>
                 </HStack>
                 <HStack>
-                    <Badge backgroundColor={"point.500"} color={"black"}>
+                    <Badge ml={1} backgroundColor={"point.500"} color={"black"}>
                         <HStack>
                             <FaUserNinja />
                             <Text>{playerTomGamesData ? playerTomGamesData.length : "0"}</Text>

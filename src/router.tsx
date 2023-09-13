@@ -1,6 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./components/Root";
 import Community from "./routes/Community";
+import DuesDetail from "./routes/DuesDetails";
+import DuesPayment from "./routes/DuesPayment";
+import DuesPaymentDetail from "./routes/DuesPaymentDetail";
 import GameDetail from "./routes/GameDetail";
 import Home from "./routes/Home";
 import IsPlayerMyAllGameList from "./routes/IsPlayerMyAllGameList";
@@ -20,6 +23,12 @@ import TeamVoteList from "./routes/TeamVoteList";
 import UpdateGame from "./routes/UpdateGame";
 import UpdateTeam from "./routes/UpdateTeam";
 import UploadGame from "./routes/UploadGame";
+import Help from "./routes/Help";
+import DuesDetailsDetail from "./routes/DuesDetailsDetail";
+import FAQ from "./routes/FAQ";
+import GameQuotas from "./routes/GameQuotas";
+import UploadGameQuotas from "./routes/UploadGameQuotas";
+import UpdateGameQuota from "./routes/UpdateGameQuota";
 
 const router = createBrowserRouter(
     [
@@ -81,6 +90,22 @@ const router = createBrowserRouter(
                     element : <TeamPlayerList />
                 },
                 {
+                    path : "teams/:teamPk/dues/payment",
+                    element : <DuesPayment />
+                },
+                {
+                    path : "teams/:teamPk/dues/payment/:paymentPk",
+                    element : <DuesPaymentDetail />
+                },
+                {
+                    path : "teams/:teamPk/dues/details",
+                    element : <DuesDetail />
+                },
+                {
+                    path : "teams/:teamPk/dues/details/:detailPk",
+                    element : <DuesDetailsDetail />
+                },
+                {
                     path : "players/:playerPk",
                     element : <PlayerProfile />
                 },
@@ -106,8 +131,28 @@ const router = createBrowserRouter(
                     element : <UpdateGame />
                 },
                 {
+                    path : "games/:gamePk/quotas/upload",
+                    element : <UploadGameQuotas />
+                },
+                {
+                    path : "games/:gamePk/quotas",
+                    element : <GameQuotas />
+                },
+                {
+                    path : "games/:gamePk/quotas/:quotaPk/edit",
+                    element : <UpdateGameQuota />
+                },
+                {
                     path : "community",
                     element : <Community />
+                },
+                {
+                    path : "help",
+                    element : <Help />
+                },
+                {
+                    path : "help/faq",
+                    element : <FAQ />
                 }
             ],
             errorElement : <NotFound />,

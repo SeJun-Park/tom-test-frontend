@@ -12,6 +12,7 @@ import { ISpvsrUser, ITeam, ITinyPlayer } from "../types";
 import "../calender.css";
 import useUser from "../lib/useUser";
 import { Helmet } from "react-helmet";
+import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
 
 interface IUploadGameForm {
     vsteam : string,
@@ -40,7 +41,7 @@ export default function UploadGame() {
     const uploadGameMutation = useMutation(gameUpload, {
         onSuccess : (data) => {
             toast({
-                title : "game upload success.",
+                title : "경기 업로드 성공",
                 status : "success"
             });
             navigate(-1)
@@ -54,112 +55,103 @@ export default function UploadGame() {
       
         setDate(formattedDate);
         console.log(formattedDate);
-        // const localDateString = date.toLocaleDateString("en-US", { timeZone: "Asia/Seoul" });
-        // console.log(localDateString)
-        // setDate(localDateString);
-        // const localDateString = date.toLocaleDateString("en-US", { timeZone: "Asia/Seoul" });
-        // const formattedDate = new Date(localDateString);
-        // setDate(formattedDate.toISOString().split("T")[0]);
-        // setDate(date.toISOString().split("T")[0])
-        // console.log(date)
       };
 
     const onSubmit = ( { vsteam, location, start_time, end_time, participants } : IUploadGameForm) => {
-        // setTeam(name)
-        // teamSearchMutation.mutate({ name, participants, date});
         if (date && teamPk) {
             const team = teamPk
             uploadGameMutation.mutate({teamPk, team, vsteam, location, date, start_time, end_time, participants})
         }
-
-        // uploadGameFormReset();
     }
 
     const onClickBack = () => {
         navigate(-1)
     }
 
-    if ( !user?.is_spvsr || spvsrData?.team.name !== teamData?.name) {
+    if (spvsrData?.team.name !== teamData?.name) {
         navigate("/")
     }
 
     return (
         <ProtectedPage>
-            <Helmet>
-                <title>{ teamData ? (`3OM | ${teamData.name} Game Upload`) : "Loading.." }</title>
-            </Helmet>
-            <HStack height={20} px={5}>
-                <Button variant={"unstyled"} onClick={onClickBack}>
-                    <FaArrowLeft />
-                </Button>
-            </HStack>
-            <VStack alignItems={"flex-start"} padding={"5"}>
-                <Text fontSize={"xl"} as="b"> Upload Game </Text>
-            </VStack>
-            <VStack as="form" onSubmit={handleSubmit(onSubmit)} p={10} spacing={6}>
-                <FormControl mb={5}>
-                    <FormLabel>
-                        우리팀
-                    </FormLabel>
-                    <Input type={"text"} isReadOnly value={teamData?.pk} px={1} required placeholder={teamData?.name} variant={"flushed"} color={"gray.400"}/>
-                </FormControl>
-                <FormControl mb={5}>
-                    <FormLabel>
-                        상대팀
-                    </FormLabel>
-                    <Input {...register("vsteam", { required : true})} px={1} type={"text"} isInvalid={Boolean(errors.vsteam?.message)} required placeholder="" variant={"flushed"}/>
-                    <FormHelperText fontSize={"xs"}>
-                      정확히 입력하면 상대 전적을 확인할 수 있습니다.
-                    </FormHelperText>
-                </FormControl>
-                <FormControl>
-                    <FormLabel>
-                        장소
-                    </FormLabel>
-                    <Input {...register("location", { required : true})} type={"text"} px={1} isInvalid={Boolean(errors.location?.message)} placeholder="" variant={"flushed"}/>
+            <SpvsrOnlyPage>
+                <Helmet>
+                    <title>{ teamData ? (`3OM | ${teamData.name} Game Upload`) : "Loading.." }</title>
+                </Helmet>
+                <HStack height={20} px={5}>
+                    <Button variant={"unstyled"} onClick={onClickBack}>
+                        <FaArrowLeft />
+                    </Button>
+                </HStack>
+                <VStack alignItems={"flex-start"} padding={"5"}>
+                    <Text fontSize={"xl"} as="b"> 경기 업로드 </Text>
+                </VStack>
+                <VStack as="form" onSubmit={handleSubmit(onSubmit)} p={10} spacing={6}>
+                    <FormControl mb={5}>
+                        <FormLabel>
+                            우리팀
+                        </FormLabel>
+                        <Input type={"text"} isReadOnly value={teamData?.pk} px={1} required placeholder={teamData?.name} variant={"flushed"} color={"gray.400"}/>
+                    </FormControl>
+                    <FormControl mb={5}>
+                        <FormLabel>
+                            상대팀
+                        </FormLabel>
+                        <Input {...register("vsteam", { required : true})} px={1} type={"text"} isInvalid={Boolean(errors.vsteam?.message)} required placeholder="" variant={"flushed"}/>
+                        <FormHelperText fontSize={"xs"}>
+                        정확히 입력하면 상대 전적을 확인할 수 있습니다.
+                        </FormHelperText>
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>
+                            장소
+                        </FormLabel>
+                        <Input {...register("location", { required : true})} type={"text"} px={1} isInvalid={Boolean(errors.location?.message)} placeholder="" variant={"flushed"}/>
 
-                </FormControl>
-                <FormControl>
-                    <FormLabel> 
-                        장소 
-                    </FormLabel>
-                    <Box my={6}>
-                        <Calendar onChange={handleDateChange} prev2Label={null} next2Label={null} minDetail="month" maxDate={new Date(Date.now() + (60*60*24*7*4*6*1000))} formatDay={(locale, date) => date.toLocaleString("en", {day : "numeric"})} />
-                    </Box>
-                    <FormHelperText fontSize={"xs"}> 날짜와 시간은 필수로 선택해야 합니다. </FormHelperText>
-                </FormControl>
-                <FormControl>
-                    <FormLabel mb={5}>
-                        시작 시간
-                    </FormLabel>
-                    <Input {...register("start_time", { required : true })} type={"time"} step="1800" isInvalid={Boolean(errors.start_time?.message)} placeholder="" variant={"flushed"} />
-
-                </FormControl>
-                <FormControl>
-                    <FormLabel mb={5}>
-                        종료 시간
-                    </FormLabel>
-                    <Input {...register("end_time", { required : true })} type={"time"} step="1800" isInvalid={Boolean(errors.end_time?.message)} placeholder="" variant={"flushed"} />
-
-                </FormControl>
-                <FormControl>
-                    <FormLabel my={5}> 
-                        Line-ups 
-                    </FormLabel>
-                    {teamPlayersData?.map((player) => (
-                        <Box key={player.pk}>
-                            <Checkbox {...register("participants", {required:true})} value={player.pk} my={1}> {player.backnumber}. {player.name} </Checkbox>
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel> 
+                            날짜 
+                        </FormLabel>
+                        <Box my={6}>
+                            <Calendar onChange={handleDateChange} prev2Label={null} next2Label={null} minDetail="month" maxDate={new Date(Date.now() + (60*60*24*7*4*6*1000))} formatDay={(locale, date) => date.toLocaleString("en", {day : "numeric"})} />
                         </Box>
-                    ))}
-                    <FormHelperText mt={5} fontSize={"xs"}> *라인업은 경기 종료 시간 이후 수정 불가합니다. </FormHelperText>
-                    <FormHelperText fontSize={"xs"}> *스코어는 경기 종료 시간 이후 등록 가능합니다. </FormHelperText>
-                    <FormHelperText fontSize={"xs"}> *골 넣은 선수는 경기 종료 시간 이후 등록 가능합니다. </FormHelperText>
-                </FormControl>
+                        <FormHelperText fontSize={"xs"}> 날짜와 시간은 필수로 선택해야 합니다. </FormHelperText>
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel mb={5}>
+                            시작 시간
+                        </FormLabel>
+                        <Input {...register("start_time", { required : true })} type={"time"} step="1800" isInvalid={Boolean(errors.start_time?.message)} placeholder="" variant={"flushed"} />
+
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel mb={5}>
+                            종료 시간
+                        </FormLabel>
+                        <Input {...register("end_time", { required : true })} type={"time"} step="1800" isInvalid={Boolean(errors.end_time?.message)} placeholder="" variant={"flushed"} />
+
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel my={5}> 
+                            Line-ups 
+                        </FormLabel>
+                        {teamPlayersData?.map((player) => (
+                            <Box key={player.pk}>
+                                <Checkbox {...register("participants", {required:true})} value={player.pk} my={1}> {player.backnumber}. {player.name} </Checkbox>
+                            </Box>
+                        ))}
+                        <FormHelperText mt={5} fontSize={"xs"}> *라인업은 최소 1명 이상 선택해야 합니다. </FormHelperText>
+                        <FormHelperText mt={5} fontSize={"xs"}> *라인업은 경기 종료 시간 이후 수정 불가합니다. </FormHelperText>
+                        <FormHelperText fontSize={"xs"}> *스코어는 경기 종료 시간 이후 등록 가능합니다. </FormHelperText>
+                        <FormHelperText fontSize={"xs"}> *골 넣은 선수는 경기 종료 시간 이후 등록 가능합니다. </FormHelperText>
+                    </FormControl>
+                    <Empty />
+                    {uploadGameMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}
+                    <Button isLoading={uploadGameMutation.isLoading} type="submit"  color={"main.500"} width={"100%"} marginTop={4} variant={"unstyled"}> Upload </Button>
+                </VStack>
                 <Empty />
-                {uploadGameMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}
-                <Button isLoading={uploadGameMutation.isLoading} type="submit"  color={"main.500"} width={"100%"} marginTop={4} variant={"unstyled"}> Upload </Button>
-            </VStack>
-            <Empty />
+            </SpvsrOnlyPage>
         </ProtectedPage>
     )
 }

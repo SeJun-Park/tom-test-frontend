@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getGame, getTeam, getTeamPlayers, isSpvsr } from "../api";
+import { getGame, isSpvsr } from "../api";
 import ProtectedPage from "../components/ProtectedPage";
+import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
 import useUser from "../lib/useUser";
-import { IGame, ISpvsrUser, ITeam, ITinyPlayer } from "../types";
+import { IGame, ISpvsrUser } from "../types";
 import UpdateGameAfter from "./UpdateGameAfter";
 import UpdateGameBefore from "./UpdateGameBefore";
 
@@ -18,17 +19,19 @@ export default function UpdateGame() {
 
     const navigate = useNavigate();
 
-    if ( !user?.is_spvsr || spvsrData?.team.name !== gameData?.team.name) {
-        navigate("/")
-    }
-
     const teamPk = gameData?.team.pk
 
     const gameDateTime = `${gameData?.date}T${gameData?.end_time}`
 
+    if (spvsrData?.team.name !== gameData?.team.name) {
+        navigate("/")
+    }
+
     return (
         <ProtectedPage>
-            {teamPk ? (new Date(gameDateTime) > new Date() ? <UpdateGameBefore teamPk={teamPk} /> : <UpdateGameAfter teamPk={teamPk} />) : null}
+            <SpvsrOnlyPage>
+                {teamPk ? (new Date(gameDateTime) > new Date() ? <UpdateGameBefore teamPk={teamPk} /> : <UpdateGameAfter teamPk={teamPk} />) : null}
+            </SpvsrOnlyPage>
         </ProtectedPage>
     )
 }

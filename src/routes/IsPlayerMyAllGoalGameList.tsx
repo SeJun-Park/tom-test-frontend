@@ -1,7 +1,7 @@
 import { Badge, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft, FaFutbol, FaUserNinja } from "react-icons/fa";
+import { FaArrowLeft, FaFutbol } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { isPlayer, isPlayerGames, isPlayerGoalGames, isPlayerGoals } from "../api";
 import BigDivider from "../components/BigDivider";
@@ -9,7 +9,7 @@ import Empty from "../components/Empty";
 import Game from "../components/Game";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
-import { IGoals, IPlayerUser, ITinyGame, ITinyTeam } from "../types";
+import { IGoals, IPlayerUser, ITinyGame } from "../types";
 
 export default function IsPlayerMyAllGoalGameList() {
     const { isLoading : isPlayerLoading, data : isPlayerData, isError : isPlayerError } = useQuery<IPlayerUser>(["isPlayer"], isPlayer);
@@ -35,7 +35,7 @@ export default function IsPlayerMyAllGoalGameList() {
             <VStack alignItems={"flex-start"} padding={"5"}>
                 <Text fontSize={"xl"} as="b"> {isPlayerData?.username} </Text>
                 <HStack>
-                    <Badge backgroundColor={"black"} color={"white"}>
+                    <Badge ml={1} backgroundColor={"black"} color={"white"}>
                         <HStack>
                             <FaFutbol />
                             <Text>{isPlayerGoalsData ? isPlayerGoalsData.goals : "0"}</Text>

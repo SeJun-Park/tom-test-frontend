@@ -1,9 +1,6 @@
-import { useForm } from "react-hook-form";
-import { Button, FormControl, FormHelperText, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, useToast, VStack } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getPlayer, playerConnectingCancel } from "../api";
-import { IPlayer } from "../types";
-import PlayerNoLink from "./PlayerNoLink";
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast, VStack } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { playerConnectingCancel } from "../api";
 
 interface PlayerConnectCancelModalProps {
     isOpen : boolean;
@@ -34,8 +31,6 @@ export default function PlayerConnectCancelModal ( props : PlayerConnectCancelMo
         if(props.playerPk) {
             const playerPk = props.playerPk
             playerConnectCancelMutation.mutate({ playerPk });
-            // data:ILogInForm 으로 받고, mutation.mutate({ data.username, data.password }) 로 받고 싶은데 안됨
-            // console.log(data)
         }
     }
 
@@ -50,7 +45,7 @@ export default function PlayerConnectCancelModal ( props : PlayerConnectCancelMo
             <ModalBody>
                 <VStack>
                     
-                    <Button onClick={onClick} isLoading={playerConnectCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> disconnect </Button>
+                    <Button onClick={onClick} isLoading={playerConnectCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 플레이어 연결 해제하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>

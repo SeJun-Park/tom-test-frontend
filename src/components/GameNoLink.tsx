@@ -1,6 +1,5 @@
 import { Box, Container, Divider, Grid, HStack, Text, VStack } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { formatDate_pl } from "../lib/utils";
+import { formatGamesDate } from "../lib/utils";
 import { ITinyTeam } from "../types";
 
 interface IGameProps {
@@ -35,7 +34,7 @@ export default function GameNoLink( props : IGameProps ) {
             {/* <Box width={"100%"} height={"1"} bgGradient="linear(to-b, main.500, main.500, point.500)" my={0}> </Box> */}
                 <VStack alignItems={"flex-start"} px={3} mb={4}>
                     <Divider />
-                    <Text as="b" fontSize={"sm"}> {props.date ? (formatDate_pl(props.date)) : null} </Text>
+                    <Text as="b" fontSize={"sm"}> {props.date ? (formatGamesDate(props.date)) : null} </Text>
                     <Divider />
                     <HStack width={"100%"} height={"10"}>
                         <Container>

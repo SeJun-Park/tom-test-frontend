@@ -1,35 +1,26 @@
 import { Box, Button, Heading, HStack, LightMode, Text, useColorModeValue, useDisclosure, VStack } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
-import { FaFutbol, FaRunning, FaUserNinja } from "react-icons/fa";
+import { useRecoilValue } from "recoil";
+import { loginRequiredImageState } from "../atoms";
 import LoginModal from "../components/LoginModal";
 import SignUpModal from "../components/SignUpModal";
 
 export default function LogInRequired() {
 
     const logoColor = useColorModeValue("main.500", "white");
+    const loginRequiredImage = useRecoilValue(loginRequiredImageState)
 
     const { isOpen:isLoginOpen, onClose:onLoginClose, onOpen:onLoginOpen } = useDisclosure();
     const { isOpen:isSignUpOpen, onClose:onSignUpClose, onOpen:onSignUpOpen } = useDisclosure();
 
     return (
           <VStack justifyContent={"center"} minHeight={"100vh"}>
-            {/* <HStack justifyContent={"center"} width={"100%"} spacing={5} mb={2}>
-                <Box color={"main.500"}>
-                    <FaUserNinja size={"45"} />
-                </Box>
-                <Box color={"main.500"}>
-                    <FaUserNinja size={"45"} />
-                </Box>
-                <Box color={"main.500"}>
-                    <FaUserNinja size={"45"} />
-                </Box>
-            </HStack> */}
               <Helmet>
                   <title> 3OM | Home </title>
               </Helmet>
               <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                 <Box
-                backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/55da74ce-715c-4795-5746-c27ace4b5b00/public)"
+                backgroundImage={`url(${loginRequiredImage})`}
                 backgroundSize="cover"
                 backgroundPosition="center"
                 width="100%"
@@ -42,7 +33,7 @@ export default function LogInRequired() {
                 padding={2}
                 >
                   <Heading size="xl" color="white">
-                    로그인이 필요합니다
+                    로그인이 필요합니다.
                   </Heading>
                   {/* <Text color="black" mt={2}>
                     Please Log In / Sign Up

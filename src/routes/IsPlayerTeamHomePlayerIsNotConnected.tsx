@@ -18,7 +18,7 @@ export default function IsPlayerTeamHomePlayerIsNotConnected( props : IsPlayerTe
                 <Avatar size={"xl"}/>
                 <VStack alignItems={"flex-start"}>
                     <Text as="b" fontSize={"xl"}> 연결된 선수가 없습니다. </Text>
-                    <Button onClick={onOpen} backgroundColor={"main.500"} color={"white"} size={"sm"}> CONNECT </Button>
+                    <Button onClick={onOpen} backgroundColor={"main.500"} color={"white"} size={"sm"}> 플레이어 연결하기 </Button>
                 </VStack>
             </HStack>
             <VStack alignItems={"flex-start"} px={3}>
@@ -33,7 +33,7 @@ export default function IsPlayerTeamHomePlayerIsNotConnected( props : IsPlayerTe
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> 0 GAMES </Text>
+                    <Text as="b" fontSize={"sm"}> 0 경기 </Text>
                 </HStack>
             </VStack>
             <SmallDivider />
@@ -44,7 +44,7 @@ export default function IsPlayerTeamHomePlayerIsNotConnected( props : IsPlayerTe
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> 0 TIMES </Text>
+                    <Text as="b" fontSize={"sm"}> 0 회 </Text>
                 </HStack>
             </VStack>
             <SmallDivider />
@@ -55,7 +55,7 @@ export default function IsPlayerTeamHomePlayerIsNotConnected( props : IsPlayerTe
                 <Divider />
                 <HStack width={"100%"} justifyContent={"space-between"}>
                     <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                    <Text as="b" fontSize={"sm"}> 0 GOALS </Text>
+                    <Text as="b" fontSize={"sm"}> 0 골 </Text>
                 </HStack>
             </VStack>
             <Empty />

@@ -1,16 +1,16 @@
-import { Box, Button, Checkbox, Divider, FormControl, FormHelperText, FormLabel, HStack, Input, Text, useDisclosure, useToast, VStack } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Divider, FormControl, FormHelperText, FormLabel, HStack, Input, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft, FaMinus, FaPlus  } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { gameUpdate, getGame, getTeam, isSpvsr } from "../api";
-import DeleteGameModal from "../components/DeleteGameModal";
+import { gameUpdate, getGame, getTeam } from "../api";
 import Empty from "../components/Empty";
 import GoalPlayer from "../components/GoalPlayer";
 import ProtectedPage from "../components/ProtectedPage";
-import { IGame, IGoalPlayer, ISpvsrUser, ITeam } from "../types";
+import { IGame, ITeam } from "../types";
+
 interface UpdateGameAfterProps {
     teamPk : number
 }
@@ -29,7 +29,6 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
 
     const { gamePk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
 
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", props.teamPk], getTeam);
@@ -39,10 +38,6 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
     const navigate = useNavigate();
     const toast = useToast();
 
-    const { isOpen, onOpen, onClose } = useDisclosure() 
-
-    // const [ date, setDate ] = useState<Date | undefined>();
-    // const [selectedGoals, setSelectedGoals] = useState<number[] | undefined>();
 
     let initialGoals : number[] = []
     if (gameData) {
@@ -68,49 +63,31 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
         }
     }
 
-    // const handleGoalChange = (goalPk : number) => {
-    //     if (selectedGoals) {
-    //         if (selectedGoals.includes(goalPk)) {
-    //             // 이미 선택된 목표인 경우 선택 취소
-    //             setSelectedGoals(selectedGoals.filter((goal) => goal !== goalPk));
-    //           } else {
-    //             // 선택되지 않은 목표인 경우 선택 추가
-    //             setSelectedGoals([...selectedGoals, goalPk]);
-    //           }
-    //     }
-    //   };
-
     const updateGameMutation = useMutation(gameUpdate, {
         onSuccess : (data) => {
             toast({
-                title : "game upload success.",
+                title : "경기 수정 성공",
                 status : "success"
             });
             navigate(-1)
         }
     })
 
-    // const handleDateChange = (date : any) => {
-    //     setDate(date.toISOString().split("T")[0])
-    //     console.log(date)
-    //   };
 
     const onSubmit = ( { vsteam, team_score, vsteam_score, location, start_time, end_time, participants } : IUpdateGameForm) => {
-        // setTeam(name)
-        // teamSearchMutation.mutate({ name, participants, date});
+
+        if (!Array.isArray(participants)) {
+            participants = [participants];
+        }
+
         if ( gamePk && gameData) {
             updateGameMutation.mutate({gamePk, vsteam, team_score, vsteam_score, location, start_time, end_time, participants, goals})
         }
 
-        // uploadGameFormReset();
     }
 
     const onClickBack = () => {
         navigate(-1)
-    }
-
-    if (spvsrData?.team.name !== gameData?.team.name) {
-        navigate("/")
     }
 
     return (
@@ -124,7 +101,7 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
                 </Button>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                <Text fontSize={"xl"} as="b"> Update Game </Text>
+                <Text fontSize={"xl"} as="b"> 경기 수정하기 </Text>
             </VStack>
             <VStack as="form" onSubmit={handleSubmit(onSubmit)} p={10} spacing={6}>
                 <FormControl mb={5}>
@@ -188,7 +165,7 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
                     <FormLabel my={5}> 
                         Line-ups 
                     </FormLabel>
-                    {gameData?.participants?.map((participant) => {
+                    {gameData?.participants?.sort((a, b) => a.backnumber - b.backnumber).map((participant) => {
 
                                                         return (
                                                             <Box key={participant.pk}>
@@ -206,38 +183,14 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
                                                             </Box>
                                                         );
                                                         })}
-                    {/* {teamPlayersData?.map((player) => (
-                        <Box key={player.pk}>
-                            <Checkbox {...register("participants", {required:true})} 
-                                                                            defaultChecked={} value={player.pk} my={1}> {player.backnumber}. {player.name} </Checkbox>
-                        </Box>
-                    ))} */}
                     <FormHelperText mt={5} fontSize={"xs"}> *라인업은 경기 종료 시간 이후 수정 불가합니다. </FormHelperText>
                 </FormControl>
                 <FormControl>
                     <FormLabel my={5}> 
-                        골 넣은 선수
+                        골 넣은 선수 
                     </FormLabel>
-                    {/* {gameData?.participants.map((participant) => {
-                                                        // const isChecked = gameData?.participants?.includes(player);
-                                                        const isChecked = selectedGoals?.some((goalplayer) => goalplayer === participant.pk);
-
-                                                        return (
-                                                            <Box key={participant.pk}>
-                                                            <Checkbox
-                                                                {...register("goals")}
-                                                                defaultChecked={isChecked} // defaultChecked prop을 사용하여 체크 여부 설정
-                                                                onChange={() => handleGoalChange(participant.pk)}
-                                                                value={participant.pk}
-                                                                my={1}
-                                                            >
-                                                                {participant.backnumber}. {participant.name}
-                                                            </Checkbox>
-                                                            </Box>
-                                                        );
-                                                        })} */}
                     <VStack alignItems={"flex-start"}> 
-                        {gameData?.participants.map((participant) => 
+                        {gameData?.participants.sort((a, b) => a.backnumber - b.backnumber).map((participant) => 
                                                                     <HStack width={"100%"} px={3} key={participant.pk}>
                                                                         <Button onClick={plusBtnClick} value={participant.pk} size={"sm"} color={"main.500"} variant={"unstyled"}>
                                                                             <FaPlus />
@@ -247,31 +200,12 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
                                                                             )}
                     
                     </VStack>
-
-                    
-                        {/* {gameData?.participants.map((participant) => {
-                                                        // const isChecked = gameData?.participants?.includes(player);
-                                                        const isChecked = gameData?.goals.some((goalplayer) => goalplayer.player.pk === participant.pk);
-
-                                                        return (
-                                                            <Box key={participant.pk}>
-                                                            <Checkbox
-                                                                {...register("goals")}
-                                                                defaultChecked={isChecked} // defaultChecked prop을 사용하여 체크 여부 설정
-                                                                value={participant.pk}
-                                                                my={1}
-                                                            >
-                                                                {participant.backnumber}. {participant.name}
-                                                            </Checkbox>
-                                                            </Box>
-                                                        );
-                                                        })} */}
                 </FormControl>
                 <Divider />
                 <VStack spacing={4} px={7} justifyContent={"flex-start"} alignItems={"flex-start"}>
                     {goals?.map((goalplayer, index) => 
-                                                    <HStack>
-                                                        <GoalPlayer key={index} playerPk={goalplayer} />
+                                                    <HStack key={index}>
+                                                        <GoalPlayer playerPk={goalplayer} />
                                                         <Button value={goalplayer} onClick={minusBtnClick} size={"sm"} color={"black"} variant={"unstyled"}>
                                                             <FaMinus />
                                                         </Button>
@@ -282,11 +216,9 @@ export default function UpdateGameAfter( props : UpdateGameAfterProps ) {
                 <Divider />
                 <Empty />
                 {updateGameMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}
-                <Button isLoading={updateGameMutation.isLoading} type="submit" backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"solid"}> Update </Button>
-                <Button onClick={onOpen} isLoading={updateGameMutation.isLoading}  backgroundColor={"black"} color={"white"} width={"100%"} marginTop={4} variant={"solid"}> Delete </Button>
+                <Button isLoading={updateGameMutation.isLoading} type="submit" backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"solid"}> 수정하기 </Button>
             </VStack>
             <Empty />
-            <DeleteGameModal isOpen={isOpen} onClose={onClose}/>
         </ProtectedPage>
     )
 }

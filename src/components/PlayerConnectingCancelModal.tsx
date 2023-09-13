@@ -1,9 +1,6 @@
-import { useForm } from "react-hook-form";
-import { Button, FormControl, FormHelperText, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, useToast, VStack } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getPlayer, playerConnectingCancel } from "../api";
-import { IPlayer } from "../types";
-import PlayerNoLink from "./PlayerNoLink";
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast, VStack } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { playerConnectingCancel } from "../api";
 
 interface PlayerConnectingCancelModalProps {
     isOpen : boolean;
@@ -21,7 +18,7 @@ export default function PlayerConnectingCancelModal ( props : PlayerConnectingCa
             console.log("player connect successful")
             // data.ok
             toast({
-                title : "플레이어 연결 해제 요청 성공",
+                title : "플레이어 연결 요청 취소 성공",
                 status : "success"
             });
             props.onClose();
@@ -33,8 +30,6 @@ export default function PlayerConnectingCancelModal ( props : PlayerConnectingCa
         if(props.playerPk) {
             const playerPk = props.playerPk
             playerConnectingCancelMutation.mutate({ playerPk });
-            // data:ILogInForm 으로 받고, mutation.mutate({ data.username, data.password }) 로 받고 싶은데 안됨
-            // console.log(data)
         }
     }
 
@@ -44,12 +39,12 @@ export default function PlayerConnectingCancelModal ( props : PlayerConnectingCa
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> 연결을 해제하시겠습니까? </ModalHeader>
+            <ModalHeader> 플레이어 연결 요청을 취소하시겠습니까? </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
                 <VStack>
                     
-                    <Button onClick={onClick} isLoading={playerConnectingCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> disconnect </Button>
+                    <Button onClick={onClick} isLoading={playerConnectingCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 취소하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>

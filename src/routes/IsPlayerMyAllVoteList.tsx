@@ -35,7 +35,7 @@ export default function IsPlayerMyAllVoteList() {
             <VStack alignItems={"flex-start"} padding={"5"}>
                 <Text fontSize={"xl"} as="b"> {isPlayerData?.username} </Text>
                 <HStack>
-                    <Badge backgroundColor={"point.500"} color={"black"}>
+                    <Badge ml={1} backgroundColor={"point.500"} color={"black"}>
                         <HStack>
                             <FaUserNinja />
                             <Text>{isPlayerTomGamesData ? isPlayerTomGamesData.length : "0"}</Text>

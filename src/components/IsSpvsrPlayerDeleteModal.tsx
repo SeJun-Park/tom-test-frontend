@@ -1,9 +1,7 @@
-import { useForm } from "react-hook-form";
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {  getPlayer, playerDelete } from "../api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { playerDelete } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
-import { IPlayer } from "../types";
 
 interface IsSpvsrPlayerDeleteModalProps {
     isOpen : boolean;
@@ -13,7 +11,6 @@ interface IsSpvsrPlayerDeleteModalProps {
 export default function IsSpvsrPlayerDeleteModal ( props : IsSpvsrPlayerDeleteModalProps ) {
 
     const { playerPk } = useParams();
-    const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayer>(["player", playerPk], getPlayer);
     const navigate = useNavigate();
 
     const toast = useToast();
@@ -21,7 +18,7 @@ export default function IsSpvsrPlayerDeleteModal ( props : IsSpvsrPlayerDeleteMo
 
     const playerDeleteMutation = useMutation(playerDelete, {
         onSuccess : (data) => {
-            console.log("player add successful")
+            console.log("player delete successful")
             // data.ok
             toast({
                 title : "플레이어 삭제 성공",
@@ -29,6 +26,7 @@ export default function IsSpvsrPlayerDeleteModal ( props : IsSpvsrPlayerDeleteMo
             });
             props.onClose();
             navigate(-1)
+            queryClient.refetchQueries(["teamPlayers"])
         },
     });
 
@@ -44,12 +42,12 @@ export default function IsSpvsrPlayerDeleteModal ( props : IsSpvsrPlayerDeleteMo
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> 정말 삭제하시겠습니까? </ModalHeader>
+            <ModalHeader> 플레이어를 삭제하시겠습니까? </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
                 <VStack>
-                    {playerDeleteMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> something is wrong </Text>) : null}
-                    <Button onClick={onClick} isLoading={playerDeleteMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> Delete </Button>
+                    {playerDeleteMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> 문제가 발생했습니다. </Text>) : null}
+                    <Button onClick={onClick} isLoading={playerDeleteMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 삭제하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>

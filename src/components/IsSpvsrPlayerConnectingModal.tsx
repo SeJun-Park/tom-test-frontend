@@ -1,9 +1,7 @@
-import { useForm } from "react-hook-form";
-import { Avatar, Box, Button, Divider, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useToast, VStack } from "@chakra-ui/react";
+import { Avatar, Button, Divider, FormLabel, HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getPlayer, getTeamPlayersNotConnected, playerConnect, playerConnecting, playerConnectingCancel } from "../api";
-import { IPlayer, ITinyPlayer } from "../types";
-import { FaCheck } from "react-icons/fa";
+import { getPlayer, playerConnect, playerConnectingCancel } from "../api";
+import { IPlayer } from "../types";
 import { useParams } from "react-router-dom";
 
 interface IsSpvsrPlayerConnectingModalProps {
@@ -64,7 +62,7 @@ export default function IsSpvsrPlayerConnectingModal ( props : IsSpvsrPlayerConn
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> Connecting.. </ModalHeader>
+            <ModalHeader> 연결 요청 중.. </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
                 <VStack>
@@ -87,8 +85,8 @@ export default function IsSpvsrPlayerConnectingModal ( props : IsSpvsrPlayerConn
                     </HStack>
                     {playerConnectMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> connect failed </Text>) : null}
                     <Divider />
-                    <Button onClick={onAllowBtnClick} type="submit" isLoading={playerConnectMutation.isLoading} size={"md"} width="100%" backgroundColor={"point.500"} color={"black"}> Allow </Button>
-                    <Button onClick={onDenyBtnClick} type="submit" isLoading={playerConnectingCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> Deny </Button>
+                    <Button onClick={onAllowBtnClick} type="submit" isLoading={playerConnectMutation.isLoading} size={"md"} width="100%" backgroundColor={"point.500"} color={"black"}> 허용하기 </Button>
+                    <Button onClick={onDenyBtnClick} type="submit" isLoading={playerConnectingCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 거부하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>

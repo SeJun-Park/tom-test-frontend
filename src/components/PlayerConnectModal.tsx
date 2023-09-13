@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Box, Button, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useToast, VStack } from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTeamPlayersNotConnected, playerConnecting } from "../api";
 import { ITinyPlayer } from "../types";
@@ -39,8 +39,6 @@ export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
 
     const onSubmit = ({ playerPk, code }:IPlayerConnectForm) => {
         playerConnectingMutation.mutate({ playerPk, code });
-        // data:ILogInForm 으로 받고, mutation.mutate({ data.username, data.password }) 로 받고 싶은데 안됨
-        // console.log(data)
     }
 
     return (
@@ -49,7 +47,7 @@ export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> Player Connect </ModalHeader>
+            <ModalHeader> 플레이어 연결 </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
                 <VStack>
@@ -68,7 +66,7 @@ export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
                         </InputGroup>
                     </FormControl>
                     {playerConnectingMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> code is wrong </Text>) : null}
-                    <Button type="submit" isLoading={playerConnectingMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> CONNECT </Button>
+                    <Button type="submit" isLoading={playerConnectingMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> 플레이어 연결하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>

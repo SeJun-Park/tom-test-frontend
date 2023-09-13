@@ -22,7 +22,7 @@ export default function Community() {
                 </Button>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"} mb={10}>
-                <Text fontSize={"xl"} as="b"> 준비중입니다. </Text>
+                <Text fontSize={"xl"} as="b"> 준비중입니다 🥹 </Text>
             </VStack>
         </>
     )

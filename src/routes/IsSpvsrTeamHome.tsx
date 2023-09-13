@@ -1,15 +1,23 @@
-import { Avatar, Badge, Box, Card, CardBody, CircularProgress, CircularProgressLabel, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { Avatar, Badge, Box, Button, Card, CardBody, CardHeader, CircularProgress, CircularProgressLabel, Divider, Flex, Grid, Heading, HStack, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Select, SimpleGrid, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaArrowRight, FaRunning, FaUser } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
-import { getTeam, getTeamGames, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamTomGames, isSpvsr } from "../api";
+import { FaArrowRight, FaCamera, FaReceipt, FaRunning, FaTasks, FaTrash, FaTrashAlt, FaUser } from "react-icons/fa";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getTeam, getTeamFeeds, getTeamGames, getTeamNotisByMonth, getTeamNotisMonth, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamSchedulesByMonth, getTeamSchedulesMonth, getTeamTomGames, isSpvsr } from "../api";
 import BigDivider from "../components/BigDivider";
+import CaptureButton from "../components/CaptureButton";
 import Empty from "../components/Empty";
+import Feed from "../components/Feed";
+import FeedAddModal from "../components/FeedAddModal";
 import Game from "../components/Game";
+import Noti from "../components/Noti";
 import NullGame from "../components/NullGame";
+import Schedule from "../components/Schedule";
+import ScheduleAddModal from "../components/ScheduleAddModal";
 import SmallDivider from "../components/SmallDivider";
-import { ISpvsrUser, ITeam, ITinyGame, ITinyPlayer } from "../types";
+import TeamPhotoUploadModal from "../components/TeamPhotoUploadModal";
+import { IFeed, INoti, ISchedule, ISpvsrUser, ITeam, ITinyGame, ITinyPlayer } from "../types";
 
 export default function IsSpvsrTeamHome() {
 
@@ -22,6 +30,109 @@ export default function IsSpvsrTeamHome() {
     const { isLoading : teamGamesLoading, data : teamGamesData, isError : teamGamesError } = useQuery<ITinyGame[]>(["teamGames", teamPk], getTeamGames);
     const { isLoading : teamTomGamesLoading, data : teamTomGamesData, isError : teamTomGamesError } = useQuery<ITinyGame[]>(["teamTomGames", teamPk], getTeamTomGames);
     const { isLoading : teamPlayersLoading, data : teamPlayersData, isError : teamPlayersError } = useQuery<ITinyPlayer[]>(["teamPlayers", teamPk], getTeamPlayers);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const currentYearMonth = `${new Date().getFullYear()}년 ${(new Date().getMonth() + 1).toString().padStart(2, '0')}월`
+
+    const { isLoading : teamNotisMonthLoading, data : teamNotisMonthData, isError : teamNotisMonthError } = useQuery<string[]>(["teamNotisMonth", teamPk], getTeamNotisMonth, {
+        onSuccess: (data) => {
+            if (!data.includes(currentYearMonth)) {
+                setTeamNotisMonth([currentYearMonth, ...data]);
+            } else {
+                // 기존 data 배열에서 currentYearMonth를 제거
+                const filteredData = data.filter(item => item !== currentYearMonth);
+                // currentYearMonth를 맨 앞에 추가
+                setTeamNotisMonth([currentYearMonth, ...filteredData]);
+            }
+        }
+    });
+    const { isLoading : teamSchedulesMonthLoading, data : teamSchedulesMonthData, isError : teamSchedulesMonthError } = useQuery<string[]>(["teamSchedulesMonth", teamPk], getTeamSchedulesMonth, {
+        onSuccess: (data) => {
+            if (!data.includes(currentYearMonth)) {
+                setTeamSchedulesMonth([currentYearMonth, ...data]);
+            } else {
+                // 기존 data 배열에서 currentYearMonth를 제거
+                const filteredData = data.filter(item => item !== currentYearMonth);
+                // currentYearMonth를 맨 앞에 추가
+                setTeamSchedulesMonth([currentYearMonth, ...filteredData]);
+            }
+        }
+    });
+    const { isLoading : teamFeedsLoading, data : teamFeedsData, isError : teamFeedsError } = useQuery<IFeed[]>(["teamFeeds", teamPk], getTeamFeeds);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const [ teamNotisMonth, setTeamNotisMonth ] = useState<string[]>();
+    const [ teamSchedulesMonth, setTeamSchedulesMonth ] = useState<string[]>();
+
+    const [ selectedNotisDate, setSelectedNotisDate ] = useState<string>();
+    const [ selectedSchedulesDate, setSelectedSchedulesDate ] = useState<string>();
+
+    const [ teamNotisByMonth, setTeamNotisByMonth ] = useState<INoti[]>();
+    const [ teamSchedulesByMonth, setTeamSchedulesByMonth ] = useState<ISchedule[]>();
+
+    const teamNotisByMonthMutation = useMutation(getTeamNotisByMonth, 
+        {
+            onSuccess : (data) => {
+                setTeamNotisByMonth(data)
+            },
+        }
+    )
+
+    useEffect(() => {
+
+        setSelectedNotisDate(currentYearMonth)
+        setSelectedSchedulesDate(currentYearMonth)
+
+        const [ year, month ] = currentYearMonth.split('년 ').map((part, index) => index === 1 ? part.slice(0, -1) : part);
+        if (teamPk) {
+            teamNotisByMonthMutation.mutate({teamPk, year, month});
+            teamSchedulesByMonthMutation.mutate({teamPk, year, month});
+        }
+    }, []);
+
+    const handleChangeNotisDate = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedNotisDate(event.target.value);
+        const [ year, month ] = event.target.value.split('년 ').map((part, index) => index === 1 ? part.slice(0, -1) : part);
+        if(teamPk) {
+            teamNotisByMonthMutation.mutate({teamPk, year, month})
+        }
+      };
+
+    const teamSchedulesByMonthMutation = useMutation(getTeamSchedulesByMonth, 
+        {
+            onSuccess : (data) => {
+                setTeamSchedulesByMonth(data)
+            },
+        }
+    )
+
+    const handleChangeSchedulesDate = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedSchedulesDate(event.target.value);
+        const [ year, month ] = event.target.value.split('년 ').map((part, index) => index === 1 ? part.slice(0, -1) : part);
+        if(teamPk) {
+            teamSchedulesByMonthMutation.mutate({teamPk, year, month})
+        }
+      };
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const [tabIndexThomeSub, setTabIndexThomeSub] = useState(Number(localStorage.getItem('tabIndexThomeSub')) || 0);
+
+    useEffect(() => {
+      localStorage.setItem('tabIndexThomeSub', tabIndexThomeSub.toString());
+    }, [tabIndexThomeSub]);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const { isOpen : isScheduleOpen, onOpen : onScheduleOpen, onClose : onScheduleClose } = useDisclosure()
+const { isOpen : isFeedOpen, onOpen : onFeedOpen, onClose : onFeedClose } = useDisclosure()
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const navigate = useNavigate();
 
     return (
         <>
@@ -37,37 +148,36 @@ export default function IsSpvsrTeamHome() {
                                         : null}
             </HStack>
             <Tabs isFitted variant='enclosed'>
-            <TabList mb='1em'>
+            <TabList mb='1em' justifyContent={"center"}>
                 <Tab _selected={{color : "main.500"}}> 팀 프로필 </Tab>
             </TabList>
             <TabPanels>
                 <TabPanel p={"0"}>
                     <VStack py={5}>
-                        <Avatar src={teamData?.avatar} size={"2xl"} />
+                        <HStack>
+                            <VStack>
+                                <Avatar src={teamData?.avatar} size={"2xl"} />
+                            {/* <Avatar src={"https://prodigits.co.uk/thumbs/wallpapers/p2ls/drawings/26/5761411112242453.jpg"} size={"sm"} ml={-10} showBorder={true} /> */}
+                            </VStack>
+                            <VStack alignItems={"flex-end"}>
+                                <Badge ml={1} backgroundColor={"gray.100"} color={"black"}>
+                                    <Text> since {teamData ? teamData.since : ""} </Text>
+                                </Badge>
+                                <Badge ml={1} backgroundColor={"black"} color={"white"}>
+                                    <HStack>
+                                        <FaUser />
+                                        <Text>{teamPlayersData ? teamPlayersData.length : "0"}</Text>
+                                    </HStack>
+                                </Badge>
+                                <Badge ml={1} backgroundColor={"main.500"} color={"white"}>
+                                    <HStack>
+                                        <FaRunning />
+                                        <Text>{teamGamesData ? teamGamesData.length : "0"}</Text>
+                                    </HStack>
+                                </Badge>
+                            </VStack>
+                        </HStack>
                     </VStack>
-                    <HStack justifyContent={"center"}>
-                        <Badge ml={1} backgroundColor={"gray.100"} color={"black"}>
-                            <Text> since {teamData ? teamData.since : ""} </Text>
-                        </Badge>
-                        <Badge ml={1} backgroundColor={"black"} color={"white"}>
-                            <HStack>
-                                <FaUser />
-                                <Text>{teamPlayersData ? teamPlayersData.length : "0"}</Text>
-                            </HStack>
-                        </Badge>
-                        <Badge ml={1} backgroundColor={"main.500"} color={"white"}>
-                            <HStack>
-                                <FaRunning />
-                                <Text>{teamGamesData ? teamGamesData.length : "0"}</Text>
-                            </HStack>
-                        </Badge>
-                    </HStack>
-                    <HStack justifyContent={"center"} mt={4}>
-                        <Text fontSize={"xs"}> 연결된 선수 </Text>
-                        <CircularProgress size={"65px"} thickness={"5px"} value={teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? Number(((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1)) : 0} color='main.500'>
-                                        <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
-                        </CircularProgress>
-                    </HStack>
                     {teamData?.description && (
                         <VStack>
                             <Card my={4} width={"90%"} textAlign={"center"}>
@@ -91,54 +201,214 @@ export default function IsSpvsrTeamHome() {
                                 : <NullGame />) : <NullGame />}
                     </VStack>
                     <BigDivider />
-                    <Link to={`/teams/${teamPk}/players`}>
-                        <VStack alignItems={"flex-start"} px={3} mt={8}>
-                            <HStack width={"100%"} justifyContent={"space-between"}>
-                                <HStack>
-                                    <Text as="b" color={"main.500"} fontSize={"md"}> 선수 </Text>
-                                    {teamPlayersConnectingData && teamPlayersConnectingData?.length !== 0 ?                             
-                                                                    <Box justifyContent={"center"}>
-                                                                        <Badge ml={1} bg={"point.500"} color={"black"}> {teamPlayersConnectingData.length} </Badge>
-                                                                    </Box>
-                                                                : null}
-                                </HStack>
-                                <FaArrowRight size={"10"}/>
-                            </HStack>
-                            <Divider />
-                            <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamPlayersData ? teamPlayersData.length : "0"} 명 </Text>
-                            </HStack>
-                        </VStack>
-                    </Link>
-                    <SmallDivider />
-                    <Link to={`/teams/${teamPk}/games`}>
-                        <VStack alignItems={"flex-start"} px={3} mt={8}>
-                            <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
-                                <FaArrowRight size={"10"}/>
-                            </HStack>
-                            <Divider />
-                            <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamGamesData ? teamGamesData.length : "0"} 경기 </Text>
-                            </HStack>
-                        </VStack>
-                    </Link>
-                    <SmallDivider />
-                    <Link to={`/teams/${teamPk}/votes`}>
-                        <VStack alignItems={"flex-start"} px={3} mt={8}>
-                            <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" color={"main.500"} fontSize={"md"}> 투표 </Text>
-                                <FaArrowRight size={"10"}/>
-                            </HStack>
-                            <Divider />
-                            <HStack width={"100%"} justifyContent={"space-between"}>
-                                <Text as="b" fontSize={"sm"}> TOTAL </Text>
-                                <Text as="b" fontSize={"sm"}> {teamTomGamesData ? teamTomGamesData.length : "0"} 회 </Text>
-                            </HStack>
-                        </VStack>
-                    </Link>
+
+                    <Tabs isLazy align={"center"} variant='soft-rounded' index={tabIndexThomeSub} onChange={setTabIndexThomeSub}>
+                        <TabList mb='1em'>
+                            <Tab _selected={{color : "white", bg : "main.500"}}> 기록 </Tab>
+                            <Tab _selected={{color : "white", bg : "main.500"}}> 알림 </Tab>
+                            <Tab _selected={{color : "white", bg : "main.500"}}> 일정 </Tab>
+                            <Tab _selected={{color : "white", bg : "main.500"}}> 피드 </Tab>
+                            <Tab _selected={{color : "white", bg : "main.500"}}> 회비 </Tab>
+                        </TabList>
+                        <TabPanels>
+                            <TabPanel p={"0"}>
+                                <Link to={`/teams/${teamPk}/players`}>
+                                    <VStack alignItems={"flex-start"} px={3} mt={8}>
+                                        <HStack width={"100%"} justifyContent={"space-between"}>
+                                            <HStack>
+                                                <Text as="b" color={"main.500"} fontSize={"md"}> 선수 </Text>
+                                                {teamPlayersConnectingData && teamPlayersConnectingData?.length !== 0 ?                             
+                                                                                <Box justifyContent={"center"}>
+                                                                                    <Badge ml={1} bg={"point.500"} color={"black"}> {teamPlayersConnectingData.length} </Badge>
+                                                                                </Box>
+                                                                            : null}
+                                            </HStack>
+                                            <FaArrowRight size={"10"}/>
+                                        </HStack>
+                                        <Divider />
+                                        <HStack width={"100%"} justifyContent={"space-between"}>
+                                            <Text as="b" fontSize={"sm"}> TOTAL </Text>
+                                            <Text as="b" fontSize={"sm"}> {teamPlayersData ? teamPlayersData.length : "0"} 명 </Text>
+                                        </HStack>
+                                    </VStack>
+                                </Link>
+                                <SmallDivider />
+                                <Link to={`/teams/${teamPk}/games`}>
+                                    <VStack alignItems={"flex-start"} px={3} mt={8}>
+                                        <HStack width={"100%"} justifyContent={"space-between"}>
+                                            <Text as="b" color={"main.500"} fontSize={"md"}> 경기 </Text>
+                                            <FaArrowRight size={"10"}/>
+                                        </HStack>
+                                        <Divider />
+                                        <HStack width={"100%"} justifyContent={"space-between"}>
+                                            <Text as="b" fontSize={"sm"}> TOTAL </Text>
+                                            <Text as="b" fontSize={"sm"}> {teamGamesData ? teamGamesData.length : "0"} 경기 </Text>
+                                        </HStack>
+                                    </VStack>
+                                </Link>
+                                <SmallDivider />
+                                <Link to={`/teams/${teamPk}/votes`}>
+                                    <VStack alignItems={"flex-start"} px={3} mt={8}>
+                                        <HStack width={"100%"} justifyContent={"space-between"}>
+                                            <Text as="b" color={"main.500"} fontSize={"md"}> 투표 </Text>
+                                            <FaArrowRight size={"10"}/>
+                                        </HStack>
+                                        <Divider />
+                                        <HStack width={"100%"} justifyContent={"space-between"}>
+                                            <Text as="b" fontSize={"sm"}> TOTAL </Text>
+                                            <Text as="b" fontSize={"sm"}> {teamTomGamesData ? teamTomGamesData.length : "0"} 회 </Text>
+                                        </HStack>
+                                    </VStack>
+                                </Link>
+                                <Empty />
+                            </TabPanel>
+                            <TabPanel p={"0"}>
+                                <Select mb={5} onChange={handleChangeNotisDate} value={selectedNotisDate}>
+                                    {teamNotisMonth?.map((yearMonth) => <option key={yearMonth} value={yearMonth}>{yearMonth}</option>)}
+                                </Select>
+                                <VStack spacing={5}>
+                                    {teamNotisByMonth && teamNotisByMonth.length !== 0 ? teamNotisByMonth.map((noti, index) => {
+                                                                                            if (new Date(noti.dateTime) > new Date()) {
+                                                                                                // noti.dateTime이 현재 시간보다 더 늦은 경우는 렌더링하지 않습니다.
+                                                                                                return <Text padding={5} key={index}>예정된 알림이 있습니다.</Text>;
+                                                                                              }
+
+                                                                                            return (
+                                                                                                    <Noti 
+                                                                                                    key={index}
+                                                                                                    name={noti.name}
+                                                                                                    description={noti.description}
+                                                                                                    dateTime={noti.dateTime}
+                                                                                                    title={noti.title}
+                                                                                                    category={noti.category}
+                                                                                                    payload={noti.payload}
+                                                                                                    plan={teamData ? teamData?.plan : ""}
+                                                                                                    isspvsr={(spvsrData?.team.name === teamData?.name)}
+                                                                                                    />
+                                                                                                    )
+                                                                                                })
+                                                                                            
+                                                                                                : <Text padding={5}>등록된 알림이 없습니다.</Text>}
+                                </VStack>
+                                <Empty />
+                            </TabPanel>
+                            <TabPanel p={"0"}>
+                                <VStack alignItems={"flex-end"} px={5} pb={5}>
+                                    <Box>
+                                        {spvsrData?.team.name === teamData?.name ? 
+                                                                                <Button onClick={onScheduleOpen} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 일정 추가하기 </Button>
+                                                                                // onClick={onOpen} 
+                                                                                    : null}
+                                        
+                                    </Box>
+                                </VStack>
+                                <Select mb={5} onChange={handleChangeSchedulesDate} value={selectedSchedulesDate}>
+                                    {teamSchedulesMonth?.map((yearMonth) => <option key={yearMonth} value={yearMonth}>{yearMonth}</option>)}
+                                </Select>
+                                <Box id="captureTarget">
+                                <VStack alignItems={"flex-start"} px={3} spacing={4}>
+                                    <Divider />
+                                    <HStack>
+                                    <Text as="b" color={"black"} fontSize={"sm"} > {teamData?.name} </Text>
+                                    <Text as="b" color={"main.500"} fontSize={"sm"} > | {selectedSchedulesDate} 일정 </Text>
+                                    </HStack>
+                                    <Divider mb={5} />
+                                </VStack>
+                                <VStack spacing={5}>
+                                    {teamData && teamSchedulesByMonth && teamSchedulesByMonth.length !== 0 ? teamSchedulesByMonth.map((schedule, index) => 
+                                                                                                <Schedule
+                                                                                                key={index}
+                                                                                                pk={schedule.id}
+                                                                                                avatar={teamData?.avatar}
+                                                                                                dateTime={schedule.dateTime}
+                                                                                                category={schedule.category}
+                                                                                                title={schedule.title}
+                                                                                                isspvsr={(spvsrData?.team.name === teamData?.name)}
+                                                                                                />)
+                                                                                                   : <Text padding={5}>등록된 일정이 없습니다.</Text>}
+                                </VStack>
+                                {teamPk && <ScheduleAddModal isOpen={isScheduleOpen} onClose={onScheduleClose} teamPk={teamPk} />}
+                                <Empty />
+                                </Box>
+                                <CaptureButton />
+                            </TabPanel>
+                            <TabPanel p={"0"}>
+                            {/* <Select mb={5}>
+                                <option>전체</option>
+                                {teamFeedsMonthData?.map((yearMonth) => <option key={yearMonth} value={yearMonth}>{yearMonth}</option>)}
+                            </Select> */}
+                            <VStack alignItems={"flex-end"} px={5} pb={5}>
+                                    {spvsrData?.team.name === teamData?.name ? 
+                                                                        <>
+                                                                            <Button onClick={onFeedOpen} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 피드 추가하기 </Button>
+                                                                            <FeedAddModal isOpen={isFeedOpen} onClose={onFeedClose} />
+                                                                        </>
+                                                                            // onClick={onOpen} 
+                                                                                : null}
+                            </VStack>
+                            <VStack spacing={5}>
+                                {teamData && teamFeedsData && teamFeedsData.length !== 0 ? teamFeedsData.map((feed, index) => 
+                                                                                        <Feed 
+                                                                                        key={index}
+                                                                                        pk={feed.id}
+                                                                                        avatar={teamData.avatar}
+                                                                                        name={teamData.name}
+                                                                                        created_at={feed.created_at}
+                                                                                        title={feed.title}
+                                                                                        payload={feed.payload}
+                                                                                        photos={feed.photos}
+                                                                                        isspvsr={(spvsrData?.team.name === teamData?.name)}
+                                                                                        />
+                                                                                    ) 
+                                                                                : <Text padding={5}>새로운 소식이 없습니다.</Text>}
+                                </VStack>
+                                <Empty />
+                            </TabPanel>
+                            <TabPanel p={"0"}>
+                                <VStack spacing={2} mt={8}>
+                                    <Link to={`/teams/${teamPk}/dues/payment`}>
+                                        <Card maxW='xs' minW='xs'>
+                                            <CardHeader>
+                                                <Flex gap="4" alignItems='center'>
+                                                    <Box color={"main.500"}>
+                                                        <FaTasks />
+                                                    </Box>
+                                                    <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                                                        <Box>
+                                                        <VStack alignItems={"flex-start"}>
+                                                            <Heading size='sm'>회비 납부 현황</Heading>
+                                                        </VStack>
+                                                        </Box>
+                                                    </Flex>
+                                                    <FaArrowRight size={"10"}/>
+                                                </Flex>
+                                            </CardHeader>
+                                        </Card>
+                                    </Link>
+                                    <Link to={`/teams/${teamPk}/dues/details`}>
+                                        <Card maxW='xs' minW='xs'>
+                                            <CardHeader>
+                                                <Flex gap="4" alignItems='center'>
+                                                    <Box color={"point.500"}>
+                                                        <FaReceipt />
+                                                    </Box>
+                                                    <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                                                        <Box>
+                                                        <VStack alignItems={"flex-start"}>
+                                                            <Heading size='sm'>회비 사용 내역</Heading>
+                                                        </VStack>
+                                                        </Box>
+                                                    </Flex>
+                                                    <FaArrowRight size={"10"}/>
+                                                </Flex>
+                                            </CardHeader>
+                                        </Card>
+                                    </Link>
+                                </VStack>
+                                <Empty />
+                            </TabPanel>
+                        </TabPanels>
+                    </Tabs>
                     <Empty />
                 </TabPanel>
             </TabPanels>

@@ -1,6 +1,4 @@
-import { Avatar, Box, Divider, HStack, Text } from "@chakra-ui/react"
-import { FaArrowRight } from "react-icons/fa"
-import { Link } from "react-router-dom"
+import { Avatar, Box, HStack, Text } from "@chakra-ui/react"
 
 interface IPlayerNoLinkProps {
     pk : number,
@@ -18,7 +16,7 @@ export default function PlayerNoLink ( props : IPlayerNoLinkProps ) {
                     <HStack spacing={3}>
                         <Avatar src={props.avatar}></Avatar>
                         <Text as="b" fontSize={"xs"}>{props.backnumber}.</Text>
-                        <Text as="b" fontSize={"xs"}>{props.name}</Text>
+                        <Text as="b" fontSize={"sm"}>{props.name}</Text>
                     </HStack>
                 </HStack>
         </Box>

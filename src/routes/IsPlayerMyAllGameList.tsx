@@ -33,7 +33,7 @@ export default function IsPlayerMyAllGameList() {
             <VStack alignItems={"flex-start"} padding={"5"}>
                 <Text fontSize={"xl"} as="b"> {isPlayerData?.username} </Text>
                 <HStack>
-                    <Badge backgroundColor={"main.500"} color={"white"}>
+                    <Badge ml={1} backgroundColor={"main.500"} color={"white"}>
                         <HStack>
                             <FaRunning />
                             <Text>{isPlayerGamesData ? isPlayerGamesData.length : "0"}</Text>

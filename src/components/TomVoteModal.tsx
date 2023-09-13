@@ -1,10 +1,9 @@
-import { Box, Button, Checkbox, Divider, FormControl, FormHelperText, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast, VStack } from "@chakra-ui/react";
+import { Box, Button, Checkbox, FormControl, FormHelperText, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { gameDelete, tomVoteBallot } from "../api";
+import { tomVoteBallot } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { IGameVote } from "../types";
-import GameNoLink from "./GameNoLink";
 import { useState } from "react";
 import PlayerNoLink from "./PlayerNoLink";
 interface TomVoteModalProps {
@@ -26,7 +25,6 @@ export default function TomVoteModal ( props : TomVoteModalProps ) {
 
     const toast = useToast();
     const queryClient = useQueryClient()
-    const navigate = useNavigate();
 
     const uploadBallotMutation = useMutation(tomVoteBallot, {
         onSuccess : (data) => {

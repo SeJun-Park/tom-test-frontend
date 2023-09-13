@@ -1,8 +1,8 @@
-import { Badge, Box, Button, CircularProgress, CircularProgressLabel, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, CircularProgress, CircularProgressLabel, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersGoalStats, getTeamPlayersTOMStats, isSpvsr } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
