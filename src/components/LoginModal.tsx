@@ -90,7 +90,7 @@ export default function LoginModal( props : LoginModalProps ) {
                                 <FaUserNinja />
                             </Box>
                     }/>
-                        <Input isInvalid={Boolean(errors.username?.message)} required {...register("username", { required : "이름을 입력해주세요." })} placeholder="username" variant={"filled"}/>
+                        <Input isInvalid={Boolean(errors.username?.message)} required {...register("username", { required : "이름을 입력해주세요." })} placeholder="사용자 이름" variant={"filled"}/>
                                   {/* errors.username 에 어떤 msg가 있다면 이 input은 Invalid 하다는 의미  */}                                                {/* required : true 라고만 해도 됨 */}
                     </InputGroup>
                     <InputGroup>
@@ -99,7 +99,7 @@ export default function LoginModal( props : LoginModalProps ) {
                                 <FaLock />
                             </Box>
                     }/>
-                        <Input isInvalid={Boolean(errors.password?.message)} required {...register("password", { required : "패스워드를 입력해주세요." })} type="password" placeholder="password" variant={"filled"}/>
+                        <Input isInvalid={Boolean(errors.password?.message)} required {...register("password", { required : "패스워드를 입력해주세요." })} type="password" placeholder="비밀번호" variant={"filled"}/>
                                             {/* errors.password 에 어떤 msg가 있다면 이 input은 Invalid 하다는 의미  */}  
                     </InputGroup>
                 </VStack>

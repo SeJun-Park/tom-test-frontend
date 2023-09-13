@@ -95,30 +95,43 @@ export default function CaptureButton() {
     const toast = useToast();
 
     const captureScreen = async () => {
-
         setIsLoading(true);
 
-        const targetElement = document.getElementById('captureTarget'); // 캡쳐할 대상 요소의 ID
+        const targetElement = document.getElementById('captureTarget');
         if (!targetElement) return;
 
-        const canvas = await html2canvas(targetElement, { useCORS: true });
-        const imgData = canvas.toDataURL();
+        try {
+            const canvas = await html2canvas(targetElement, { useCORS: true });
+            const imgData = canvas.toDataURL();
 
-        // 이제 imgData를 다운로드 링크로 제공하거나 다른 동작을 수행할 수 있습니다.
-        const link = document.createElement('a');
-        link.href = imgData;
-        link.download = 'screenshot.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                // 모바일 브라우저에서 실행 중인 경우
+                window.location.href = imgData;
+            } else {
+                // 데스크톱 브라우저에서 실행 중인 경우
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'screenshot.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
 
-        setIsLoading(false);
-
-        toast({
-            title : "캡쳐 성공",
-            status : "success",
-            duration : 1000,
-        });
+            toast({
+                title: "캡쳐 성공",
+                status: "success",
+                duration: 1000,
+            });
+        } catch (error) {
+            console.error(error);
+            toast({
+                title: "캡쳐 실패",
+                status: "error",
+                duration: 1000,
+            });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
