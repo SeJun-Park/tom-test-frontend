@@ -14,6 +14,7 @@ import DuesInItem from "../components/DuesInItem";
 import DuesOutItem from "../components/DuesOutItem";
 import CaptureButton from "../components/CaptureButton";
 import Empty from "../components/Empty";
+import Capture from "../components/Capture";
 
 export default function IsSpvsrDuesDetailsDetail() {
 
@@ -63,7 +64,6 @@ export default function IsSpvsrDuesDetailsDetail() {
                                                                 <DuesDetailDeleteModal isOpen={isDeleteOpen} onClose={onDeleteClose} />
                                                             </Menu>}
             </HStack>
-            <Box id="captureTarget">
             <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
                 <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
                 <Text fontSize={"xl"} as="b"> "{duesDetailData?.title}" 회비 사용 내역 </Text>
@@ -171,8 +171,7 @@ export default function IsSpvsrDuesDetailsDetail() {
                 </TabPanels>
             </Tabs>
             <Empty />
-            </Box>
-            {spvsrData?.team.name === teamData?.name && <CaptureButton />}
+            <Capture />
         </>
     );
 }

@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaEdit, FaEllipsisV } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getGame, getGameQuotas, isSpvsr } from "../api";
+import Capture from "../components/Capture";
 import CaptureButton from "../components/CaptureButton";
 import FFT from "../components/formations/FFT";
 import FTTO from "../components/formations/FTTO";
@@ -71,7 +72,6 @@ export default function IsSpvsrGameQuotas() {
                                                                         </Menu>
                                                                     </HStack>
                                                                     : null}
-                                                                    <Box id="captureTarget">
                                                                     <VStack padding={5} my={5}>
                                                                         <Text as="b" fontSize={"xx-small"}> {gameData?.date ? (formatGamesDate(gameData.date)) : null} </Text>
                                                                         <Text as="b" fontSize={"lg"}>{gameData?.team.name} vs {gameData?.vsteam}</Text>
@@ -104,11 +104,9 @@ export default function IsSpvsrGameQuotas() {
                                                                                                 </Card>
                                                                                                     )}
                                                                     </VStack>
-                                                                    </Box>
                                                                 </TabPanel>)}
                     </TabPanels>
-                {/* </Box> */}
-                {spvsrData?.team.name === gameData?.team.name ? <CaptureButton /> : null}
+                <Capture />
             </Tabs>
         </>
     )

@@ -6,6 +6,7 @@ import { FaArrowRight, FaCamera, FaReceipt, FaRunning, FaTasks, FaTrash, FaTrash
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamFeeds, getTeamGames, getTeamNotisByMonth, getTeamNotisMonth, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamSchedulesByMonth, getTeamSchedulesMonth, getTeamTomGames, isSpvsr } from "../api";
 import BigDivider from "../components/BigDivider";
+import Capture from "../components/Capture";
 import CaptureButton from "../components/CaptureButton";
 import Empty from "../components/Empty";
 import Feed from "../components/Feed";
@@ -305,7 +306,7 @@ const navigate = useNavigate();
                                 <Select mb={5} onChange={handleChangeSchedulesDate} value={selectedSchedulesDate}>
                                     {teamSchedulesMonth?.map((yearMonth) => <option key={yearMonth} value={yearMonth}>{yearMonth}</option>)}
                                 </Select>
-                                <Box id="captureTarget">
+                                {/* <Box id="captureTarget"> */}
                                 <VStack alignItems={"flex-start"} px={3} spacing={4} mb={5}>
                                     <Divider />
                                     <HStack>
@@ -329,8 +330,8 @@ const navigate = useNavigate();
                                 </VStack>
                                 {teamPk && <ScheduleAddModal isOpen={isScheduleOpen} onClose={onScheduleClose} teamPk={teamPk} />}
                                 <Empty />
-                                </Box>
-                                <CaptureButton />
+                                {/* </Box> */}
+                                <Capture />
                             </TabPanel>
                             <TabPanel p={"0"}>
                             {/* <Select mb={5}>

@@ -6,6 +6,7 @@ import { FaArrowRight, FaReceipt, FaRunning, FaTasks, FaUser } from "react-icons
 import { Link, useParams } from "react-router-dom";
 import { getTeam, getTeamFeeds, getTeamGames, getTeamNotisByMonth, getTeamNotisMonth, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamSchedulesByMonth, getTeamSchedulesMonth, getTeamTomGames } from "../api";
 import BigDivider from "../components/BigDivider";
+import Capture from "../components/Capture";
 import Empty from "../components/Empty";
 import Feed from "../components/Feed";
 import Game from "../components/Game";
@@ -310,6 +311,7 @@ export default function IsPlayerTeamHome() {
                                                                                                    : <Text padding={5}>등록된 일정이 없습니다.</Text>}
                                 </VStack>
                                 <Empty />
+                                <Capture />
                             </TabPanel>
                             <TabPanel p={"0"}>
                             <VStack spacing={5}>

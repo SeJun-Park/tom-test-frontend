@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getGame, getGameQuotas } from "../api";
+import Capture from "../components/Capture";
 import FFT from "../components/formations/FFT";
 import FTTO from "../components/formations/FTTO";
 import TFT from "../components/formations/TFT";
@@ -78,6 +79,7 @@ export default function IsPlayerGameQuotas() {
                                                                     </Box>
                                                                 </TabPanel>)}
                     </TabPanels>
+                <Capture />
             </Tabs>
         </>
     )

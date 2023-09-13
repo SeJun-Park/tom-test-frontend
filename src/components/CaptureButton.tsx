@@ -133,6 +133,7 @@ export default function CaptureButton() {
                                 duration: 1000,
                             });
                         });
+                        
                 } else {
                     window.alert('Sharing is not supported in this browser');
                 }

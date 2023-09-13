@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaCheckCircle, FaDotCircle, FaEllipsisV, FaMinusCircle, FaToggleOff } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamDuesPayment, getTeamDuesPaymentItems, isSpvsr } from "../api";
+import Capture from "../components/Capture";
 import CaptureButton from "../components/CaptureButton";
 import DuesPaymentDeleteModal from "../components/DuesPaymentDeleteModal";
 import DuesPaymentItem from "../components/DuesPaymentItem";
@@ -54,7 +55,6 @@ export default function IsSpvsrDuesPaymentDetail() {
                                                                 <DuesPaymentDeleteModal isOpen={isDeleteOpen} onClose={onDeleteClose} />
                                                             </Menu>}
             </HStack>
-            <Box id="captureTarget">
                 <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
                     <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
                     <Text fontSize={"xl"} as="b"> "{duesPaymentData?.title}" 회비 납부 현황 </Text>
@@ -105,8 +105,7 @@ export default function IsSpvsrDuesPaymentDetail() {
                                                                                                             ) : <Text> 비어 있습니다. </Text>}
                 </VStack>
                 <Empty />
-            </Box>
-            {spvsrData?.team.name === teamData?.name && <CaptureButton />}
+            <Capture />
         </>
             )
 }
