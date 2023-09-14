@@ -25,7 +25,7 @@ export default function IsSpvsrHelp() {
                 <Text fontSize={"xl"} as="b"> 관리자 고객센터 </Text>
             </VStack>
             <VStack>
-                <Link to={`http://pf.kakao.com/_xcxaEMG/chat`}>
+                <Link to={`http://pf.kakao.com/_VtbuG/chat`}>
                     <Card maxW='xs' minW='xs'>
                         <CardHeader>
                             <Flex gap="4" alignItems='center'>
