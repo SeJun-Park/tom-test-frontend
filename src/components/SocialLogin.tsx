@@ -4,7 +4,7 @@ import { FaComment } from "react-icons/fa";
 export default function SocialLogin() {
 
     const kakaoParamsObject = {
-        client_id : "d2703f278acadc861b3685bb7368adfb",
+        client_id : "1c4cb9fa293fd2cb3a132f04abaae253",
         // 아마도 REST API KEY
         redirect_uri : "https://3manofthematch.com/kakaologin",
         response_type : "code",

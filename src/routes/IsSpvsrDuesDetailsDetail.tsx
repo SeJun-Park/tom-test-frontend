@@ -56,7 +56,6 @@ export default function IsSpvsrDuesDetailsDetail() {
                                                                     <FaEllipsisV />
                                                                 </MenuButton>
                                                                 <MenuList>
-                                                                    <MenuItem> 카카오로 공유하기 </MenuItem>
                                                                     <MenuItem onClick={onUpdateOpen}> 수정하기 </MenuItem>
                                                                     <MenuItem onClick={onDeleteOpen}> 삭제하기 </MenuItem>
                                                                 </MenuList>
