@@ -31,7 +31,7 @@ export default function SpvsrHome() {
 
     return (
         <>
-            <VStack>
+            <VStack alignItems={"flex-end"} px={5}>
                 <Box w="320px" h="100px">
                         <KakaoADBig />
                 </Box>

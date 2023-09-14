@@ -34,7 +34,7 @@ export default function IsPlayerHome() {
             <Helmet>
                 <title>{ isPlayerData ? ("3OM | Home") : "Loading.." }</title>
             </Helmet>
-            <VStack>
+            <VStack alignItems={"flex-end"} px={5}>
                 <Box w="320px" h="100px">
                         <KakaoADBig />
                 </Box>
