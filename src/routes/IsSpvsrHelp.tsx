@@ -2,6 +2,7 @@ import { Box, Button, Card, CardHeader, Flex, Heading, HStack, Text, VStack } fr
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaArrowRight, FaComment, FaInstagram, FaQuestionCircle, FaYoutube } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import KakaoADBig from "../components/KakaoADBig";
 
 export default function IsSpvsrHelp() {
 
@@ -64,7 +65,12 @@ export default function IsSpvsrHelp() {
                     </Card>
                 </Link>
             </VStack>
-            <VStack alignItems={"flex-start"} padding={"5"} my={10}>
+            <VStack>
+                <Box w="320px" h="100px" my={10}>
+                        <KakaoADBig />
+                </Box>
+            </VStack>
+            <VStack alignItems={"flex-start"} padding={"5"}>
                 <Text fontSize={"xl"} as="b"> 삼오엠 SNS </Text>
             </VStack>
             <VStack>
