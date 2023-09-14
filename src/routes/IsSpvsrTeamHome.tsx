@@ -423,6 +423,7 @@ const navigate = useNavigate();
                 </TabPanel>
             </TabPanels>
         </Tabs>
+        <Empty />
         <VStack>
             <Box w="320px" h="50px">
                     <KakaoADSmall />
