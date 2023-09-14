@@ -39,8 +39,8 @@ export default function IsPlayerHome() {
                         <KakaoADBig />
                 </Box>
             </VStack>
-            <VStack alignItems={"flex-start"} padding={"5"}>
-                <VStack position="relative" width="320px" height="50">
+            <VStack alignItems={"flex-end"} padding={"5"}>
+                <VStack position="relative" width="320px" height="75">
                     <Link to={"/community"}>
                         <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                             <Box
