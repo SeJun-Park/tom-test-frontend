@@ -1,4 +1,4 @@
-import { Button, CircularProgress, CircularProgressLabel, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, CircularProgress, CircularProgressLabel, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersGoalStats, getTeamPlayersTOMStats } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import Player from "../components/Player";
 import PlayerGoalStats from "../components/PlayerGoalStats";
 import PlayerTOMStats from "../components/PlayerTOMStats";
@@ -46,6 +48,11 @@ export default function IsPlayerTeamPlayerList() {
                                 <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                 </CircularProgress>
             </HStack>
+            <VStack>
+                <Box w="320px" h="100px" my={3}>
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>
                     <Tab _selected={{color : "main.500"}}> 전체 </Tab>
@@ -129,6 +136,13 @@ export default function IsPlayerTeamPlayerList() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+            <VStack>
+                <Box w="320px" h="50px">
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </ProtectedPage>
     )
 }

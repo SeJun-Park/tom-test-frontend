@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersGoalStats, getTeamPlayersTOMStats, isSpvsr } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import PlayerAddModal from "../components/PlayerAddModal";
 import PlayerGoalStats from "../components/PlayerGoalStats";
 import PlayerTOMStats from "../components/PlayerTOMStats";
@@ -50,6 +52,11 @@ export default function IsSpvsrTeamPlayerList() {
                                 <CircularProgressLabel fontSize={"xs"}>{teamPlayersConnectedData && teamPlayersData && teamPlayersData && teamPlayersData.length !==0 ? ((teamPlayersConnectedData.length/teamPlayersData.length)*100).toFixed(1) : "0"}%</CircularProgressLabel>
                 </CircularProgress>
             </HStack>
+            <VStack>
+                <Box w="320px" h="100px" my={3}>
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>
                     <Tab _selected={{color : "main.500"}}> 전체 </Tab>
@@ -141,6 +148,13 @@ export default function IsSpvsrTeamPlayerList() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+            <VStack>
+                <Box w="320px" h="50px" borderWidth={1}>
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </ProtectedPage>
     )
 }

@@ -18,6 +18,8 @@ import GamePhotoUploadModal from "../components/GamePhotoUploadModal";
 import GamePhotoDeleteModal from "../components/GamePhotoDeleteModal";
 import GameVideoDeleteModal from "../components/GameVideoDeleteModal";
 import PlayerDailyAddModal from "../components/PlayerDailyAddModal";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 
 export default function IsSpvsrGameDetail() {
 
@@ -115,6 +117,11 @@ export default function IsSpvsrGameDetail() {
                     {gameData?.goals.map((goalplayer) => 
                                                         <GoalPlayer key={goalplayer.player.pk} playerPk={goalplayer.player.pk} />    )}
                     <Divider />
+            </VStack>
+            <VStack mt={8}>
+                <Box w="320px" h="100px">
+                        <KakaoADBig />
+                </Box>
             </VStack>
             <BigDivider />
             <Tabs variant='soft-rounded' isLazy align={"center"} index={tabIndexGame} onChange={setTabIndexGame}>
@@ -296,7 +303,13 @@ export default function IsSpvsrGameDetail() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-
+            <VStack>
+                <Box w="320px" h="50px" borderWidth="1px">
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </>
     )
 }

@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Card, CardBody, Divider, HStack, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Button, Card, CardBody, Divider, HStack, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { FaArrowLeft, FaArrowRight, FaCamera, FaEllipsisV, FaFutbol, FaRunning, FaTrashAlt, FaUserNinja } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -17,6 +17,8 @@ import { IGoals, IPlayer, ISpvsrUser, ITinyGame } from "../types";
 import { Helmet } from "react-helmet";
 import PlayerPhotoUploadModal from "../components/PlayerPhotoUploadModal";
 import PlayerPhotoDeleteModal from "../components/PlayerPhotoDeleteModal";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 
 export default function IsSpvsrPlayerProfile() {
 
@@ -176,6 +178,11 @@ export default function IsSpvsrPlayerProfile() {
                         /> 
                         : <NullGame />) : <NullGame />}
             </VStack>
+            <VStack>
+                <Box w="320px" h="100px" mt={3}>
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <BigDivider />
             <Link to={`/players/${playerPk}/games`}>
                 <VStack alignItems={"flex-start"} px={3} mt={8}>
@@ -218,6 +225,13 @@ export default function IsSpvsrPlayerProfile() {
                     </HStack>
                 </VStack>
             </Link>
+            <Empty />
+            <VStack>
+                <Box w="320px" h="50px" mt={3}>
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
             <Empty />
         </ProtectedPage>
     )

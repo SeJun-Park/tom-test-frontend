@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { isSpvsr, isSpvsrTeam } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
 import SmallDivider from "../components/SmallDivider";
 import Team from "../components/Team";
 import TeamPhotoDeleteModal from "../components/TeamPhotoDeleteModal";
@@ -30,8 +31,13 @@ export default function SpvsrHome() {
 
     return (
         <>
+            <VStack>
+                <Box w="320px" h="100px">
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                <VStack position="relative" width="100%" height="125">
+                <VStack position="relative" width="100%" height="100">
                         <Link to={"/community"}>
                             <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                 <Box

@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Card, CardBody, Divider, HStack, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Button, Card, CardBody, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaArrowRight, FaFutbol, FaRunning, FaUserNinja } from "react-icons/fa";
@@ -7,6 +7,8 @@ import { getPlayer, getPlayerGames, getPlayerGoals, getPlayerTomGames } from "..
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import Game from "../components/Game";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import NullGame from "../components/NullGame";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
@@ -91,6 +93,11 @@ export default function IsPlayerPlayerProfile() {
                         /> 
                         : <NullGame />) : <NullGame />}
             </VStack>
+            <VStack>
+                <Box w="320px" h="100px" mt={3}>
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <BigDivider />
             <Link to={`/players/${playerPk}/games`}>
                 <VStack alignItems={"flex-start"} px={3} mt={8}>
@@ -133,6 +140,13 @@ export default function IsPlayerPlayerProfile() {
                     </HStack>
                 </VStack>
             </Link>
+            <Empty />
+            <VStack>
+                <Box w="320px" h="50px" mt={3}>
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
             <Empty />
         </ProtectedPage>
     )

@@ -12,6 +12,8 @@ import Empty from "../components/Empty";
 import Feed from "../components/Feed";
 import FeedAddModal from "../components/FeedAddModal";
 import Game from "../components/Game";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import Noti from "../components/Noti";
 import NullGame from "../components/NullGame";
 import Schedule from "../components/Schedule";
@@ -201,6 +203,13 @@ const navigate = useNavigate();
                                 /> 
                                 : <NullGame />) : <NullGame />}
                     </VStack>
+
+                    <VStack>
+                        <Box w="320px" h="100px" mt={3} borderWidth={1}>
+                                <KakaoADBig />
+                        </Box>
+                    </VStack>
+
                     <BigDivider />
 
                     <Tabs isLazy align={"center"} variant='soft-rounded' index={tabIndexThomeSub} onChange={setTabIndexThomeSub}>
@@ -414,6 +423,13 @@ const navigate = useNavigate();
                 </TabPanel>
             </TabPanels>
         </Tabs>
+        <VStack>
+            <Box w="320px" h="50px">
+                    <KakaoADSmall />
+            </Box>
+        </VStack>
+        <Empty />
+        <Empty />
     </>
 
     )

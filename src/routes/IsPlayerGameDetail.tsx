@@ -10,6 +10,8 @@ import Empty from "../components/Empty";
 import GameNoLink from "../components/GameNoLink";
 import GameVote from "../components/GameVote";
 import GoalPlayer from "../components/GoalPlayer";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import Player from "../components/Player";
 import { IGame } from "../types";
 import "../video.css"
@@ -78,6 +80,11 @@ export default function IsPlayerGameDetail() {
                     {gameData?.goals.map((goalplayer) => 
                                                         <GoalPlayer key={goalplayer.player.pk} playerPk={goalplayer.player.pk} />    )}
                     <Divider />
+            </VStack>
+            <VStack mt={8}>
+                <Box w="320px" h="100px">
+                        <KakaoADBig />
+                </Box>
             </VStack>
             <BigDivider />
             <Tabs variant='soft-rounded' isLazy align={"center"} index={tabIndexGame} onChange={setTabIndexGame}>
@@ -202,7 +209,13 @@ export default function IsPlayerGameDetail() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-
+            <VStack>
+                <Box w="320px" h="50px">
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </>
     )
 }

@@ -8,6 +8,7 @@ import { isPlayer, isPlayerGames, isPlayerGoals, isPlayerTeams, isPlayerTomGames
 import BigDivider from "../components/BigDivider"
 import Empty from "../components/Empty"
 import Game from "../components/Game"
+import KakaoADBig from "../components/KakaoADBig"
 import NullGame from "../components/NullGame"
 import ProtectedPage from "../components/ProtectedPage"
 import SmallDivider from "../components/SmallDivider"
@@ -33,8 +34,13 @@ export default function IsPlayerHome() {
             <Helmet>
                 <title>{ isPlayerData ? ("3OM | Home") : "Loading.." }</title>
             </Helmet>
+            <VStack>
+                <Box w="320px" h="100px">
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                <VStack position="relative" width="100%" height="75">
+                <VStack position="relative" width="100%" height="100">
                     <Link to={"/community"}>
                         <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                             <Box
@@ -99,17 +105,22 @@ export default function IsPlayerHome() {
                 </TabList>
                 <TabPanels>
                     <TabPanel p={"0"}>
-                        <VStack alignItems={"flex-start"} px={3} spacing={3} mt={8}>
-                            {isPlayerTeamsData?.map((team) => (
-                                <Team 
-                                    key={team.pk}
-                                    pk={team.pk}
-                                    avatar={team.avatar}
-                                    name={team.name}
-                                />
-                            ))}
-                            {isPlayerTeamsData?.length === 0 ? <Text>연결된 팀이 없습니다. <br/> 상단 검색 버튼으로 나의 팀을 검색해보세요! </Text> : null}
-                        </VStack>
+                    {isPlayerTeamsData?.length !== 0 ?                          
+                                                        <VStack alignItems={"flex-start"} px={3} spacing={3} mt={8}>
+                                                            {isPlayerTeamsData?.map((team) => (
+                                                                <Team 
+                                                                    key={team.pk}
+                                                                    pk={team.pk}
+                                                                    avatar={team.avatar}
+                                                                    name={team.name}
+                                                                />
+                                                            ))}
+                                                        </VStack>
+                                                        : 
+                                                        <VStack py={3}>
+                                                            <Text as="b">연결된 팀이 없습니다.</Text>
+                                                            <Text as="b">상단 검색 버튼으로 나의 팀을 검색해보세요! </Text>
+                                                        </VStack>}
                         <Empty />
                         <Empty />
                     </TabPanel>

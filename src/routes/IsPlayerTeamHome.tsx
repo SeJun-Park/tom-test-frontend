@@ -10,6 +10,8 @@ import Capture from "../components/Capture";
 import Empty from "../components/Empty";
 import Feed from "../components/Feed";
 import Game from "../components/Game";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import Noti from "../components/Noti";
 import NullGame from "../components/NullGame";
 import Schedule from "../components/Schedule";
@@ -197,6 +199,12 @@ export default function IsPlayerTeamHome() {
                                 vsteam_score={teamGamesData[0].vsteam_score}
                                 /> 
                                 : <NullGame />) : <NullGame />}
+                    </VStack>
+
+                    <VStack>
+                        <Box w="320px" h="100px" mt={3}>
+                                <KakaoADBig />
+                        </Box>
                     </VStack>
                     <BigDivider />
 
@@ -391,6 +399,13 @@ export default function IsPlayerTeamHome() {
                 </TabPanel>
             </TabPanels>
         </Tabs>
+        <VStack>
+            <Box w="320px" h="50px" >
+                    <KakaoADSmall />
+            </Box>
+        </VStack>
+        <Empty />
+        <Empty />
     </>
 
     )
