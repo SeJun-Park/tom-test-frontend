@@ -226,6 +226,7 @@ export default function IsSpvsrPlayerProfile() {
                 </VStack>
             </Link>
             <Empty />
+            <Empty />
             <VStack>
                 <Box w="320px" h="50px" mt={3}>
                         <KakaoADSmall />

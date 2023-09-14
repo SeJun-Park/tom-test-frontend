@@ -205,7 +205,7 @@ const navigate = useNavigate();
                     </VStack>
 
                     <VStack>
-                        <Box w="320px" h="100px" mt={3} borderWidth={1}>
+                        <Box w="320px" h="100px" mt={3}>
                                 <KakaoADBig />
                         </Box>
                     </VStack>

@@ -46,7 +46,7 @@ export default function IsPlayerDuesDetails() {
                                                                                                                     />) : <Text>비어 있습니다.</Text>}
             </VStack>
             <VStack>
-                <Box w="320px" h="50px" mt={16} borderWidth={1}>
+                <Box w="320px" h="50px" mt={16}>
                         <KakaoADSmall />
                 </Box>
             </VStack>
