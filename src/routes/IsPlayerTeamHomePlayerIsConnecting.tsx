@@ -27,11 +27,6 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
                 <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
                 <NullGame />
             </VStack>
-            <VStack>
-                <Box w="320px" h="100px" mt={3}>
-                        <KakaoADBig />
-                </Box>
-            </VStack>
             <BigDivider />
             <VStack alignItems={"flex-start"} px={3} mt={8}>
                 <HStack width={"100%"} justifyContent={"space-between"}>
