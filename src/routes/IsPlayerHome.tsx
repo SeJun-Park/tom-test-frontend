@@ -40,7 +40,7 @@ export default function IsPlayerHome() {
                 </Box>
             </VStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                <VStack position="relative" width="100%" height="100">
+                <VStack position="relative" width="320px" height="100">
                     <Link to={"/community"}>
                         <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                             <Box

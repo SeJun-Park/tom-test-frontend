@@ -1,4 +1,4 @@
-import { Button, CircularProgress, CircularProgressLabel, Divider, FormControl, FormHelperText, FormLabel, HStack, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, CircularProgress, CircularProgressLabel, Divider, FormControl, FormHelperText, FormLabel, HStack, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
@@ -9,6 +9,8 @@ import { getTeam, getTeamGames, getTeamGamesRelative, getTeamGoals, getTeamGoals
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import Game from "../components/Game";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
 import { IGoals, ITeam, ITeamAllStats, ITeamStatsRelative, ITinyGame, IVSteams } from "../types";
@@ -96,6 +98,11 @@ export default function IsPlayerTeamGameList() {
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
                 <Text fontSize={"xl"} as="b"> {teamData?.name} </Text>
+            </VStack>
+            <VStack>
+                <Box w="320px" h="100px" my={3}>
+                        <KakaoADBig />
+                </Box>
             </VStack>
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>
@@ -258,6 +265,13 @@ export default function IsPlayerTeamGameList() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+            <VStack>
+                <Box w="320px" h="50px">
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </ProtectedPage>
     )
 }

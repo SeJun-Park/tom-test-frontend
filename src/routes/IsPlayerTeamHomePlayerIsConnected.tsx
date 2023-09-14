@@ -1,10 +1,12 @@
-import { Avatar, Badge, Button, Card, CardBody, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Button, Card, CardBody, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { FaArrowRight, FaFutbol, FaRunning, FaUserNinja } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { getPlayer, getPlayerGames, getPlayerGoals, getPlayerTomGames } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import PlayerConnectCancelModal from "../components/PlayerConnectCancelModal";
 import SmallDivider from "../components/SmallDivider";
 import { IGoals, IPlayer, ITinyGame } from "../types";
@@ -62,6 +64,11 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
             <VStack justifyContent={"center"} pt={5}>
                     <Button backgroundColor={"gray.100"} color={"black"} size={"sm"} onClick={onOpen}> 플레이어 연결 해제하기 </Button>
             </VStack>
+            <VStack>
+                <Box w="320px" h="100px" mt={3}>
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <BigDivider />
             <Link to={`/players/${playerData?.id}/games`}>
                 <VStack alignItems={"flex-start"} px={3} mt={8}>
@@ -104,6 +111,13 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
                     </HStack>
                 </VStack>
             </Link>
+            <Empty />
+            <VStack>
+                <Box w="320px" h="50px">
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
             <Empty />
             <PlayerConnectCancelModal isOpen={isOpen} onClose={onClose} playerPk={props.playerPk} />
         </>
