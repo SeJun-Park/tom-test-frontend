@@ -1,10 +1,12 @@
-import { Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamDuesDetailList } from "../api";
 import DuesDetailList from "../components/DuesDetailList";
+import Empty from "../components/Empty";
+import KakaoADSmall from "../components/KakaoADSmall";
 import { IDuesDetail, ITeam } from "../types";
 
 export default function IsPlayerDuesDetails() {
@@ -43,6 +45,13 @@ export default function IsPlayerDuesDetails() {
                                                                                                                     title={duesDetail.title}
                                                                                                                     />) : <Text>비어 있습니다.</Text>}
             </VStack>
+            <VStack>
+                <Box w="320px" h="50px" mt={16} borderWidth={1}>
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </>
     )
 }

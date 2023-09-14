@@ -1,10 +1,12 @@
-import { Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamDuesPaymentList } from "../api";
 import DuesPaymentList from "../components/DuesPaymentList";
+import Empty from "../components/Empty";
+import KakaoADSmall from "../components/KakaoADSmall";
 import { IDuesPayment, ITeam } from "../types";
 
 export default function IsPlayerDuesPayment() {
@@ -42,6 +44,13 @@ export default function IsPlayerDuesPayment() {
                                                                                                                         title={duesPayment.title}
                                                                                                                         />) : <Text>비어 있습니다.</Text>}
             </VStack>
+            <VStack>
+                <Box w="320px" h="50px" mt={16} borderWidth={1}>
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </>
     )
 }

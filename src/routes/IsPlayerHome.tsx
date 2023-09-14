@@ -1,4 +1,4 @@
-import { VStack, Text, Tabs, TabList, Tab, TabPanels, TabPanel, Divider, HStack, Box, Badge, Image } from "@chakra-ui/react"
+import { VStack, Text, Tabs, TabList, Tab, TabPanels, TabPanel, Divider, HStack, Box, Badge, Image, Card, CardHeader, Flex } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
@@ -118,8 +118,24 @@ export default function IsPlayerHome() {
                                                         </VStack>
                                                         : 
                                                         <VStack py={3}>
-                                                            <Text as="b">연결된 팀이 없습니다.</Text>
-                                                            <Text as="b">상단 검색 버튼으로 나의 팀을 검색해보세요! </Text>
+                                                            <Card maxW='xs' minW='xs'>
+                                                                <CardHeader>
+                                                                    <Flex gap="4" alignItems='center'>
+                                                                        {/* <Box color={"point.500"}>
+                                                                            <FaReceipt />
+                                                                        </Box> */}
+                                                                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                                                                            <Box>
+                                                                            <VStack>
+                                                                                {/* <Heading size='sm'>{props.title}</Heading> */}
+                                                                                <Text as="b">연결된 팀이 없습니다.</Text>
+                                                                                <Text as="b">상단 검색 버튼으로 나의 팀을 검색해보세요! </Text>
+                                                                            </VStack>
+                                                                            </Box>
+                                                                        </Flex>
+                                                                    </Flex>
+                                                                </CardHeader>
+                                                            </Card>
                                                         </VStack>}
                         <Empty />
                         <Empty />

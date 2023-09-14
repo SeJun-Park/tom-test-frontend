@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamDuesDetailList, isSpvsr } from "../api";
 import DuesDetailAddModal from "../components/DuesDetailAddModal";
 import DuesDetailList from "../components/DuesDetailList";
+import Empty from "../components/Empty";
+import KakaoADSmall from "../components/KakaoADSmall";
 import { IDuesDetail, ISpvsrUser, ITeam } from "../types";
 
 export default function IsSpvsrDuesDetails() {
@@ -57,6 +59,13 @@ export default function IsSpvsrDuesDetails() {
                                                                                                                     title={duesDetail.title}
                                                                                                                     />) : <Text>비어 있습니다.</Text>}
             </VStack>
+            <VStack>
+                <Box w="320px" h="50px" mt={16} borderWidth={1}>
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </>
     )
 }
