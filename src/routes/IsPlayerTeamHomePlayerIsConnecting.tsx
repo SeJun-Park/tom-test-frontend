@@ -1,6 +1,8 @@
-import { Avatar, Button, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Avatar, Box, Button, Divider, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import NullGame from "../components/NullGame";
 import PlayerConnectingCancelModal from "../components/PlayerConnectingCancelModal";
 import SmallDivider from "../components/SmallDivider";
@@ -24,6 +26,11 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
             <VStack alignItems={"flex-start"} px={3}>
                 <Text as="b" color={"main.500"} mt={10} fontSize={"md"}> 최근 경기 </Text>
                 <NullGame />
+            </VStack>
+            <VStack>
+                <Box w="320px" h="100px" mt={3}>
+                        <KakaoADBig />
+                </Box>
             </VStack>
             <BigDivider />
             <VStack alignItems={"flex-start"} px={3} mt={8}>
@@ -58,6 +65,8 @@ export default function IsPlayerTeamHomePlayerIsConnecting( props : IsPlayerTeam
                     <Text as="b" fontSize={"sm"}> 0 골 </Text>
                 </HStack>
             </VStack>
+            <Empty />
+            <Empty />
             <Empty />
             <PlayerConnectingCancelModal isOpen={isOpen} onClose={onClose} playerPk={props.playerPk} />
         </>

@@ -112,11 +112,6 @@ export default function IsPlayerTeamHomePlayerIsConnected( props : IsPlayerTeamH
                 </VStack>
             </Link>
             <Empty />
-            <VStack>
-                <Box w="320px" h="50px">
-                        <KakaoADSmall />
-                </Box>
-            </VStack>
             <Empty />
             <Empty />
             <PlayerConnectCancelModal isOpen={isOpen} onClose={onClose} playerPk={props.playerPk} />

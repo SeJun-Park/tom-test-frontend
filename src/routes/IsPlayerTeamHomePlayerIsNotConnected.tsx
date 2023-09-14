@@ -66,11 +66,6 @@ export default function IsPlayerTeamHomePlayerIsNotConnected( props : IsPlayerTe
                 </HStack>
             </VStack>
             <Empty />
-            <VStack>
-                <Box w="320px" h="50px">
-                        <KakaoADSmall />
-                </Box>
-            </VStack>
             <Empty />
             <Empty />
             <PlayerConnectModal isOpen={isOpen} onClose={onClose} teamPk={props.teamPk} />
