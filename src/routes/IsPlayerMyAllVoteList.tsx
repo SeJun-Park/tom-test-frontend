@@ -1,4 +1,4 @@
-import { Badge, Button, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Badge, Box, Button, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaUserNinja } from "react-icons/fa";
@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { isPlayer, isPlayerGames, isPlayerSuperplayers, isPlayerTomGames } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
 import TomGame from "../components/TomGame";
@@ -42,6 +44,11 @@ export default function IsPlayerMyAllVoteList() {
                         </HStack>
                     </Badge>
                 </HStack>
+            </VStack>
+            <VStack>
+                <Box w="320px" h="100px" my={3}>
+                        <KakaoADBig />
+                </Box>
             </VStack>
             <Tabs isFitted my={5} isLazy>
                 <TabList mb='1em'>
@@ -84,6 +91,13 @@ export default function IsPlayerMyAllVoteList() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+            <VStack>
+                <Box w="320px" h="50px" mt={3}>
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </ProtectedPage>
     )
 }
