@@ -99,6 +99,14 @@ export default function IsSpvsrTeamVoteList() {
                         <VStack alignItems={"flex-start"} padding={"5"} mb={10}>
                             <Text fontSize={"xl"} as="b"> 투표 등록 전입니다. </Text>
                         </VStack>
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
                         {/* <VStack>
                             {teamVotesData && teamVotesData.map((tvote, index) => 
                                                                 <TeamVote

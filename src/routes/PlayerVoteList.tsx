@@ -91,7 +91,17 @@ export default function PlayerVoteList() {
                         <Empty />
                     </TabPanel>
                     <TabPanel p={0}>
-                        
+                        <VStack alignItems={"flex-start"} padding={"5"} mb={10}>
+                            <Text fontSize={"xl"} as="b"> 투표 등록 전입니다. </Text>
+                        </VStack>
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
