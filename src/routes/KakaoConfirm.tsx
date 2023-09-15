@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { kakaoLogIn } from "../api";
+import Empty from "../components/Empty";
 
 export default function KakaoConfirm() {
 
@@ -15,7 +16,8 @@ export default function KakaoConfirm() {
                 status : "success",
                 title : "환영합니다!",
                 description : "Happy 3OM!",
-                position : "bottom-right"
+                position : "bottom-right",
+                duration : 1000
             })
             queryClient.refetchQueries(["me"]);
             navigate("/");
@@ -52,6 +54,14 @@ export default function KakaoConfirm() {
         <Heading> 로그인 중... </Heading>
         <Text> 3OM에 오신 걸 환영합니다. </Text>
         <Spinner size={"lg"} />
+        <Empty />
+        <Empty />
+        <Empty />
+        <Empty />
+        <Empty />
+        <Empty />
+        <Empty />
+        <Empty />
     </VStack>
     // NotFound 코드 복사해옴
     )

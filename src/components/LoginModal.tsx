@@ -53,7 +53,8 @@ export default function LoginModal( props : LoginModalProps ) {
             // data.ok
             toast({
                 title : "로그인 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             props.onClose();
             queryClient.refetchQueries(["me"]);
