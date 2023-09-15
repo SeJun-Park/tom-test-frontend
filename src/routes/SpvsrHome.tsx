@@ -86,6 +86,10 @@ export default function SpvsrHome() {
                                 <Team  pk={spvsrTeamData.pk} avatar={spvsrTeamData.avatar} name={spvsrTeamData.name} />
                                 }
                         </VStack>
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
                     </TabPanel>
                     <TabPanel p={"0"}>
                         <VStack spacing={5}>

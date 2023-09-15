@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useEffect} from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import Footer from "./Footer";
 import Header from "./Header";
 
 function ScrollToTopOnPathChange() {
@@ -23,6 +24,7 @@ export default function Root() {
             <Header />
             <ScrollToTopOnPathChange />
             <Outlet />
+            <Footer />
             <ReactQueryDevtools />
                 {/* 이게 꽃 모양 버튼을 만드는 컴포넌트인듯 */}
         </Box>
