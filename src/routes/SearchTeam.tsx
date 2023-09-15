@@ -84,6 +84,16 @@ export default function SearchTeam() {
                     <Empty />
                 </>
             ) : null}
+            <Empty />
+            <Empty />
+            <Empty />
+            <Empty />
+            <Empty />
+            <Empty />
+            <Empty />
+            <Empty />
+            <Empty />
+            <Empty />
         </ProtectedPage>
     )
 }
