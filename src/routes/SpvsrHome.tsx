@@ -90,6 +90,10 @@ export default function SpvsrHome() {
                         <Empty />
                         <Empty />
                         <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
                     </TabPanel>
                     <TabPanel p={"0"}>
                         <VStack spacing={5}>

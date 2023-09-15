@@ -141,6 +141,10 @@ export default function IsPlayerHome() {
                         <Empty />
                         <Empty />
                         <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
+                        <Empty />
                     </TabPanel>
                     <TabPanel p={"0"}>
                         <VStack alignItems={"flex-start"} px={3}>
