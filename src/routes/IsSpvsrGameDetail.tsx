@@ -304,7 +304,7 @@ export default function IsSpvsrGameDetail() {
                 </TabPanels>
             </Tabs>
             <VStack>
-                <Box w="320px" h="50px" borderWidth="1px">
+                <Box w="320px" h="50px">
                         <KakaoADSmall />
                 </Box>
             </VStack>
