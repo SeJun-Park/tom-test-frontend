@@ -51,6 +51,10 @@ export default function UpdateGameBefore( props : UpdateGameBeforeProps ) {
 
     const onSubmit = ( { vsteam, location, start_time, end_time, participants } : IUpdateGameForm) => {
         
+        if (!Array.isArray(participants)) {
+            participants = [participants];
+        }
+
         if (gamePk && gameData) {
             updateGameMutation.mutate({gamePk, vsteam, location, start_time, end_time,participants})
         }

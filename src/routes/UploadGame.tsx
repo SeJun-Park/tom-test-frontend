@@ -58,6 +58,11 @@ export default function UploadGame() {
       };
 
     const onSubmit = ( { vsteam, location, start_time, end_time, participants } : IUploadGameForm) => {
+        
+        if (!Array.isArray(participants)) {
+            participants = [participants];
+        }
+
         if (date && teamPk) {
             const team = teamPk
             uploadGameMutation.mutate({teamPk, team, vsteam, location, date, start_time, end_time, participants})
