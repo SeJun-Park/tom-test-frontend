@@ -7,7 +7,7 @@ export const tomAvatarState = atom({
 
 export const gameAvatarState = atom({
     key : "gameAvatar",
-    default : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/640px-Soccerball.svg.png"
+    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/a703565c-e647-46fd-d0c0-5b7a2ea3d600/public"
 })
 
 export const formationState = atom({
