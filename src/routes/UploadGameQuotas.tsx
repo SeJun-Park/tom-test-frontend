@@ -163,7 +163,7 @@ export default function UploadGameQuotas() {
           return;
         }
         updateLineups(step-2, lineups);
-        setLineups([]);
+        // setLineups([]);
         onUploadOpen();
       };
 
