@@ -1,8 +1,4 @@
-import { Avatar, VStack, Text, Image, Box, HStack } from "@chakra-ui/react";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { gameQuotaPreview, getPlayer } from "../../api";
+import { VStack, Text, Image, Box, HStack } from "@chakra-ui/react";
 import FormationPlayer from "../FormationPlayer";
 
 interface IFTTOpreviewProps {
