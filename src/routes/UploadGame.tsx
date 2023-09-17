@@ -42,7 +42,8 @@ export default function UploadGame() {
         onSuccess : (data) => {
             toast({
                 title : "경기 업로드 성공",
-                status : "success"
+                status : "success",
+                duration : 1000
             });
             navigate(-1)
         }
@@ -58,7 +59,7 @@ export default function UploadGame() {
       };
 
     const onSubmit = ( { vsteam, location, start_time, end_time, participants } : IUploadGameForm) => {
-        
+
         if (!Array.isArray(participants)) {
             participants = [participants];
         }

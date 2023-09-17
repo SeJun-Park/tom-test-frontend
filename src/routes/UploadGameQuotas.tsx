@@ -10,6 +10,9 @@ import { formationState } from "../atoms";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import FormationPlayer from "../components/FormationPlayer";
+import FFTpreview from "../components/formations/FFTpreview";
+import FTTOpreview from "../components/formations/FTTOpreview";
+import TFTpreview from "../components/formations/TFTpreview";
 import GameQuotaUploadModal from "../components/GameQuotaUploadModal";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
@@ -38,6 +41,14 @@ export default function UploadGameQuotas() {
     const onStep1InputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         setNumQuotas(Number(event.target.value))
     }
+
+    const increase = () => {
+        setNumQuotas((prev) => Math.min(prev + 1, 8));
+    };
+
+    const decrease = () => {
+        setNumQuotas((prev) => Math.max(prev - 1, 1));
+    };
 
     const onStep1BtnClick = () => {
         if (numQuotas >= 1 && numQuotas <= 8) {
@@ -71,7 +82,8 @@ export default function UploadGameQuotas() {
         if (lineups.length !== 11) {
             toast({
                 title : "11명의 선수를 모두 선택해야 합니다.",
-                status : "error"
+                status : "error",
+                duration : 1000
             });
             return;
         }
@@ -82,19 +94,6 @@ export default function UploadGameQuotas() {
         setStep((prev) => prev + 1);  // 예를 들어 다음 단계를 나타내는 값이 2라고 가정
         console.log(quotasData)
     }
-
-    const getFormationImage = (formation: Formation) => {
-        switch (formation) {
-            case '4-2-3-1':
-                return "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/16eef5b5-5cf9-4cd6-7066-c12620fd5600/public";
-            case '4-4-2':
-                return null;
-            // ... 다른 포메이션에 대한 이미지 반환 ...
-            default:
-                return null;
-        }
-    }
-      
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,7 +106,8 @@ export default function UploadGameQuotas() {
         if (lineups.includes(value)) {
             toast({
                 title : "이미 선택된 선수입니다.",
-                status : "error"
+                status : "error",
+                duration : 1000
             });
             return;
         }
@@ -116,7 +116,8 @@ export default function UploadGameQuotas() {
         if (lineups.length >= 11) {
             toast({
                 title : "11명까지 선택할 수 있습니다.",
-                status : "error"
+                status : "error",
+                duration : 1000
             });
             return;
         }
@@ -196,8 +197,20 @@ export default function UploadGameQuotas() {
                         <Text fontSize={"xs"} color={"gray.500"}>*쿼터 수는 수정이 불가하니 신중하게 등록해주세요!</Text>
                         <Text fontSize={"xs"} color={"gray.500"}>*용병이 있는 경우 이전 화면에서 먼저 추가하고 진행해주세요.</Text>
                     </VStack>
-                    <Input type="number" min={1} max={8} step={1} value={numQuotas} onChange={onStep1InputChange} />
+                    <HStack>
+                        <Button size={"sm"} onClick={decrease}>-</Button>
+                        <Input type="number" min={1} max={8} step={1} value={numQuotas} onChange={onStep1InputChange} />
+                        <Button size={"sm"} onClick={increase}>+</Button>
+                    </HStack>
                     <Button onClick={onStep1BtnClick} backgroundColor={"main.500"} color={"white"} width={"100%"}>시작하기</Button>
+                    <Empty />
+                    <Empty />
+                    <Empty />
+                    <Empty />
+                    <Empty />
+                    <Empty />
+                    <Empty />
+                    <Empty />
                 </VStack>
             }
 
@@ -213,11 +226,9 @@ export default function UploadGameQuotas() {
                                                             <>
                                                                 <Text fontSize={"xs"} color={"gray.500"}>*1번부터 11번까지 순서대로 선수를 등록하세요!</Text>
                                                                 <Center width={"100%"} mt={5}>
-                                                                    <Image 
-                                                                        src={getFormationImage(quotasData[step-2].formation) || undefined} 
-                                                                        alt="Formation" 
-                                                                        maxWidth="100%"
-                                                                    />
+                                                                    {quotasData[step-2].formation === '4-2-3-1' && <FTTOpreview lineups={lineups}/>}
+                                                                    {quotasData[step-2].formation === '4-4-2' && <FFTpreview lineups={lineups}/>}
+                                                                    {quotasData[step-2].formation === '3-5-2' && <TFTpreview lineups={lineups}/>}
                                                                 </Center>
                                                                 {lineups.length < 11 ? 
                                                                                         <Text as="b" my={5}> 
@@ -231,48 +242,67 @@ export default function UploadGameQuotas() {
                                                                 
                                                                 <VStack alignItems={"flex-start"}> 
                                                                     <Grid templateColumns={"1fr 1fr"} gap={5}>
-                                                                    {gameData?.participants.sort((a, b) => a.backnumber - b.backnumber).map((participant) => 
-                                                                    <HStack width={"100%"} px={3} key={participant.pk}>
-                                                                        <Button onClick={plusBtnClick} value={participant.pk} size={"sm"} color={"main.500"} variant={"unstyled"}>
-                                                                            <FaPlus />
-                                                                        </Button>
-                                                                        <Text fontSize={"xs"}>{`${participant.backnumber}.`} </Text>
-                                                                        <Text fontSize={"sm"}>{`${participant.name}`} </Text>
-                                                                    </HStack>
-                                                                    )}
-                                                                    </Grid>
-                                                                </VStack>
-                                                                <SmallDivider />
-                                                                <Empty />
-                                                                <Text as="b" mb={5}> 
-                                                                    {lineups.length}명이 선택되었습니다.
-                                                                </Text>
-                                                                <VStack spacing={4} justifyContent={"flex-start"} alignItems={"flex-start"} mt={5}>
-                                                                    <Grid templateColumns={"1fr 1fr"} gap={5}>
-                                                                    {lineups?.map((player, index) => 
-                                                                                                    <HStack>
+                                                                        {gameData?.participants.sort((a, b) => a.backnumber - b.backnumber).map((participant) => {
+                                                                            const lineupIndex = lineups.indexOf(participant.pk);
+                                                                            const isInLineup = lineupIndex !== -1;
+                                                                        
+                                                                            return (
+                                                                                <HStack width={"100%"} key={participant.pk} spacing={2}>
+                                                                                    <Button onClick={isInLineup ? minusBtnClick : plusBtnClick} value={participant.pk} size={"xs"} color={isInLineup ? "black" : "main.500"} variant={"unstyled"}>
+                                                                                        {isInLineup ? 
+                                                                                        <Box 
+                                                                                        display="flex"
+                                                                                        alignItems="center"
+                                                                                        justifyContent="center">
+                                                                                            <FaMinus />
+                                                                                        </Box> : <FaPlus />}
+                                                                                    </Button>
+                                                                                    {isInLineup ? 
                                                                                                         <Box
-                                                                                                            w="36px"   // 원하는 크기에 따라 조절하세요.
-                                                                                                            h="36px"   // 원하는 크기에 따라 조절하세요.
+                                                                                                            w="24px"   // 원하는 크기에 따라 조절하세요.
+                                                                                                            h="24px"   // 원하는 크기에 따라 조절하세요.
                                                                                                             borderRadius="full"
                                                                                                             display="flex"
                                                                                                             alignItems="center"
                                                                                                             justifyContent="center"
                                                                                                             // backgroundColor="white"   // 필요한 배경색으로 설정하세요.
-                                                                                                            border="2px"   // Avatar와 유사한 테두리를 원하면 추가하세요.
+                                                                                                            border="1px"   // Avatar와 유사한 테두리를 원하면 추가하세요.
                                                                                                             // borderColor="gray.200"   // 원하는 테두리 색상으로 변경하세요.
                                                                                                             color="main.500"
+
                                                                                                         >
-                                                                                                            <Text as="b" color={"main.500"} fontSize={"md"}>{index+1}</Text>
+                                                                                                            <Text as="b" color={"main.500"} fontSize={"sm"}>{lineupIndex + 1}</Text>
                                                                                                         </Box>
-                                                                                                        <FormationPlayer key={index} playerPk={player} />
-                                                                                                        <Button value={player} onClick={minusBtnClick} size={"sm"} color={"black"} variant={"unstyled"}>
-                                                                                                            <FaMinus />
-                                                                                                        </Button>
-                                                                                                    </HStack>
-                                                                    )}
+                                                                                                        :
+                                                                                                        <Box
+                                                                                                            w="24px"   // 원하는 크기에 따라 조절하세요.
+                                                                                                            h="24px"   // 원하는 크기에 따라 조절하세요.
+                                                                                                            borderRadius="full"
+                                                                                                            display="flex"
+                                                                                                            alignItems="center"
+                                                                                                            justifyContent="center"
+                                                                                                            // backgroundColor="white"   // 필요한 배경색으로 설정하세요.
+                                                                                                            border="1px"   // Avatar와 유사한 테두리를 원하면 추가하세요.
+                                                                                                            // borderColor="gray.200"   // 원하는 테두리 색상으로 변경하세요.
+                                                                                                            color="gray"
+
+                                                                                                        >
+                                                                                                            <Text as="b" color={"gray"} fontSize={"sm"}>•</Text>
+                                                                                                        </Box>
+                                                                                                        }
+                                                                                    <Text fontSize={"xs"}>{`${participant.backnumber}.`}</Text>
+                                                                                    <Text fontSize={"sm"}>{`${participant.name}`}</Text>
+                                                                                </HStack>
+                                                                            );
+                                                                        }
+                                                                        )}
                                                                     </Grid>
                                                                 </VStack>
+                                                                <Empty />
+                                                                <Text as="b" mb={5}> 
+                                                                    {lineups.length}명이 선택되었습니다.
+                                                                </Text>
+                                                                <Empty />
                                                                 <BigDivider />
                                                                 <Text my={5}> 
                                                                     {step-1}쿼터 메모

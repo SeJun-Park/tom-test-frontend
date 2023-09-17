@@ -23,8 +23,9 @@ export default function TeamRegister() {
         onSuccess : () => {
             console.log("team register mutation success");
             toast({
-                title : "team register success.",
-                status : "success"
+                title : "팀 등록 성공",
+                status : "success",
+                duration : 1000
             });
             queryClient.refetchQueries(["isSpvsr"])
             queryClient.refetchQueries(["isSpvsrTeam"])
