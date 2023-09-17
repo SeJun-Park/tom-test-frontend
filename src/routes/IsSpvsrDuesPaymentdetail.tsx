@@ -1,10 +1,9 @@
 import { Box, Button, Card, CardBody, HStack, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft, FaCheckCircle, FaDotCircle, FaEllipsisV, FaMinusCircle, FaToggleOff } from "react-icons/fa";
+import { FaArrowLeft, FaDotCircle, FaEllipsisV, FaToggleOff, FaToggleOn } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamDuesPayment, getTeamDuesPaymentItems, isSpvsr } from "../api";
-import Capture from "../components/Capture";
 import CaptureButton from "../components/CaptureButton";
 import DuesPaymentDeleteModal from "../components/DuesPaymentDeleteModal";
 import DuesPaymentItem from "../components/DuesPaymentItem";
@@ -55,6 +54,7 @@ export default function IsSpvsrDuesPaymentDetail() {
                                                                 <DuesPaymentDeleteModal isOpen={isDeleteOpen} onClose={onDeleteClose} />
                                                             </Menu>}
             </HStack>
+            <Box id="captureTarget">
                 <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
                     <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
                     <Text fontSize={"xl"} as="b"> "{duesPaymentData?.title}" 회비 납부 현황 </Text>
@@ -70,20 +70,16 @@ export default function IsSpvsrDuesPaymentDetail() {
                                         )}
                 <HStack justifyContent={"space-evenly"} padding={10} pb={0}>
                     <HStack>
-                        <FaCheckCircle color={"green"} />
+                        <FaToggleOn size={22} color={"green"} />
                         <Text> 납부 </Text>
                     </HStack>
                     <HStack>
-                        <FaMinusCircle color={"red"} />
+                        <FaToggleOff size={22} color={"gray"} />
                         <Text> 미납 </Text>
                     </HStack>
                     <HStack>
-                        <FaDotCircle color={"black"} />
+                        <FaDotCircle size={15} color={"black"} />
                         <Text> 면제 </Text>
-                    </HStack>
-                    <HStack>
-                        <FaToggleOff />
-                        <Text> 미기록 </Text>
                     </HStack>
                 </HStack>
                 <HStack justifyContent={"space-between"} padding={5} mt={5}>
@@ -105,7 +101,8 @@ export default function IsSpvsrDuesPaymentDetail() {
                                                                                                             ) : <Text> 비어 있습니다. </Text>}
                 </VStack>
                 <Empty />
-            <Capture />
+            </Box>
+            {spvsrData?.team.name === teamData?.name && <CaptureButton />}
         </>
             )
 }
