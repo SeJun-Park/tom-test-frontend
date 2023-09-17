@@ -88,6 +88,7 @@ export default function DuesPaymentItem( props : IDuesPaymentItemProps ) {
                 duration : 1000
             });
             queryClient.refetchQueries(["duesPaymentItems"])
+            queryClient.refetchQueries(["duesPaymentItemsExtra"])
         },
     });
 
