@@ -1,7 +1,8 @@
-import { Avatar, Box, Divider, HStack, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure } from "@chakra-ui/react";
-import { FaCheckCircle, FaDotCircle, FaEllipsisH, FaMinusCircle, FaToggleOff } from "react-icons/fa";
-import DuesPaymentItemDeleteModal from "./DuesPaymentItemDeleteModal";
-import DuesPaymentItemUpdateModal from "./DuesPaymentItemUpdateModal";
+import { Avatar, Box, Button, Divider, HStack, Menu, MenuButton, MenuItem, MenuList, Text, useToast } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FaDotCircle, FaEllipsisH, FaToggleOff, FaToggleOn } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { duesPaymentItemDelete, duesPaymentItemUpdate } from "../api";
 
 interface IDuesPaymentItemProps {
     id : number,
@@ -14,23 +15,90 @@ interface IDuesPaymentItemProps {
 
 export default function DuesPaymentItem( props : IDuesPaymentItemProps ) {
 
-    const { isOpen : isDeleteOpen, onOpen : onDeleteOpen, onClose : onDeleteClose } = useDisclosure()
-    const { isOpen : isUpdateOpen, onOpen : onUpdateOpen, onClose : onUpdateClose } = useDisclosure()
+    const { teamPk } = useParams();
 
     const renderIcon = (payment: string) => {
         switch(payment) {
           case "paid":
-            return <FaCheckCircle color={"green"} />;
+            return <FaToggleOn size={22} color={"green"} />;
           case "non_paid":
-            return <FaMinusCircle color={"red"} />;
+            return <FaToggleOff size={22} color={"gray"} />;
           case "na":
-            return <FaDotCircle color={"black"} />;
-          case "non":
-            return <FaToggleOff />;
+            return <FaDotCircle size={15} color={"black"} />;
           default:
             return null;
         }
       }
+
+    const toast = useToast();
+    const queryClient = useQueryClient()
+
+    const duesPaymentItemUpdateMutation = useMutation(duesPaymentItemUpdate, {
+        onSuccess : (data) => {
+            console.log("duesPaymentItem Update successful")
+            // data.ok
+            toast({
+                title : "업데이트 성공",
+                status : "success",
+                duration : 1000
+            });
+            queryClient.refetchQueries(["duesPaymentItems"])
+        },
+    });
+
+    const onToggleButtonClick = () => {
+
+        const itemPk = String(props.id)
+        let payment = props.payment;
+
+        if (payment === 'paid') {
+            payment = 'non_paid';
+        } else if (payment === 'non_paid') {
+            payment = 'paid';
+        }
+
+        if(teamPk) {
+            duesPaymentItemUpdateMutation.mutate({ teamPk, itemPk, payment })
+        }
+    }
+
+    const onNAButtonClick = () => {
+
+        const itemPk = String(props.id)
+        let payment = props.payment
+
+        if (payment === 'na') {
+            payment = 'non_paid';
+        } else {
+            payment = 'na';
+        }
+
+        if(teamPk) {
+            duesPaymentItemUpdateMutation.mutate({ teamPk, itemPk, payment })
+        }
+    }
+
+    const duesPaymentItemDeleteMutation = useMutation(duesPaymentItemDelete, {
+        onSuccess : (data) => {
+            console.log("duesPaymentItem delete successful")
+            // data.ok
+            toast({
+                title : "삭제 성공",
+                status : "success",
+                duration : 1000
+            });
+            queryClient.refetchQueries(["duesPaymentItems"])
+        },
+    });
+
+    const onDeleteButtonClick = () => {
+
+        const itemPk = String(props.id)
+
+        if(teamPk) {
+            duesPaymentItemDeleteMutation.mutate({ teamPk, itemPk })
+        }
+    }
 
     return (
         <Box width={"100%"}>
@@ -43,7 +111,11 @@ export default function DuesPaymentItem( props : IDuesPaymentItemProps ) {
                     </HStack>
                 </HStack>
                 <HStack>
-                    {renderIcon(props.payment)}
+                    <Button variant={"unstyled"}>
+                        <Box onClick={onToggleButtonClick} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                            {renderIcon(props.payment)}
+                        </Box>
+                    </Button>
                     {props.is_spvsr && 
                                                                         <>
                                                                             <Menu>
@@ -52,11 +124,11 @@ export default function DuesPaymentItem( props : IDuesPaymentItemProps ) {
                                                                                     <FaEllipsisH size={12} />
                                                                                 </MenuButton>
                                                                                 <MenuList>
-                                                                                    <MenuItem onClick={onUpdateOpen}> 수정하기 </MenuItem>
-                                                                                    <MenuItem onClick={onDeleteOpen}> 삭제하기 </MenuItem>
+                                                                                    {props.payment === 'paid' && <MenuItem onClick={onNAButtonClick}> 면제 </MenuItem>}
+                                                                                    {props.payment === 'non_paid' && <MenuItem onClick={onNAButtonClick}> 면제 </MenuItem>}
+                                                                                    {props.payment === 'na' && <MenuItem onClick={onNAButtonClick}> 면제 취소 </MenuItem>}
+                                                                                    <MenuItem onClick={onDeleteButtonClick}> 삭제하기 </MenuItem>
                                                                                 </MenuList>
-                                                                                <DuesPaymentItemUpdateModal id={props.id} isOpen={isUpdateOpen} onClose={onUpdateClose} />
-                                                                                <DuesPaymentItemDeleteModal id={props.id} isOpen={isDeleteOpen} onClose={onDeleteClose} />
                                                                             </Menu>
                                                                         </>
                                                                               }
