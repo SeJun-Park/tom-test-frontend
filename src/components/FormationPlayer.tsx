@@ -9,7 +9,9 @@ interface IFormationPlayerProps {
 
 export default function FormationPlayer ( props : IFormationPlayerProps ) {
 
-    const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayer>(["player", props.playerPk], getPlayer);
+    const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayer>(["player", props.playerPk], getPlayer, {
+        enabled: !!props.playerPk
+    });
 
     return (
         <VStack spacing={0}>

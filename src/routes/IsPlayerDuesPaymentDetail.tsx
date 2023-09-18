@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaCheckCircle, FaDotCircle, FaMinusCircle, FaToggleOff, FaToggleOn } from "react-icons/fa";
@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamDuesPayment, getTeamDuesPaymentItems } from "../api";
 import DuesPaymentItem from "../components/DuesPaymentItem";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import { IDuesPayment, IDuesPaymentItem, ITeam } from "../types";
 
 export default function IsPlayerDuesPaymentDetail() {
@@ -45,6 +47,11 @@ export default function IsPlayerDuesPaymentDetail() {
                                                 </Card>
                                             </VStack>
                                         )}
+                <VStack mt={8}>
+                    <Box w="320px" h="100px">
+                            <KakaoADBig />
+                    </Box>
+                </VStack>
                 <HStack justifyContent={"space-evenly"} padding={10} pb={0}>
                 <HStack>
                         <FaToggleOn size={22} color={"green"} />
@@ -75,6 +82,13 @@ export default function IsPlayerDuesPaymentDetail() {
                                                                                                             />
                                                                                                             ) : <Text> 비어 있습니다. </Text>}
                 </VStack>
+                <Empty />
+                <VStack mt={16}>
+                    <Box w="320px" h="50px">
+                            <KakaoADSmall />
+                    </Box>
+                </VStack>
+                <Empty />
                 <Empty />
         </>
             )

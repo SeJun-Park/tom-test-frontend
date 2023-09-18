@@ -1,4 +1,4 @@
-import { Box, Button, Center, Divider, Grid, HStack, Image, Input, Select, Text, Textarea, useDisclosure, useToast, VStack } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, Divider, Grid, HStack, Image, Input, Select, Text, Textarea, useDisclosure, useToast, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
@@ -14,6 +14,7 @@ import FFTpreview from "../components/formations/FFTpreview";
 import FTTOpreview from "../components/formations/FTTOpreview";
 import TFTpreview from "../components/formations/TFTpreview";
 import GameQuotaUploadModal from "../components/GameQuotaUploadModal";
+import PlayerQuotasInfoPreview from "../components/PlayerQuotasInfoPreview";
 import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
 import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
@@ -177,6 +178,36 @@ export default function UploadGameQuotas() {
         navigate("/")
     }
 
+    interface IPlayerInfo {
+        playerId: number;
+        gameQuotaIndex: number[];
+        lineupsIndex: number[];
+        formations: string[];
+      }
+      
+    const calculatePlayerInfo = (quotasData: any[]): IPlayerInfo[] => {
+    return quotasData.reduce<IPlayerInfo[]>((acc, gameQuota, gameQuotaIndex) => {
+        if (gameQuota.lineups) {
+        gameQuota.lineups.forEach((playerId: number, lineupsIndex: number) => {
+            const existingPlayerIndex = acc.findIndex(info => info.playerId === playerId);
+            if (existingPlayerIndex !== -1) {
+            acc[existingPlayerIndex].gameQuotaIndex.push(gameQuotaIndex);
+            acc[existingPlayerIndex].lineupsIndex.push(lineupsIndex);
+            acc[existingPlayerIndex].formations.push(gameQuota.formation);
+            } else {
+            acc.push({
+                playerId: playerId,
+                gameQuotaIndex: [gameQuotaIndex],
+                lineupsIndex: [lineupsIndex],
+                formations: [gameQuota.formation],
+            });
+            }
+        });
+        }
+        return acc;
+    }, []);
+    };
+
 
     return (
         <ProtectedPage>
@@ -325,6 +356,36 @@ export default function UploadGameQuotas() {
                                                 <Button onClick={onStep2BtnClick} backgroundColor={"main.500"} color={"white"} mt={5}>
                                                     다음
                                                 </Button>}
+                    <Accordion allowMultiple width={"100%"} mt={14}>
+                        <AccordionItem _expanded={{ bg: 'gray.100'}}>
+                            <AccordionButton>
+                                <Box as="b" color={"main.500"} flex='1' textAlign='left'>
+                                팁!
+                                </Box>
+                                <AccordionIcon />
+                            </AccordionButton>
+                            <AccordionPanel pb={4}>
+                                <VStack my={9}>
+                                    <Text>총 {numQuotas}쿼터, {gameData?.participants.length}명의 선수이므로,</Text>
+                                    <Text>{gameData && (numQuotas*11)%(gameData.participants.length)}명이 {gameData && Math.floor((numQuotas*11)/(gameData.participants.length))+1}쿼터, {gameData && gameData.participants.length - (numQuotas*11)%(gameData.participants.length)}명이 {gameData && Math.floor((numQuotas*11)/(gameData.participants.length))}쿼터를 뛸 수 있습니다.</Text>
+                                </VStack>
+                                <Divider />
+                                <VStack mt={2}>
+                                    <Text as="b" color={"main.500"}>플레이어 별 정보</Text>
+                                    <Text fontSize={"xs"} color={"gray"}>*선택된 쿼터 수 기준 오름차순으로 정렬됩니다.</Text>
+                                {calculatePlayerInfo(quotasData).sort((a, b) => a.gameQuotaIndex.length - b.gameQuotaIndex.length).map((gameQuotasInfo, index) => 
+                                                                                <PlayerQuotasInfoPreview
+                                                                                                key={gameQuotasInfo.playerId} 
+                                                                                                playerPk={gameQuotasInfo.playerId}
+                                                                                                gameQuotaIndex={gameQuotasInfo.gameQuotaIndex}
+                                                                                                formations={gameQuotasInfo.formations}
+                                                                                                lineupsIndex={gameQuotasInfo.lineupsIndex}
+                                                                                                />
+                                                                        )}
+                                </VStack>
+                            </AccordionPanel>
+                        </AccordionItem>
+                    </Accordion>
                 </VStack>
             }
 

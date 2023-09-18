@@ -15,6 +15,8 @@ import DuesOutItem from "../components/DuesOutItem";
 import CaptureButton from "../components/CaptureButton";
 import Empty from "../components/Empty";
 import Capture from "../components/Capture";
+import KakaoADSmall from "../components/KakaoADSmall";
+import KakaoADBig from "../components/KakaoADBig";
 
 export default function IsSpvsrDuesDetailsDetail() {
 
@@ -76,6 +78,11 @@ export default function IsSpvsrDuesDetailsDetail() {
                             </Card>
                         </VStack>
                     )}
+            <VStack mt={8}>
+                <Box w="320px" h="100px">
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <Tabs isLazy align={"center"} variant='soft-rounded' my={8}>
                 <TabList mb='1em'>
                     <Tab _selected={{color : "white", bg : "main.500"}}> 최종 내역 </Tab>
@@ -171,6 +178,13 @@ export default function IsSpvsrDuesDetailsDetail() {
             </Tabs>
             <Empty />
             <Capture />
+            <VStack mt={16}>
+                <Box w="320px" h="50px">
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </>
     );
 }

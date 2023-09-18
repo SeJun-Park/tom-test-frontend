@@ -10,6 +10,8 @@ import DuesPaymentItem from "../components/DuesPaymentItem";
 import DuesPaymentItemAddModal from "../components/DuesPaymentItemAddModal";
 import DuesPaymentUpdateModal from "../components/DuesPaymentUpdateModal";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 import { IDuesPayment, IDuesPaymentItem, ISpvsrUser, ITeam } from "../types";
 
 export default function IsSpvsrDuesPaymentDetail() {
@@ -68,6 +70,11 @@ export default function IsSpvsrDuesPaymentDetail() {
                                                 </Card>
                                             </VStack>
                                         )}
+                <VStack mt={8}>
+                    <Box w="320px" h="100px">
+                            <KakaoADBig />
+                    </Box>
+                </VStack>
                 <HStack justifyContent={"space-evenly"} padding={10} pb={0}>
                     <HStack>
                         <FaToggleOn size={22} color={"green"} />
@@ -103,6 +110,13 @@ export default function IsSpvsrDuesPaymentDetail() {
                 <Empty />
             </Box>
             {spvsrData?.team.name === teamData?.name && <CaptureButton />}
+            <VStack mt={16}>
+                <Box w="320px" h="50px">
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />
         </>
             )
 }

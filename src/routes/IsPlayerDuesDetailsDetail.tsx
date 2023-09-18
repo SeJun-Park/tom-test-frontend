@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
@@ -8,6 +8,8 @@ import { IAmount, IDuesDetail, IDuesInItem, IDuesOutItem, ITeam } from "../types
 import DuesInItem from "../components/DuesInItem";
 import DuesOutItem from "../components/DuesOutItem";
 import Empty from "../components/Empty";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
 
 export default function IsPlayerDuesDetailsDetail() {
 
@@ -49,6 +51,11 @@ export default function IsPlayerDuesDetailsDetail() {
                             </Card>
                         </VStack>
                     )}
+            <VStack mt={8}>
+                <Box w="320px" h="100px">
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <Tabs isLazy align={"center"} variant='soft-rounded' my={8}>
                 <TabList mb='1em'>
                     <Tab _selected={{color : "white", bg : "main.500"}}> 최종 내역 </Tab>
@@ -123,6 +130,13 @@ export default function IsPlayerDuesDetailsDetail() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+            <Empty />
+            <VStack mt={16}>
+                <Box w="320px" h="50px" mt={16}>
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
             <Empty />
         </>
     );
