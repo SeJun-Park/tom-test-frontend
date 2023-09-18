@@ -8,13 +8,13 @@ import DuesPaymentItem from "../components/DuesPaymentItem";
 import Empty from "../components/Empty";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
-import { IDuesPayment, IDuesPaymentItem, ITeam } from "../types";
+import { IDuesPayment, IDuesPaymentItem, ITinyTeam } from "../types";
 
 export default function DuesPaymentDetailReadOnly() {
 
     const { teamPk, paymentPk } = useParams();
 
-    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["teamReadOnly", teamPk], getTeamReadOnly);
+    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITinyTeam>(["teamReadOnly", teamPk], getTeamReadOnly);
     const { isLoading : duesPaymentLoading, data : duesPaymentData, isError : duesPaymentError } = useQuery<IDuesPayment>(["duesPayment", teamPk, paymentPk], getTeamDuesPayment);
     const { isLoading : duesPaymentItemsLoading, data : duesPaymentItemsData, isError : duesPaymentItemsError } = useQuery<IDuesPaymentItem[]>(["duesPaymentItems", teamPk, paymentPk], getTeamDuesPaymentItems);
 
