@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaDotCircle, FaEllipsisV, FaToggleOff, FaToggleOn } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { getTeam, getTeamDuesPayment, getTeamDuesPaymentItems, isSpvsr } from "../api";
+import Capture from "../components/Capture";
 import CaptureButton from "../components/CaptureButton";
 import DuesPaymentDeleteModal from "../components/DuesPaymentDeleteModal";
 import DuesPaymentItem from "../components/DuesPaymentItem";
@@ -12,6 +13,7 @@ import DuesPaymentUpdateModal from "../components/DuesPaymentUpdateModal";
 import Empty from "../components/Empty";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
+import KakaoShare from "../components/KakaoShare";
 import { IDuesPayment, IDuesPaymentItem, ISpvsrUser, ITeam } from "../types";
 
 export default function IsSpvsrDuesPaymentDetail() {
@@ -56,60 +58,65 @@ export default function IsSpvsrDuesPaymentDetail() {
                                                                 <DuesPaymentDeleteModal isOpen={isDeleteOpen} onClose={onDeleteClose} />
                                                             </Menu>}
             </HStack>
-            <Box id="captureTarget">
-                <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
-                    <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
-                    <Text fontSize={"xl"} as="b"> "{duesPaymentData?.title}" 회비 납부 현황 </Text>
-                </VStack>
-                {duesPaymentData?.memo && (
-                                            <VStack>
-                                                <Card width={"90%"} textAlign={"center"}>
-                                                    <CardBody>
-                                                        <Text fontSize={"sm"}>{duesPaymentData.memo}</Text>
-                                                    </CardBody>
-                                                </Card>
-                                            </VStack>
-                                        )}
-                <VStack mt={8}>
-                    <Box w="320px" h="100px">
-                            <KakaoADBig />
-                    </Box>
-                </VStack>
-                <HStack justifyContent={"space-evenly"} padding={10} pb={0}>
-                    <HStack>
-                        <FaToggleOn size={22} color={"green"} />
-                        <Text> 납부 </Text>
-                    </HStack>
-                    <HStack>
-                        <FaToggleOff size={22} color={"gray"} />
-                        <Text> 미납 </Text>
-                    </HStack>
-                    <HStack>
-                        <FaDotCircle size={15} color={"black"} />
-                        <Text> 면제 </Text>
-                    </HStack>
+            <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
+                <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
+                <Text fontSize={"xl"} as="b"> "{duesPaymentData?.title}" 회비 납부 현황 </Text>
+            </VStack>
+            {duesPaymentData?.memo && (
+                                        <VStack>
+                                            <Card width={"90%"} textAlign={"center"}>
+                                                <CardBody>
+                                                    <Text fontSize={"sm"}>{duesPaymentData.memo}</Text>
+                                                </CardBody>
+                                            </Card>
+                                        </VStack>
+                                    )}
+            <VStack mt={8}>
+                <Box w="320px" h="100px">
+                        <KakaoADBig />
+                </Box>
+            </VStack>
+            <HStack justifyContent={"space-evenly"} padding={10} pb={0}>
+                <HStack>
+                    <FaToggleOn size={22} color={"green"} />
+                    <Text> 납부 </Text>
                 </HStack>
-                <HStack justifyContent={"space-between"} padding={5} mt={5}>
-                    <Text as="b" color={"main.500"} fontSize={"md"} > 납부 현황 </Text>
-                    {spvsrData?.team.name === teamData?.name && <Button onClick={onAddOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> + 항목 추가하기 </Button>}
-                    <DuesPaymentItemAddModal isOpen={isAddOpen} onClose={onAddClose} />
+                <HStack>
+                    <FaToggleOff size={22} color={"gray"} />
+                    <Text> 미납 </Text>
                 </HStack>
-                <VStack padding={5}>
-                    {duesPaymentItemsData && duesPaymentItemsData.length !== 0 ? duesPaymentItemsData.map((duesPaymentItem, index) => 
-                                                                                                            <DuesPaymentItem 
-                                                                                                            key={index}
-                                                                                                            id={duesPaymentItem.id}
-                                                                                                            backnumber={duesPaymentItem.player.backnumber}
-                                                                                                            avatar={duesPaymentItem.player.avatar}
-                                                                                                            name={duesPaymentItem.player.name}
-                                                                                                            payment={duesPaymentItem.payment}
-                                                                                                            is_spvsr={spvsrData && teamData && (spvsrData.team.name === teamData.name) ? true : false}                                                                                                        
-                                                                                                            />
-                                                                                                            ) : <Text> 비어 있습니다. </Text>}
-                </VStack>
-                <Empty />
-            </Box>
-            {spvsrData?.team.name === teamData?.name && <CaptureButton />}
+                <HStack>
+                    <FaDotCircle size={15} color={"black"} />
+                    <Text> 면제 </Text>
+                </HStack>
+            </HStack>
+            <HStack justifyContent={"space-between"} padding={5} mt={5}>
+                <Text as="b" color={"main.500"} fontSize={"md"} > 납부 현황 </Text>
+                {spvsrData?.team.name === teamData?.name && <Button onClick={onAddOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> + 항목 추가하기 </Button>}
+                <DuesPaymentItemAddModal isOpen={isAddOpen} onClose={onAddClose} />
+            </HStack>
+            <VStack padding={5}>
+                {duesPaymentItemsData && duesPaymentItemsData.length !== 0 ? duesPaymentItemsData.map((duesPaymentItem, index) => 
+                                                                                                        <DuesPaymentItem 
+                                                                                                        key={index}
+                                                                                                        id={duesPaymentItem.id}
+                                                                                                        backnumber={duesPaymentItem.player.backnumber}
+                                                                                                        avatar={duesPaymentItem.player.avatar}
+                                                                                                        name={duesPaymentItem.player.name}
+                                                                                                        payment={duesPaymentItem.payment}
+                                                                                                        is_spvsr={spvsrData && teamData && (spvsrData.team.name === teamData.name) ? true : false}                                                                                                        
+                                                                                                        />
+                                                                                                        ) : <Text> 비어 있습니다. </Text>}
+            </VStack>
+            <Empty />
+            <KakaoShare 
+                title={"hi"}
+                description={"dec"}
+                imageUrl={"https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/ba2021f7-07b0-4a45-cc5d-268b34bce000/public"}
+                mobileWebUrl={"https://www.3manofthematch.com/teams/1/dues/payment/3"}
+                webUrl={"https://www.3manofthematch.com/teams/1/dues/payment/3"}
+                btnTitle={"보러 가기"}
+            />
             <VStack mt={16}>
                 <Box w="320px" h="50px">
                         <KakaoADSmall />

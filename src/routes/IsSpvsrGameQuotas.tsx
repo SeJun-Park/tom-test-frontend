@@ -148,7 +148,7 @@ export default function IsSpvsrGameQuotas() {
                     </AccordionButton>
                     <AccordionPanel pb={4}>
                         <VStack>
-                        {allPlayersData?.map((gameQuotasInfo, index) => 
+                        {allPlayersData?.sort((a, b) => a.gameQuotaIndex.length - b.gameQuotaIndex.length).map((gameQuotasInfo, index) => 
                                                                         <PlayerQuotasInfo
                                                                                         key={index} 
                                                                                         playerPk={gameQuotasInfo.playerPk}

@@ -356,7 +356,8 @@ export default function UploadGameQuotas() {
                                                 <Button onClick={onStep2BtnClick} backgroundColor={"main.500"} color={"white"} mt={5}>
                                                     다음
                                                 </Button>}
-                    <Accordion allowMultiple width={"100%"} mt={14}>
+                <Box mt={14}>
+                    <Accordion allowMultiple width={"100%"}>
                         <AccordionItem _expanded={{ bg: 'gray.100'}}>
                             <AccordionButton>
                                 <Box as="b" color={"main.500"} flex='1' textAlign='left'>
@@ -386,6 +387,7 @@ export default function UploadGameQuotas() {
                             </AccordionPanel>
                         </AccordionItem>
                     </Accordion>
+                </Box>
                 </VStack>
             }
 
