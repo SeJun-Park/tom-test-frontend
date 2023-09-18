@@ -23,7 +23,7 @@ export default function KakaoShare(props:KakaoShareProps) {
 
     useEffect(() => {
         if (window.Kakao && !window.Kakao.isInitialized()) {
-          window.Kakao.init('mykey');
+          window.Kakao.init('73a35797c5557b800422cc5735d88d6f');
         }
     }, []);
     
