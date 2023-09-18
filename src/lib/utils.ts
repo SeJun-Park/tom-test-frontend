@@ -60,3 +60,90 @@ export const formatDuesItemDate = (dateString: string): string => {
   const formattedDate = `${year}.${month < 10 ? "0" + month : month}.${day < 10 ? "0" + day : day}`;
   return formattedDate;
 };
+
+
+
+export const getPlayerQuotaFormation = ( formation : string, index : number ) => {
+  if (formation === '4-2-3-1') {
+    switch(index) {
+      case 0:
+        return "탑 공격수";
+      case 1:
+        return "왼쪽 윙";
+      case 2:
+        return "가운데 공격형 미드필더";
+      case 3:
+        return "오른쪽 윙";
+      case 4:
+        return "왼쪽 수비형 미드필더";
+      case 5:
+        return "오른쪽 수비형 미드필더";
+      case 6:
+        return "왼쪽 백";
+      case 7:
+        return "왼쪽 센터백";
+      case 8:
+        return "오른쪽 센터백";
+      case 9:
+        return "오른쪽 백";
+      case 10:
+        return "골키퍼";
+      default:
+        return null;
+    }
+  } else if (formation === '4-4-2') {
+    switch(index) {
+      case 0:
+        return "왼쪽 탑 공격수";
+      case 1:
+        return "오른쪽 탑 공격수";
+      case 2:
+        return "왼쪽 윙";
+      case 3:
+        return "왼쪽 중앙 미드필더";
+      case 4:
+        return "오른쪽 중앙 미드필더";
+      case 5:
+        return "오른쪽 윙";
+      case 6:
+        return "왼쪽 백";
+      case 7:
+        return "왼쪽 센터백";
+      case 8:
+        return "오른쪽 센터백";
+      case 9:
+        return "오른쪽 백";
+      case 10:
+        return "골키퍼";
+      default:
+        return null;
+    } 
+  } else if (formation === '3-5-2') {
+    switch(index) {
+      case 0:
+        return "왼쪽 탑 공격수";
+      case 1:
+        return "오른쪽 탑 공격수";
+      case 2:
+        return "왼쪽 윙";
+      case 3:
+        return "왼쪽 중앙 미드필더";
+      case 4:
+        return "가운데 중앙 미드필더";
+      case 5:
+        return "오른쪽 중앙 미드필더";
+      case 6:
+        return "오른쪽 윙";
+      case 7:
+        return "왼쪽 백";
+      case 8:
+        return "센터백";
+      case 9:
+        return "오른쪽 백";
+      case 10:
+        return "골키퍼";
+      default:
+        return null;
+    }
+  }
+}

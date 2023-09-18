@@ -24,7 +24,7 @@ export default function GameQuotasDeleteModal ( props : GameQuotasDeleteModalPro
             console.log("gameQuotas all delete successful")
             // data.ok
             toast({
-                title : "쿼터 전체 삭제 성공",
+                title : "전체 삭제 성공",
                 status : "success",
                 duration : 1000
             });

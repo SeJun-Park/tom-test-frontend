@@ -31,7 +31,7 @@ export default function GamePhotoUploadModal ( props : GamePhotoUploadModalProps
         onSuccess : (data) => {
             toast({
                 status : "success",
-                title : "경기 사진 등록 완료",
+                title : "사진 등록 완료",
                 description : "연속으로 등록이 가능합니다",
                 isClosable : true,
                 // isClosable : true

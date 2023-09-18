@@ -58,7 +58,7 @@ export default function SignUpModal( props : SpvsrSignUpModalProps ) {
         onSuccess : (data) => {
             console.log("sign up mutation success");
             toast({
-                title : "sign-up success.",
+                title : "가입 완료.",
                 status : "success"
             });
             props.onClose();

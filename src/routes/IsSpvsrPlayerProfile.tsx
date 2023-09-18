@@ -78,19 +78,19 @@ export default function IsSpvsrPlayerProfile() {
                     { spvsrData?.team.name === playerData?.team.name ? 
                                                                         playerData?.avatar ?
                                                                                             <VStack justifyContent={"center"}>
-                                                                                                <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"}>
-                                                                                                    <FaCamera size="20px" />
+                                                                                                <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                                                                                                    <FaCamera size="15px" />
                                                                                                 </Button>
-                                                                                                <Button onClick={onPhotoDeleteOpen} variant={"outline"} color={"gray"}>
-                                                                                                    <FaTrashAlt size="20px" />
+                                                                                                <Button onClick={onPhotoDeleteOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                                                                                                    <FaTrashAlt size="15px" />
                                                                                                 </Button>
                                                                                                 <PlayerPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
                                                                                                 <PlayerPhotoDeleteModal isOpen={isPhotoDeleteOpen} onClose={onPhotoDeleteClose} />
                                                                                             </VStack>  
                                                                                             :
                                                                                             <HStack justifyContent={"center"}>
-                                                                                                <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"}>
-                                                                                                    <FaCamera size="20px" />
+                                                                                                <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                                                                                                    <FaCamera size="15px" />
                                                                                                 </Button>
                                                                                                 <PlayerPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
                                                                                             </HStack>

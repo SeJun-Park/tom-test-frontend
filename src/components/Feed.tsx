@@ -144,8 +144,8 @@ export default function Feed( props : IFeedProps ) {
             
             {props.isspvsr && 
                 <>
-                    <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"}>
-                        <FaCamera size="20px" />
+                    <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                        <FaCamera size="15px" />
                     </Button>
                     <FeedPhotoUploadModal pk={props.pk} isOpen={isPhotoOpen} onClose={onPhotoClose} />
                 </>

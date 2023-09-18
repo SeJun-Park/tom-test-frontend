@@ -31,7 +31,7 @@ export default function DuesDetailUpdateModal ( props : DuesDetailUpdateModalPro
             console.log("duesDetail add successful")
             // data.ok
             toast({
-                title : "회비 사용 내역 업데이트 성공",
+                title : "업데이트 성공",
                 status : "success",
                 duration : 1000
             });

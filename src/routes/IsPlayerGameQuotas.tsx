@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, Divider, Grid, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Card, CardBody, Divider, Grid, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
@@ -8,6 +8,7 @@ import Capture from "../components/Capture";
 import FFT from "../components/formations/FFT";
 import FTTO from "../components/formations/FTTO";
 import TFT from "../components/formations/TFT";
+import PlayerQuotasInfo from "../components/PlayerQuotasInfo";
 import { formatGamesDate } from "../lib/utils";
 import { IGame, IGameQuota } from "../types";
 
@@ -23,6 +24,36 @@ export default function IsPlayerGameQuotas() {
     const onClickBack = () => {
         navigate(-1)
     }
+
+    interface IPlayerInfo {
+        playerPk: number;
+        playerAvatar: string;
+        playerName: string;
+        gameQuotaIndex: number[];
+        formations: string[];
+        lineupsIndex: number[];
+    }
+    
+    const allPlayersData = gameQuotasData?.reduce<IPlayerInfo[]>((acc, gameQuota, gameQuotaIndex) => {
+    gameQuota.lineups.forEach((player, lineupsIndex) => {
+        const existingPlayerIndex = acc.findIndex(info => info.playerPk === player.pk);
+        if (existingPlayerIndex !== -1) {
+        acc[existingPlayerIndex].gameQuotaIndex.push(gameQuotaIndex);
+        acc[existingPlayerIndex].lineupsIndex.push(lineupsIndex);
+        acc[existingPlayerIndex].formations.push(gameQuota.formation);
+        } else {
+        acc.push({
+            playerPk: player.pk,
+            playerAvatar: player.avatar,
+            playerName: player.name,
+            gameQuotaIndex: [gameQuotaIndex],
+            formations: [gameQuota.formation],
+            lineupsIndex: [lineupsIndex],
+        });
+        }
+    });
+    return acc;
+    }, []);
 
     return (
         <>
@@ -79,8 +110,32 @@ export default function IsPlayerGameQuotas() {
                                                                     </Box>
                                                                 </TabPanel>)}
                     </TabPanels>
-                <Capture />
             </Tabs>
+            <Accordion allowMultiple>
+                <AccordionItem>
+                    <AccordionButton>
+                        <Box as="b" color={"main.500"} flex='1' textAlign='left'>
+                        플레이어 별 정보 보기
+                        </Box>
+                        <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel pb={4}>
+                        <VStack>
+                        {allPlayersData?.map((gameQuotasInfo, index) => 
+                                                                        <PlayerQuotasInfo
+                                                                                        key={index} 
+                                                                                        playerPk={gameQuotasInfo.playerPk}
+                                                                                        playerAvatar={gameQuotasInfo.playerAvatar}
+                                                                                        playerName={gameQuotasInfo.playerName}
+                                                                                        gameQuotaIndex={gameQuotasInfo.gameQuotaIndex}
+                                                                                        formations={gameQuotasInfo.formations}
+                                                                                        lineupsIndex={gameQuotasInfo.lineupsIndex}
+                                                                                        />
+                                                                )}
+                        </VStack>
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion> 
         </>
     )
 }

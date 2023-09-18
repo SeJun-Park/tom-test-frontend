@@ -24,7 +24,7 @@ export default function DuesDetailDeleteModal ( props : DuesDetailDeleteModalPro
             console.log("dues detail delete successful")
             // data.ok
             toast({
-                title : "회비 사용 내역 삭제 성공",
+                title : "삭제 성공",
                 status : "success",
                 duration : 1000
             });

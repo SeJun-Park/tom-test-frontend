@@ -24,7 +24,7 @@ export default function PlayerPhotoDeleteModal ( props : PlayerPhotoDeleteModalP
             console.log("player photo delete successful")
             // data.ok
             toast({
-                title : "플레이어 프로필 사진 삭제 성공",
+                title : "프로필 사진 삭제 성공",
                 status : "success",
                 duration : 1000
             });

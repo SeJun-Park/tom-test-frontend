@@ -25,7 +25,7 @@ export default function DuesInItemDeleteModal ( props : DuesInItemDeleteModalPro
             console.log("duesInItem delete successful")
             // data.ok
             toast({
-                title : "회비 입금 내역 삭제 성공",
+                title : "삭제 성공",
                 status : "success",
                 duration : 1000
             });

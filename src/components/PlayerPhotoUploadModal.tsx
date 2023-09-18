@@ -31,7 +31,7 @@ export default function PlayerPhotoUploadModal ( props : PlayerPhotoUploadModalP
         onSuccess : (data) => {
             toast({
                 status : "success",
-                title : "플레이어 프로필 사진 등록 완료",
+                title : "프로필 사진 등록 완료",
                 duration : 1000
                 // isClosable : true
             });

@@ -30,7 +30,7 @@ export default function DuesDetailAddModal ( props : DuesDetailAddModalProps ) {
             console.log("duesDetail add successful")
             // data.ok
             toast({
-                title : "회비 시용 내역 추가 성공",
+                title : "추가 성공",
                 status : "success",
                 duration : 1000
             });

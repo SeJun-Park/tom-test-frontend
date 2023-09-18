@@ -23,7 +23,7 @@ export default function GameVideoDeleteModal ( props : GameVideoDeleteModalProps
             console.log("game video delete successful")
             // data.ok
             toast({
-                title : "경기 영상 링크 삭제 성공",
+                title : "링크 삭제 성공",
                 status : "success",
                 duration : 1000
             });

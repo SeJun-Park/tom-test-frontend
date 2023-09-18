@@ -29,7 +29,7 @@ export default function CarryOverAddModal ( props : CarryOverAddModalProps ) {
             console.log(data)
             // data.ok
             toast({
-                title : "이월 금액 입력 완료",
+                title : "입력 완료",
                 status : "success",
                 duration : 1000
             });

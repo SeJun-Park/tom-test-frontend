@@ -29,7 +29,7 @@ export default function FeedUpdateModal( props : FeedUpdateModalProps ) {
     const feedUpdateMutation = useMutation(feedUpdate, {
         onSuccess : (data) => {
             toast({
-                title : "피드 수정 성공",
+                title : " 피드 수정 성공",
                 status : "success"
             });
             props.onClose();

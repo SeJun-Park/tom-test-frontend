@@ -29,7 +29,7 @@ export default function DuesPaymentItemAddModal ( props : DuesPaymentItemAddModa
             console.log("duesPaymentItemsExtra successful")
             // data.ok
             toast({
-                title : "회비 납부 현황 항목 추가 성공",
+                title : "추가 성공",
                 status : "success",
                 duration : 1000
             });

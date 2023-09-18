@@ -30,7 +30,7 @@ export default function GameVideoAddModal ( props : GameVideoAddModalProps ) {
             console.log(data)
             // data.ok
             toast({
-                title : "유튜브 링크 추가 완료",
+                title : "유튜브 링크 추가 성공",
                 status : "success",
                 duration : 1000
             });

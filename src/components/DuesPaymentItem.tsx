@@ -55,6 +55,8 @@ export default function DuesPaymentItem( props : IDuesPaymentItemProps ) {
             payment = 'non_paid';
         } else if (payment === 'non_paid') {
             payment = 'paid';
+        } else if (payment === 'na') {
+            return ;
         }
 
         if(teamPk) {
@@ -112,13 +114,13 @@ export default function DuesPaymentItem( props : IDuesPaymentItemProps ) {
                     </HStack>
                 </HStack>
                 <HStack>
-                    <Button variant={"unstyled"}>
-                        <Box onClick={onToggleButtonClick} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                            {renderIcon(props.payment)}
-                        </Box>
-                    </Button>
-                    {props.is_spvsr && 
+                    {props.is_spvsr ? 
                                                                         <>
+                                                                            <Button onClick={onToggleButtonClick} variant={"unstyled"} isLoading={duesPaymentItemUpdateMutation.isLoading}>
+                                                                                <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                                                                                    {renderIcon(props.payment)}
+                                                                                </Box>
+                                                                            </Button>
                                                                             <Menu>
                                                                                 <MenuButton marginX={1}>
                                                                                     {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
@@ -132,6 +134,10 @@ export default function DuesPaymentItem( props : IDuesPaymentItemProps ) {
                                                                                 </MenuList>
                                                                             </Menu>
                                                                         </>
+                                                                        :
+                                                                        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                                                                            {renderIcon(props.payment)}
+                                                                        </Box>
                                                                               }
                 </HStack>
             </HStack>

@@ -42,7 +42,7 @@ export default function DuesInItemAddModal ( props : DuesInItemAddModalProps ) {
             console.log("duesInItem add successful")
             // data.ok
             toast({
-                title : "입금 내역 추가 성공",
+                title : "추가 성공",
                 status : "success",
                 duration : 1000
             });

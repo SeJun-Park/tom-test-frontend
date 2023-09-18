@@ -22,7 +22,7 @@ export default function GameDeleteModal ( props : GameDeleteModalProps ) {
             console.log("game delete successful")
             // data.ok
             toast({
-                title : "게임 삭제 성공",
+                title : "삭제 성공",
                 status : "success",
                 duration : 1000
             });
