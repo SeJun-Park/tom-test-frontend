@@ -521,6 +521,12 @@ export const getTeamDuesPaymentItems = async ({ queryKey } : QueryFunctionContex
     return response.data
 }
 
+export const getTeamDuesPaymentItemsReadOnly = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk, paymentPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/dues/payments/${paymentPk}/items/readonly/`)
+    return response.data
+}
+
 export const getTeamDuesPaymentItemsExtra = async ({ queryKey } : QueryFunctionContext) => {
     const [ _, teamPk, paymentPk ] = queryKey;
     const response = await instance.get(`teams/${teamPk}/dues/payments/${paymentPk}/items/extra/`)
