@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamDuesDetail, getTeamDuesInAmount, getTeamDuesInItems, getTeamDuesOutAmount, getTeamDuesOutItems } from "../api";
+import { getTeam, getTeamDuesDetail, getTeamDuesInAmount, getTeamDuesInItems, getTeamDuesOutAmount, getTeamDuesOutItems, getTeamReadOnly } from "../api";
 import { IAmount, IDuesDetail, IDuesInItem, IDuesOutItem, ITeam } from "../types";
 import DuesInItem from "../components/DuesInItem";
 import DuesOutItem from "../components/DuesOutItem";
@@ -15,7 +15,7 @@ export default function DuesDetailsDetailReadOnly() {
 
     const { teamPk, detailPk } = useParams();
 
-    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
+    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["teamReadOnly", teamPk], getTeamReadOnly);
     const { isLoading : duesDetailLoading, data : duesDetailData, isError : duesDetailError } = useQuery<IDuesDetail>(["duesDetail", teamPk, detailPk], getTeamDuesDetail);
     const { isLoading : duesInItemsLoading, data : duesInItemsData, isError : duesInItemsError } = useQuery<IDuesInItem[]>(["duesInItems", teamPk, detailPk], getTeamDuesInItems);
     const { isLoading : duesOutItemsLoading, data : duesOutItemsData, isError : duesOutItemsError } = useQuery<IDuesOutItem[]>(["duesOutItems", teamPk, detailPk], getTeamDuesOutItems);

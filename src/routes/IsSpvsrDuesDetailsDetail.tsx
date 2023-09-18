@@ -185,8 +185,8 @@ export default function IsSpvsrDuesDetailsDetail() {
                     title={`${teamData?.name} 회비 사용 내역`}
                     description={`회비 제목 : ${duesDetailData?.title}`}
                     imageUrl={shareImage}
-                    mobileWebUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/detail/${detailPk}/readonly`}
-                    webUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/detail/${detailPk}/readonly`}
+                    mobileWebUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/details/${detailPk}/readonly`}
+                    webUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/details/${detailPk}/readonly`}
                     btnTitle={"보러 가기"}
                 />
             <VStack mt={8}>
