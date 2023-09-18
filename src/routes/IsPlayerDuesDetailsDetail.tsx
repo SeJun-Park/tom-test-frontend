@@ -10,6 +10,9 @@ import DuesOutItem from "../components/DuesOutItem";
 import Empty from "../components/Empty";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
+import KakaoShare from "../components/KakaoShare";
+import { useRecoilValue } from "recoil";
+import { duesDetailsDetailShareImageState } from "../atoms";
 
 export default function IsPlayerDuesDetailsDetail() {
 
@@ -27,6 +30,8 @@ export default function IsPlayerDuesDetailsDetail() {
     const onClickBack = () => {
         navigate(-1)
     }
+
+    const shareImage = useRecoilValue(duesDetailsDetailShareImageState)
 
     return (
         <>
@@ -130,9 +135,16 @@ export default function IsPlayerDuesDetailsDetail() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            <Empty />
-            <VStack mt={16}>
-                <Box w="320px" h="50px" mt={16}>
+            <KakaoShare 
+                    title={`${teamData?.name} 회비 사용 내역`}
+                    description={`회비 제목 : ${duesDetailData?.title}`}
+                    imageUrl={shareImage}
+                    mobileWebUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/detail/${detailPk}/readonly`}
+                    webUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/detail/${detailPk}/readonly`}
+                    btnTitle={"보러 가기"}
+                />
+            <VStack mt={8}>
+                <Box w="320px" h="50px">
                         <KakaoADSmall />
                 </Box>
             </VStack>

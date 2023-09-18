@@ -3,7 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaDotCircle, FaEllipsisV, FaToggleOff, FaToggleOn } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { getTeam, getTeamDuesPayment, getTeamDuesPaymentItems, isSpvsr } from "../api";
+import { duesPaymentDetailShareImageState } from "../atoms";
 import Capture from "../components/Capture";
 import CaptureButton from "../components/CaptureButton";
 import DuesPaymentDeleteModal from "../components/DuesPaymentDeleteModal";
@@ -34,6 +36,8 @@ export default function IsSpvsrDuesPaymentDetail() {
     const { isOpen : isDeleteOpen, onOpen : onDeleteOpen, onClose : onDeleteClose } = useDisclosure()
     const { isOpen : isUpdateOpen, onOpen : onUpdateOpen, onClose : onUpdateClose } = useDisclosure()
     const { isOpen : isAddOpen, onOpen : onAddOpen, onClose : onAddClose } = useDisclosure()
+
+    const shareImage = useRecoilValue(duesPaymentDetailShareImageState)
 
     return (
         <>
@@ -108,16 +112,15 @@ export default function IsSpvsrDuesPaymentDetail() {
                                                                                                         />
                                                                                                         ) : <Text> 비어 있습니다. </Text>}
             </VStack>
-            <Empty />
             <KakaoShare 
-                title={"hi"}
-                description={"dec"}
-                imageUrl={"https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/ba2021f7-07b0-4a45-cc5d-268b34bce000/public"}
-                mobileWebUrl={"https://www.3manofthematch.com/teams/1/dues/payment/3"}
-                webUrl={"https://www.3manofthematch.com/teams/1/dues/payment/3"}
+                title={`${teamData?.name} 회비 납부 현황`}
+                description={`회비 제목 : ${duesPaymentData?.title}`}
+                imageUrl={shareImage}
+                mobileWebUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/payment/${paymentPk}/readonly`}
+                webUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/payment/${paymentPk}/readonly`}
                 btnTitle={"보러 가기"}
             />
-            <VStack mt={16}>
+            <VStack mt={8}>
                 <Box w="320px" h="50px">
                         <KakaoADSmall />
                 </Box>

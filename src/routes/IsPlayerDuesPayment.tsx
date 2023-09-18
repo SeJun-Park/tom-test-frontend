@@ -44,8 +44,8 @@ export default function IsPlayerDuesPayment() {
                                                                                                                         title={duesPayment.title}
                                                                                                                         />) : <Text>비어 있습니다.</Text>}
             </VStack>
-            <VStack>
-                <Box w="320px" h="50px" mt={16}>
+            <VStack mt={16}>
+                <Box w="320px" h="50px">
                         <KakaoADSmall />
                 </Box>
             </VStack>

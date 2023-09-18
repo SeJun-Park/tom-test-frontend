@@ -1,19 +1,16 @@
 import { Box, Button, Card, CardBody, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft, FaCheckCircle, FaDotCircle, FaMinusCircle, FaToggleOff, FaToggleOn } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { FaArrowLeft, FaDotCircle, FaToggleOff, FaToggleOn } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 import { getTeam, getTeamDuesPayment, getTeamDuesPaymentItems } from "../api";
-import { duesPaymentDetailShareImageState } from "../atoms";
 import DuesPaymentItem from "../components/DuesPaymentItem";
 import Empty from "../components/Empty";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
-import KakaoShare from "../components/KakaoShare";
 import { IDuesPayment, IDuesPaymentItem, ITeam } from "../types";
 
-export default function IsPlayerDuesPaymentDetail() {
+export default function DuesPaymentDetailReadOnly() {
 
     const { teamPk, paymentPk } = useParams();
 
@@ -21,23 +18,13 @@ export default function IsPlayerDuesPaymentDetail() {
     const { isLoading : duesPaymentLoading, data : duesPaymentData, isError : duesPaymentError } = useQuery<IDuesPayment>(["duesPayment", teamPk, paymentPk], getTeamDuesPayment);
     const { isLoading : duesPaymentItemsLoading, data : duesPaymentItemsData, isError : duesPaymentItemsError } = useQuery<IDuesPaymentItem[]>(["duesPaymentItems", teamPk, paymentPk], getTeamDuesPaymentItems);
 
-    const navigate = useNavigate();
-
-    const onClickBack = () => {
-        navigate(-1)
-    }
-
-    const shareImage = useRecoilValue(duesPaymentDetailShareImageState)
-
     return (
         <>
             <Helmet>
                 <title>{teamData ? `${teamData.name}의 회비 납부 현황` : "Loading..."}</title>
             </Helmet>
-            <HStack justifyContent={"space-between"} height={20} px={5}>
-                <Button variant={"unstyled"} onClick={onClickBack}>
-                    <FaArrowLeft />
-                </Button>
+            <HStack justifyContent={"center"} height={20} px={5}>
+                <Text as="b" color="gray" fontSize={"xs"}>*본 페이지는 읽기 전용 페이지입니다.</Text>
             </HStack>
                 <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
                     <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
@@ -52,13 +39,13 @@ export default function IsPlayerDuesPaymentDetail() {
                                                 </Card>
                                             </VStack>
                                         )}
-                <VStack mt={8}>
-                    <Box w="320px" h="100px">
+                <VStack>
+                    <Box w="320px" h="100px" mt={8}>
                             <KakaoADBig />
                     </Box>
                 </VStack>
                 <HStack justifyContent={"space-evenly"} padding={10} pb={0}>
-                <HStack>
+                    <HStack>
                         <FaToggleOn size={22} color={"green"} />
                         <Text> 납부 </Text>
                     </HStack>
@@ -87,15 +74,8 @@ export default function IsPlayerDuesPaymentDetail() {
                                                                                                             />
                                                                                                             ) : <Text> 비어 있습니다. </Text>}
                 </VStack>
-                <KakaoShare 
-                    title={`${teamData?.name} 회비 납부 현황`}
-                    description={`회비 제목 : ${duesPaymentData?.title}`}
-                    imageUrl={shareImage}
-                    mobileWebUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/payment/${paymentPk}/readonly`}
-                    webUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/payment/${paymentPk}/readonly`}
-                    btnTitle={"보러 가기"}
-                />
-                <VStack mt={8}>
+                <Empty />
+                <VStack mt={2}>
                     <Box w="320px" h="50px">
                             <KakaoADSmall />
                     </Box>

@@ -3,33 +3,23 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import { getGame, getGameQuotas } from "../api";
-import { gameQuotasShareImageState } from "../atoms";
-import Capture from "../components/Capture";
 import Empty from "../components/Empty";
 import FFT from "../components/formations/FFT";
 import FTTO from "../components/formations/FTTO";
 import TFT from "../components/formations/TFT";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
-import KakaoShare from "../components/KakaoShare";
 import PlayerQuotasInfo from "../components/PlayerQuotasInfo";
 import { formatGamesDate } from "../lib/utils";
 import { IGame, IGameQuota } from "../types";
 
-export default function IsPlayerGameQuotas() {
+export default function GameQuotasReadOnly() {
 
     const { gamePk } = useParams();
 
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
     const { isLoading : gameQuotasLoading, data : gameQuotasData, isError : gameQuotasError } = useQuery<IGameQuota[]>(["gameQuotas", gamePk], getGameQuotas);
-
-    const navigate = useNavigate();
-
-    const onClickBack = () => {
-        navigate(-1)
-    }
 
     interface IPlayerInfo {
         playerPk: number;
@@ -61,38 +51,36 @@ export default function IsPlayerGameQuotas() {
     return acc;
     }, []);
 
-    const shareImage = useRecoilValue(gameQuotasShareImageState)
-
     return (
         <>
             <Helmet>
                 <title>{ gameData ? (`3OM | ${gameData.team.name} vs ${gameData.vsteam} 포메이션`) : "Loading.." }</title>
             </Helmet>
-            <HStack justifyContent={"space-between"} height={20} px={5}>
-                <Button variant={"unstyled"} onClick={onClickBack}>
-                    <FaArrowLeft />
-                </Button>
+            <HStack justifyContent={"center"} height={20} px={5}>
+                <Text as="b" color="gray" fontSize={"xs"}>*본 페이지는 읽기 전용 페이지입니다.</Text>
             </HStack>
             <VStack my={8}>
                 <Box w="320px" h="100px">
                         <KakaoADBig />
                 </Box>
             </VStack>
+            <VStack padding={5} mt={5}>
+                <Text as="b" fontSize={"xx-small"}> {gameData?.date ? (formatGamesDate(gameData.date)) : null} </Text>
+                <Text as="b" fontSize={"lg"}>{gameData?.team.name} vs {gameData?.vsteam}</Text>
+                <Text as="b" fontSize={"xx-small"} color="gray.500" >{gameData?.location} | {gameData?.start_time.replace(/:\d{2}$/, '')}</Text>
+                <Divider mt={4}/>
+            </VStack>
             <Tabs variant='soft-rounded' isLazy align={"center"}>
                 <TabList>
-                    <Grid templateColumns={"1fr 1fr 1fr 1fr"}>
-                        {gameQuotasData?.map((gameQuota, index) => <Tab key={index} _selected={{color : "white", bgColor : "main.500"}}>{index+1}쿼터</Tab>)}
-                    </Grid>
+                    <Tab _selected={{color : "white", bgColor : "main.500"}}>쿼터별</Tab>
+                    <Tab _selected={{color : "white", bgColor : "main.500"}}>플레이어별</Tab>
                 </TabList>
                 {/* <Box id="captureTarget"> */}
                     <TabPanels>
-                    {gameQuotasData?.map((gameQuota, index) =>  <TabPanel key={index} p={0}>
-                                                                    <Box id="captureTarget">
-                                                                    <VStack padding={5} my={5}>
-                                                                        <Text as="b" fontSize={"xx-small"}> {gameData?.date ? (formatGamesDate(gameData.date)) : null} </Text>
-                                                                        <Text as="b" fontSize={"lg"}>{gameData?.team.name} vs {gameData?.vsteam}</Text>
-                                                                        <Text as="b" fontSize={"xx-small"} color="gray.500" >{gameData?.location} | {gameData?.start_time.replace(/:\d{2}$/, '')}</Text>
-                                                                        <Divider my={4} />
+                        <TabPanel p={0}>
+                        <Empty />
+                    {gameQuotasData?.map((gameQuota, index) =>  
+                                                                    <VStack padding={5}>
                                                                         { gameQuota.lineups.length === 11 ? 
                                                                             <>
                                                                                 <Text as="b" color={"main.500"} fontSize={"lg"}>{index+1}쿼터</Text>
@@ -120,50 +108,33 @@ export default function IsPlayerGameQuotas() {
                                                                                                 </Card>
                                                                                                     )}
                                                                     </VStack>
-                                                                    </Box>
-                                                                </TabPanel>)}
+                                                                )}
+                        </TabPanel>
+                        <TabPanel p={0}>
+                            <Empty />                                               
+                            <VStack px={5}>
+                            {allPlayersData?.sort((a, b) => a.gameQuotaIndex.length - b.gameQuotaIndex.length).map((gameQuotasInfo, index) => 
+                                                                            <PlayerQuotasInfo
+                                                                                            key={index} 
+                                                                                            playerPk={gameQuotasInfo.playerPk}
+                                                                                            playerAvatar={gameQuotasInfo.playerAvatar}
+                                                                                            playerName={gameQuotasInfo.playerName}
+                                                                                            gameQuotaIndex={gameQuotasInfo.gameQuotaIndex}
+                                                                                            formations={gameQuotasInfo.formations}
+                                                                                            lineupsIndex={gameQuotasInfo.lineupsIndex}
+                                                                                            />
+                                                                    )}
+                            </VStack>
+                        </TabPanel>
                     </TabPanels>
             </Tabs>
-            <Accordion allowMultiple>
-                <AccordionItem>
-                    <AccordionButton>
-                        <Box as="b" color={"main.500"} flex='1' textAlign='left'>
-                        플레이어 별 정보 보기
-                        </Box>
-                        <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4}>
-                        <VStack>
-                        {allPlayersData?.sort((a, b) => a.gameQuotaIndex.length - b.gameQuotaIndex.length).map((gameQuotasInfo, index) => 
-                                                                        <PlayerQuotasInfo
-                                                                                        key={index} 
-                                                                                        playerPk={gameQuotasInfo.playerPk}
-                                                                                        playerAvatar={gameQuotasInfo.playerAvatar}
-                                                                                        playerName={gameQuotasInfo.playerName}
-                                                                                        gameQuotaIndex={gameQuotasInfo.gameQuotaIndex}
-                                                                                        formations={gameQuotasInfo.formations}
-                                                                                        lineupsIndex={gameQuotasInfo.lineupsIndex}
-                                                                                        />
-                                                                )}
-                        </VStack>
-                    </AccordionPanel>
-                </AccordionItem>
-            </Accordion>
-            <KakaoShare 
-              title={`${gameData?.team.name} vs ${gameData?.vsteam}`}
-              description={`나의 쿼터별 포메이션을 확인하세요!`}
-              imageUrl={shareImage}
-              mobileWebUrl={`https://www.3manofthematch.com/games/${gamePk}/quotas/readonly`}
-              webUrl={`https://www.3manofthematch.com/games/${gamePk}/quotas/readonly`}
-              btnTitle={"보러 가기"}
-            />
-            <VStack mt={8}>
+            <VStack mt={16}>
                 <Box w="320px" h="50px">
                         <KakaoADSmall />
                 </Box>
             </VStack>
             <Empty />
-            <Empty /> 
+            <Empty />
         </>
     )
 }

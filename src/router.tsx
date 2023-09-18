@@ -29,6 +29,10 @@ import FAQ from "./routes/FAQ";
 import GameQuotas from "./routes/GameQuotas";
 import UploadGameQuotas from "./routes/UploadGameQuotas";
 import UpdateGameQuota from "./routes/UpdateGameQuota";
+import TeamScheduleReadOnly from "./routes/TeamScheduleReadOnly";
+import DuesPaymentDetailReadOnly from "./routes/DuesPaymentDetailReadOnly";
+import DuesDetailsDetailReadOnly from "./routes/DuesDetailsDetailReadOnly";
+import GameQuotasReadOnly from "./routes/GameQuotasReadOnly";
 
 const router = createBrowserRouter(
     [
@@ -90,6 +94,10 @@ const router = createBrowserRouter(
                     element : <TeamPlayerList />
                 },
                 {
+                    path : "teams/:teamPk/schedules/readonly",
+                    element : <TeamScheduleReadOnly />,
+                },
+                {
                     path : "teams/:teamPk/dues/payment",
                     element : <DuesPayment />
                 },
@@ -98,12 +106,20 @@ const router = createBrowserRouter(
                     element : <DuesPaymentDetail />
                 },
                 {
+                    path : "teams/:teamPk/dues/payment/:paymentPk/readonly",
+                    element : <DuesPaymentDetailReadOnly />
+                },
+                {
                     path : "teams/:teamPk/dues/details",
                     element : <DuesDetail />
                 },
                 {
                     path : "teams/:teamPk/dues/details/:detailPk",
                     element : <DuesDetailsDetail />
+                },
+                {
+                    path : "teams/:teamPk/dues/details/:detailPk/readonly",
+                    element : <DuesDetailsDetailReadOnly />
                 },
                 {
                     path : "players/:playerPk",
@@ -137,6 +153,10 @@ const router = createBrowserRouter(
                 {
                     path : "games/:gamePk/quotas",
                     element : <GameQuotas />
+                },
+                {
+                    path : "games/:gamePk/quotas/readonly",
+                    element : <GameQuotasReadOnly />
                 },
                 {
                     path : "games/:gamePk/quotas/:quotaPk/edit",

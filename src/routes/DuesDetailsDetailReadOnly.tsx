@@ -1,74 +1,34 @@
-import { Box, Button, Card, CardBody, Divider, HStack, Menu, MenuButton, MenuItem, MenuList, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import { FaArrowLeft, FaEllipsisV } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamDuesDetail, getTeamDuesInAmount, getTeamDuesInItems, getTeamDuesOutAmount, getTeamDuesOutItems, isSpvsr } from "../api";
-import CarryOverAddModal from "../components/CarryOverAddModal";
-import DuesDetailDeleteModal from "../components/DuesDetailDeleteModal";
-import DuesDetailUpdateModal from "../components/DuesDetailUpdateModal";
-import DuesInItemAddModal from "../components/DuesInItemAddModal";
-import DuesOutItemAddModal from "../components/DuesOutItemAddModal";
-import { IAmount, IDuesDetail, IDuesInItem, IDuesOutItem, ISpvsrUser, ITeam } from "../types";
+import { getTeam, getTeamDuesDetail, getTeamDuesInAmount, getTeamDuesInItems, getTeamDuesOutAmount, getTeamDuesOutItems } from "../api";
+import { IAmount, IDuesDetail, IDuesInItem, IDuesOutItem, ITeam } from "../types";
 import DuesInItem from "../components/DuesInItem";
 import DuesOutItem from "../components/DuesOutItem";
-import CaptureButton from "../components/CaptureButton";
 import Empty from "../components/Empty";
-import Capture from "../components/Capture";
 import KakaoADSmall from "../components/KakaoADSmall";
 import KakaoADBig from "../components/KakaoADBig";
-import KakaoShare from "../components/KakaoShare";
-import { useRecoilValue } from "recoil";
-import { duesDetailsDetailShareImageState } from "../atoms";
 
-export default function IsSpvsrDuesDetailsDetail() {
+export default function DuesDetailsDetailReadOnly() {
 
     const { teamPk, detailPk } = useParams();
 
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr); 
     const { isLoading : duesDetailLoading, data : duesDetailData, isError : duesDetailError } = useQuery<IDuesDetail>(["duesDetail", teamPk, detailPk], getTeamDuesDetail);
     const { isLoading : duesInItemsLoading, data : duesInItemsData, isError : duesInItemsError } = useQuery<IDuesInItem[]>(["duesInItems", teamPk, detailPk], getTeamDuesInItems);
     const { isLoading : duesOutItemsLoading, data : duesOutItemsData, isError : duesOutItemsError } = useQuery<IDuesOutItem[]>(["duesOutItems", teamPk, detailPk], getTeamDuesOutItems);
     const { isLoading : duesInAmountLoading, data : duesInAmountData, isError : duesInAmountError } = useQuery<IAmount>(["duesInAmount", teamPk, detailPk], getTeamDuesInAmount);
     const { isLoading : duesOutAmountLoading, data : duesOutAmountData, isError : duesOutAmountError } = useQuery<IAmount>(["duesOutAmount", teamPk, detailPk], getTeamDuesOutAmount);
- 
-    const navigate = useNavigate();
-
-    const onClickBack = () => {
-        navigate(-1)
-    }
-
-    const { isOpen : isCarryOverOpen, onOpen : onCarryOverOpen, onClose : onCarryOverClose } = useDisclosure()
-    const { isOpen : isDeleteOpen, onOpen : onDeleteOpen, onClose : onDeleteClose } = useDisclosure()
-    const { isOpen : isUpdateOpen, onOpen : onUpdateOpen, onClose : onUpdateClose } = useDisclosure()
-    const { isOpen : isDuesInAddOpen, onOpen : onDuesInAddOpen, onClose : onDuesInAddClose } = useDisclosure()
-    const { isOpen : isDuesOutAddOpen, onOpen : onDuesOutAddOpen, onClose : onDuesOutAddClose } = useDisclosure()
-
-    const shareImage = useRecoilValue(duesDetailsDetailShareImageState)
 
     return (
         <>
             <Helmet>
                 <title>{teamData ? `${teamData.name}의 회비 사용 내역` : "Loading..."}</title>
             </Helmet>
-            <HStack justifyContent={"space-between"} height={20} px={5}>
-                <Button variant={"unstyled"} onClick={onClickBack}>
-                    <FaArrowLeft />
-                </Button>
-                {spvsrData?.team.name === teamData?.name && 
-                                                            <Menu>
-                                                                <MenuButton marginRight={1}>
-                                                                    {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
-                                                                    <FaEllipsisV />
-                                                                </MenuButton>
-                                                                <MenuList>
-                                                                    <MenuItem onClick={onUpdateOpen}> 수정하기 </MenuItem>
-                                                                    <MenuItem onClick={onDeleteOpen}> 삭제하기 </MenuItem>
-                                                                </MenuList>
-                                                                <DuesDetailUpdateModal isOpen={isUpdateOpen} onClose={onUpdateClose} />
-                                                                <DuesDetailDeleteModal isOpen={isDeleteOpen} onClose={onDeleteClose} />
-                                                            </Menu>}
+            <HStack justifyContent={"center"} height={20} px={5}>
+                <Text as="b" color="gray" fontSize={"xs"}>*본 페이지는 읽기 전용 페이지입니다.</Text>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
                 <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
@@ -104,11 +64,6 @@ export default function IsSpvsrDuesDetailsDetail() {
                         <VStack alignItems={"flex-start"} padding={10} spacing={5}>
                             <Text as="b" color={"main.500"} fontSize={"md"}>이월 금액 (A) </Text>
                             <Text fontSize={"md"}>{duesDetailData ? duesDetailData.carry_over.toLocaleString("ko-kr") : "0"} 원</Text>
-                            {spvsrData?.team.name === teamData?.name  ? <>
-                                                                            <Button onClick={onCarryOverOpen} backgroundColor={"main.500"} color={"white"} size={"md"}>입력하기</Button>
-                                                                            <CarryOverAddModal isOpen={isCarryOverOpen} onClose={onCarryOverClose} />
-                                                                        </>
-                                                                            : null}
                             <Divider />
                             <Text as="b" color={"main.500"} fontSize={"md"}>총 입금액 (B) </Text>
                             <Text fontSize={"md"}>{duesInAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
@@ -129,13 +84,6 @@ export default function IsSpvsrDuesDetailsDetail() {
                         <VStack alignItems={"flex-start"} padding={3}>
                             <Text as="b" color={"main.500"} fontSize={"md"} > 입금 내역 </Text>
                         </VStack>
-                        {spvsrData?.team.name === teamData?.name ?          
-                                                                            <>
-                                                                            <Button onClick={onDuesInAddOpen} my={5} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 입금 내역 추가하기 </Button>
-                                                                            <DuesInItemAddModal isOpen={isDuesInAddOpen} onClose={onDuesInAddClose} />
-                                                                            </>
-                                                                            // onClick={onOpen} 
-                                                                                : null}
                             {duesInItemsData && duesInItemsData.length !== 0 ? duesInItemsData.map((duesInItem, index) => 
                                                                                                                 <DuesInItem 
                                                                                                                 key={index}
@@ -144,7 +92,7 @@ export default function IsSpvsrDuesDetailsDetail() {
                                                                                                                 date={duesInItem.date}
                                                                                                                 amount={duesInItem.amount}
                                                                                                                 note={duesInItem.note}
-                                                                                                                is_spvsr={spvsrData && teamData && (spvsrData.team.name === teamData.name) ? true : false}
+                                                                                                                is_spvsr={false}
                                                                                                                 />
                                                                                                                     ): <Text>내역이 없습니다.</Text>}
                    
@@ -159,13 +107,6 @@ export default function IsSpvsrDuesDetailsDetail() {
                         <VStack alignItems={"flex-start"} padding={3}>
                             <Text as="b" color={"main.500"} fontSize={"md"} > 지출 내역 </Text>
                         </VStack>
-                        {spvsrData?.team.name === teamData?.name ? 
-                                                                            <>
-                                                                            <Button onClick={onDuesOutAddOpen} my={5} backgroundColor={"black"} color={"white"} size={"xs"}> + 지출 내역 추가하기 </Button>
-                                                                            <DuesOutItemAddModal isOpen={isDuesOutAddOpen} onClose={onDuesOutAddClose} />
-                                                                            </>
-                                                                            // onClick={onOpen} 
-                                                                                : null}
                             {duesOutItemsData && duesOutItemsData.length !== 0 ? duesOutItemsData.map((duesOutItem, index) => 
                                                                                                                     <DuesOutItem 
                                                                                                                     key={index}
@@ -174,22 +115,15 @@ export default function IsSpvsrDuesDetailsDetail() {
                                                                                                                     date={duesOutItem.date}
                                                                                                                     amount={duesOutItem.amount}
                                                                                                                     note={duesOutItem.note}
-                                                                                                                    is_spvsr={spvsrData && teamData && (spvsrData.team.name === teamData.name) ? true : false}
+                                                                                                                    is_spvsr={false}
                                                                                                                     />
                                                                                                                         ): <Text>내역이 없습니다.</Text>}
                         
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            <KakaoShare 
-                    title={`${teamData?.name} 회비 사용 내역`}
-                    description={`회비 제목 : ${duesDetailData?.title}`}
-                    imageUrl={shareImage}
-                    mobileWebUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/detail/${detailPk}/readonly`}
-                    webUrl={`https://www.3manofthematch.com/teams/${teamPk}/dues/detail/${detailPk}/readonly`}
-                    btnTitle={"보러 가기"}
-                />
-            <VStack mt={8}>
+            <Empty />
+            <VStack mt={2}>
                 <Box w="320px" h="50px">
                         <KakaoADSmall />
                 </Box>

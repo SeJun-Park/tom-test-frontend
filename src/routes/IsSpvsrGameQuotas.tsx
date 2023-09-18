@@ -3,13 +3,19 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaEdit, FaEllipsisV } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { getGame, getGameQuotas, isSpvsr } from "../api";
+import { gameQuotasShareImageState } from "../atoms";
 import Capture from "../components/Capture";
 import CaptureButton from "../components/CaptureButton";
+import Empty from "../components/Empty";
 import FFT from "../components/formations/FFT";
 import FTTO from "../components/formations/FTTO";
 import TFT from "../components/formations/TFT";
 import GameQuotasDeleteModal from "../components/GameQuotasDeleteModal";
+import KakaoADBig from "../components/KakaoADBig";
+import KakaoADSmall from "../components/KakaoADSmall";
+import KakaoShare from "../components/KakaoShare";
 import PlayerQuotasInfo from "../components/PlayerQuotasInfo";
 import { formatGamesDate } from "../lib/utils";
 import { IGame, IGameQuota, ISpvsrUser } from "../types";
@@ -60,6 +66,8 @@ export default function IsSpvsrGameQuotas() {
     return acc;
     }, []);
 
+    const shareImage = useRecoilValue(gameQuotasShareImageState)
+
     return (
         <>
             <Helmet>
@@ -80,6 +88,11 @@ export default function IsSpvsrGameQuotas() {
                                                                             </MenuList>
                                                                         </Menu> : null}
             </HStack>
+            <VStack my={8}>
+                <Box w="320px" h="100px">
+                        <KakaoADBig />
+                </Box>
+            </VStack>
             <Tabs variant='soft-rounded' isLazy align={"center"}>
                 <TabList>
                     <Grid templateColumns={"1fr 1fr 1fr 1fr"}>
@@ -162,7 +175,22 @@ export default function IsSpvsrGameQuotas() {
                         </VStack>
                     </AccordionPanel>
                 </AccordionItem>
-            </Accordion>        
+            </Accordion>
+            <KakaoShare 
+                title={`${gameData?.team.name} vs ${gameData?.vsteam}`}
+                description={`나의 쿼터별 포메이션을 확인하세요!`}
+                imageUrl={shareImage}
+                mobileWebUrl={`https://www.3manofthematch.com/games/${gamePk}/quotas/readonly`}
+                webUrl={`https://www.3manofthematch.com/games/${gamePk}/quotas/readonly`}
+                btnTitle={"보러 가기"}
+            />
+            <VStack mt={8}>
+                <Box w="320px" h="50px">
+                        <KakaoADSmall />
+                </Box>
+            </VStack>
+            <Empty />
+            <Empty />         
         </>
     )
 }
