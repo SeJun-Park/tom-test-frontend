@@ -9,17 +9,15 @@ import { getGame, isSpvsr } from "../api";
 import { formationState } from "../atoms";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
-import FormationPlayer from "../components/FormationPlayer";
-import FFTpreview from "../components/formations/FFTpreview";
-import FTTOpreview from "../components/formations/FTTOpreview";
-import TFTpreview from "../components/formations/TFTpreview";
+import FFTpreviewUpload from "../components/formations/FFTpreviewUpload";
+import FTTOpreviewUpload from "../components/formations/FTTOpreviewUpload";
+import TFTpreviewUpload from "../components/formations/TFTpreviewUpload";
 import GameQuotaUploadModal from "../components/GameQuotaUploadModal";
 import PlayerQuotasInfoPreview from "../components/PlayerQuotasInfoPreview";
 import ProtectedPage from "../components/ProtectedPage";
-import SmallDivider from "../components/SmallDivider";
 import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
 import useUser from "../lib/useUser";
-import { Formation, IGame, ISpvsrUser } from "../types";
+import { IGame, ISpvsrUser } from "../types";
 
 export default function UploadGameQuotas() {
 
@@ -208,6 +206,11 @@ export default function UploadGameQuotas() {
     }, []);
     };
 
+    const playerQuotasLengthArray = calculatePlayerInfo(quotasData).map(item => ({
+        playerId: item.playerId,
+        gameQuotasLength: item.gameQuotaIndex.length,
+      }));
+
 
     return (
         <ProtectedPage>
@@ -257,9 +260,9 @@ export default function UploadGameQuotas() {
                                                             <>
                                                                 <Text fontSize={"xs"} color={"gray.500"}>*1번부터 11번까지 순서대로 선수를 등록하세요!</Text>
                                                                 <Center width={"100%"} mt={5}>
-                                                                    {quotasData[step-2].formation === '4-2-3-1' && <FTTOpreview lineups={lineups}/>}
-                                                                    {quotasData[step-2].formation === '4-4-2' && <FFTpreview lineups={lineups}/>}
-                                                                    {quotasData[step-2].formation === '3-5-2' && <TFTpreview lineups={lineups}/>}
+                                                                    {quotasData[step-2].formation === '4-2-3-1' && <FTTOpreviewUpload lineups={lineups} playerQuotasLengthArray={playerQuotasLengthArray}/>}
+                                                                    {quotasData[step-2].formation === '4-4-2' && <FFTpreviewUpload lineups={lineups} playerQuotasLengthArray={playerQuotasLengthArray}/>}
+                                                                    {quotasData[step-2].formation === '3-5-2' && <TFTpreviewUpload lineups={lineups} playerQuotasLengthArray={playerQuotasLengthArray}/>}
                                                                 </Center>
                                                                 {lineups.length < 11 ? 
                                                                                         <Text as="b" my={5}> 

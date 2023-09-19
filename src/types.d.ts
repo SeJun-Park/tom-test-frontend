@@ -234,3 +234,8 @@ export interface IAmount {
 }
 
 export type Formation = '4-2-3-1' | '4-4-2' | '3-5-2'; // 여기에 모든 가능한 포메이션들을 추가합니다.
+
+export interface IPlayerQuotasLength {
+    playerId : number,
+    gameQuotasLength : number
+}

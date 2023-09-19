@@ -6,6 +6,7 @@ import TeamRegister from "./TeamRegister";
 import { Helmet } from "react-helmet";
 import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
 import SpvsrHome from "./SpvsrHome";
+import { Spinner, VStack } from "@chakra-ui/react";
 
 export default function IsSpvsrHome() {
     const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr); 
@@ -16,9 +17,14 @@ export default function IsSpvsrHome() {
                 <Helmet>
                     <title>{ spvsrData ? ("3OM | Home") : "Loading.." }</title>
                 </Helmet>
-                {spvsrData?.team ? 
+                {!spvsrLoading ? spvsrData?.team ? 
                                 <SpvsrHome />
-                                : <TeamRegister />}
+                                : <TeamRegister />
+                                : 
+                                    <VStack justifyContent={"center"} my={60}>
+                                        <Spinner size={"lg"} />
+                                    </VStack>
+                                }
                 
             </ProtectedPage>
         </SpvsrOnlyPage>

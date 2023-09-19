@@ -35,6 +35,12 @@ export default function LogInRequired() {
                   <Heading size="xl" color="white">
                     로그인이 필요합니다.
                   </Heading>
+                  <Text color="white" mt={2}>
+                    운영진을 위한
+                  </Text>
+                  <Text color="white" mt={0}>
+                    쉽고 편한 조기축구 팀 관리 서비스
+                  </Text>
                   {/* <Text color="black" mt={2}>
                     Please Log In / Sign Up
                   </Text> */}
