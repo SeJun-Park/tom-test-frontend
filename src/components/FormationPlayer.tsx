@@ -15,7 +15,7 @@ export default function FormationPlayer ( props : IFormationPlayerProps ) {
 
     return (
         <VStack spacing={0}>
-            <Avatar src={playerData ? playerData.avatar : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/3bce5834-c683-46ed-843a-ce7ab35c6f00/public"} showBorder={true} borderColor={"white"}/>
+            <Avatar src={playerData ? playerData.avatar : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/dcb04b4d-9480-47cc-1789-8cc39dcf0a00/public"} showBorder={true} borderColor={"white"}/>
             <Text as="b">{playerData?.name}</Text>
         </VStack>
     )
