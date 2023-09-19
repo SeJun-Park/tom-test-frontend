@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaArrowRight, FaReceipt, FaRunning, FaTasks, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { getTeam, getTeamFeeds, getTeamGames, getTeamNotisByMonth, getTeamNotisMonth, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamSchedulesByMonth, getTeamSchedulesMonth, getTeamTomGames } from "../api";
+import { teamScheduleShareImageState } from "../atoms";
 import BigDivider from "../components/BigDivider";
 import Capture from "../components/Capture";
 import Empty from "../components/Empty";
@@ -12,6 +14,7 @@ import Feed from "../components/Feed";
 import Game from "../components/Game";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
+import KakaoShare from "../components/KakaoShare";
 import Noti from "../components/Noti";
 import NullGame from "../components/NullGame";
 import Schedule from "../components/Schedule";
@@ -132,6 +135,7 @@ export default function IsPlayerTeamHome() {
       localStorage.setItem('tabIndexThomeSub', tabIndexThomeSub.toString());
     }, [tabIndexThomeSub]);
 
+    const shareImage = useRecoilValue(teamScheduleShareImageState)
 
     return (
         <>
@@ -319,7 +323,14 @@ export default function IsPlayerTeamHome() {
                                                                                                    : <Text padding={5}>등록된 일정이 없습니다.</Text>}
                                 </VStack>
                                 <Empty />
-                                <Capture />
+                                <KakaoShare 
+                                    title={`${teamData?.name} 일정`}
+                                    description={`우리 팀 일정을 확인해보세요!`}
+                                    imageUrl={shareImage}
+                                    mobileWebUrl={`https://www.3manofthematch.com/teams/${teamPk}/schedules/readonly`}
+                                    webUrl={`https://www.3manofthematch.com/teams/${teamPk}/schedules/readonly`}
+                                    btnTitle={"보러 가기"}
+                                />
                             </TabPanel>
                             <TabPanel p={"0"}>
                             <VStack spacing={5}>

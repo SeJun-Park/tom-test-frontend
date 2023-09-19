@@ -29,10 +29,10 @@ import FAQ from "./routes/FAQ";
 import GameQuotas from "./routes/GameQuotas";
 import UploadGameQuotas from "./routes/UploadGameQuotas";
 import UpdateGameQuota from "./routes/UpdateGameQuota";
-import TeamScheduleReadOnly from "./routes/TeamScheduleReadOnly";
 import DuesPaymentDetailReadOnly from "./routes/DuesPaymentDetailReadOnly";
 import DuesDetailsDetailReadOnly from "./routes/DuesDetailsDetailReadOnly";
 import GameQuotasReadOnly from "./routes/GameQuotasReadOnly";
+import TeamSchedulesReadOnly from "./routes/TeamSchedulesReadOnly";
 
 const router = createBrowserRouter(
     [
@@ -95,7 +95,7 @@ const router = createBrowserRouter(
                 },
                 {
                     path : "teams/:teamPk/schedules/readonly",
-                    element : <TeamScheduleReadOnly />,
+                    element : <TeamSchedulesReadOnly />,
                 },
                 {
                     path : "teams/:teamPk/dues/payment",

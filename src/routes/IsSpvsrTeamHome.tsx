@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaArrowRight, FaCamera, FaReceipt, FaRunning, FaTasks, FaTrash, FaTrashAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { getTeam, getTeamFeeds, getTeamGames, getTeamNotisByMonth, getTeamNotisMonth, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamSchedulesByMonth, getTeamSchedulesMonth, getTeamTomGames, isSpvsr } from "../api";
+import { teamScheduleShareImageState } from "../atoms";
 import BigDivider from "../components/BigDivider";
 import Capture from "../components/Capture";
 import CaptureButton from "../components/CaptureButton";
@@ -14,6 +16,7 @@ import FeedAddModal from "../components/FeedAddModal";
 import Game from "../components/Game";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
+import KakaoShare from "../components/KakaoShare";
 import Noti from "../components/Noti";
 import NullGame from "../components/NullGame";
 import Schedule from "../components/Schedule";
@@ -135,7 +138,7 @@ const { isOpen : isFeedOpen, onOpen : onFeedOpen, onClose : onFeedClose } = useD
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const navigate = useNavigate();
+const shareImage = useRecoilValue(teamScheduleShareImageState);
 
     return (
         <>
@@ -340,7 +343,14 @@ const navigate = useNavigate();
                                 {teamPk && <ScheduleAddModal isOpen={isScheduleOpen} onClose={onScheduleClose} teamPk={teamPk} />}
                                 <Empty />
                                 {/* </Box> */}
-                                <Capture />
+                                <KakaoShare 
+                                    title={`${teamData?.name} 일정`}
+                                    description={`우리 팀 일정을 확인해보세요!`}
+                                    imageUrl={shareImage}
+                                    mobileWebUrl={`https://www.3manofthematch.com/teams/${teamPk}/schedules/readonly`}
+                                    webUrl={`https://www.3manofthematch.com/teams/${teamPk}/schedules/readonly`}
+                                    btnTitle={"보러 가기"}
+                                />
                             </TabPanel>
                             <TabPanel p={"0"}>
                             {/* <Select mb={5}>
