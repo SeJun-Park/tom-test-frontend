@@ -33,7 +33,6 @@ import DuesPaymentDetailReadOnly from "./routes/DuesPaymentDetailReadOnly";
 import DuesDetailsDetailReadOnly from "./routes/DuesDetailsDetailReadOnly";
 import GameQuotasReadOnly from "./routes/GameQuotasReadOnly";
 import TeamSchedulesReadOnly from "./routes/TeamSchedulesReadOnly";
-import LogInRequired from "./routes/LogInRequired";
 
 const router = createBrowserRouter(
     [
@@ -177,11 +176,6 @@ const router = createBrowserRouter(
                 }
             ],
             errorElement : <NotFound />,
-        },
-        {
-            path : "/login/required",
-            element : <LogInRequired /> ,
-            errorElement : <NotFound />
         },
     ]
 )
