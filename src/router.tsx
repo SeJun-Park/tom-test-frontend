@@ -176,7 +176,7 @@ const router = createBrowserRouter(
                 }
             ],
             errorElement : <NotFound />,
-        },
+        }
     ]
 )
 
