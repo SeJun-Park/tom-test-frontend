@@ -4,7 +4,7 @@ import ProtectedPage from "../components/ProtectedPage"
 import { ISpvsrUser, ITinyTeam } from "../types";
 import { Helmet } from "react-helmet";
 import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
-import { Avatar, Badge, Box, HStack, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Card, CardHeader, Flex, HStack, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import KakaoADBig from "../components/KakaoADBig";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
@@ -73,10 +73,32 @@ export default function IsSpvsrHome() {
                                             <TabPanels>
                                                 <TabPanel p={"0"}>
                                                     <VStack alignItems={"flex-start"} px={3} spacing={3} mt={8}>
-                                                    {spvsrTeamsData?.length !== 0 && 
+                                                    {spvsrTeamsData?.length !== 0 ? 
                                                         spvsrTeamsData?.map((team) => 
                                                             <Team  pk={team.pk} avatar={team.avatar} name={team.name} />
                                                         )
+                                                        :
+                                                        <VStack py={3}>
+                                                            <Card maxW='xs' minW='xs'>
+                                                                <CardHeader>
+                                                                    <Flex gap="4" alignItems='center'>
+                                                                        {/* <Box color={"point.500"}>
+                                                                            <FaReceipt />
+                                                                        </Box> */}
+                                                                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                                                                            <Box>
+                                                                            <VStack>
+                                                                                {/* <Heading size='sm'>{props.title}</Heading> */}
+                                                                                <Text as="b">연결된 팀이 없습니다.</Text>
+                                                                                <Text as="b">상단 검색 버튼으로 나의 팀을 검색해보거나 </Text>
+                                                                                <Text as="b">팀을 만들어 시작해보세요! </Text>
+                                                                            </VStack>
+                                                                            </Box>
+                                                                        </Flex>
+                                                                    </Flex>
+                                                                </CardHeader>
+                                                            </Card>
+                                                        </VStack>
                                                         }
                                                     </VStack>
                                                     <Empty />
