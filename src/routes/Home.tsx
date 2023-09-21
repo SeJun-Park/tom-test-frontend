@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import RoleSelectModal from "../components/RoleSelectModal";
 import useUser from "../lib/useUser";
 import IsPlayerHome from "./IsPlayerHome";
 import IsSpvsrHome from "./IsSpvsrHome";
@@ -12,7 +13,7 @@ export default function Home() {
             {!userLoading ? (
                 !isLoggedIn ? <LogInRequired /> : (
                     user?.is_player ? <IsPlayerHome /> : (
-                        user?.is_spvsr ? <IsSpvsrHome /> : null
+                        user?.is_spvsr ? <IsSpvsrHome /> : <RoleSelectModal />
                     )
                 )
             ) : null}

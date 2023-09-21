@@ -19,7 +19,6 @@ export default function IsSpvsrTeamPlayerList() {
 
     const { teamPk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
     const { isLoading : teamPlayersConnectedLoading, data : teamPlayersConnectedData, isError : teamPlayersConnectedError } = useQuery<ITinyPlayer[]>(["teamConnectedPlayers", teamPk], getTeamPlayersConnected);
     const { isLoading : teamPlayersLoading, data : teamPlayersData, isError : teamPlayersError } = useQuery<ITinyPlayer[]>(["teamPlayers", teamPk], getTeamPlayers);
@@ -77,7 +76,7 @@ export default function IsSpvsrTeamPlayerList() {
                         <HStack justifyContent={"space-between"} width={"100%"}>
                             <Text as="b" color={"main.500"} fontSize={"sm"}> ALL </Text>
                             <Box>
-                                {spvsrData?.team.name === teamData?.name ? 
+                                {teamData?.is_spvsr ? 
                                                                         <Button onClick={onOpen} backgroundColor={"point.500"} color={"black"} size={"xs"}> + NEW </Button>
                                                                             : null}
                                 
@@ -93,7 +92,7 @@ export default function IsSpvsrTeamPlayerList() {
                                                                     name={player.name}
                                                                     is_connecting={player.is_connecting}
                                                                     is_connected={player.is_connected}
-                                                                    is_spvsr={spvsrData?.team.name === teamData?.name}
+                                                                    is_spvsr={teamData ? teamData.is_spvsr : false}
                                                                 />
                                         ))}
                         </VStack>

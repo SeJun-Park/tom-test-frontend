@@ -12,9 +12,7 @@ import DuesOutItemAddModal from "../components/DuesOutItemAddModal";
 import { IAmount, IDuesDetail, IDuesInItem, IDuesOutItem, ISpvsrUser, ITeam } from "../types";
 import DuesInItem from "../components/DuesInItem";
 import DuesOutItem from "../components/DuesOutItem";
-import CaptureButton from "../components/CaptureButton";
 import Empty from "../components/Empty";
-import Capture from "../components/Capture";
 import KakaoADSmall from "../components/KakaoADSmall";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoShare from "../components/KakaoShare";
@@ -26,7 +24,6 @@ export default function IsSpvsrDuesDetailsDetail() {
     const { teamPk, detailPk } = useParams();
 
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr); 
     const { isLoading : duesDetailLoading, data : duesDetailData, isError : duesDetailError } = useQuery<IDuesDetail>(["duesDetail", teamPk, detailPk], getTeamDuesDetail);
     const { isLoading : duesInItemsLoading, data : duesInItemsData, isError : duesInItemsError } = useQuery<IDuesInItem[]>(["duesInItems", teamPk, detailPk], getTeamDuesInItems);
     const { isLoading : duesOutItemsLoading, data : duesOutItemsData, isError : duesOutItemsError } = useQuery<IDuesOutItem[]>(["duesOutItems", teamPk, detailPk], getTeamDuesOutItems);
@@ -56,7 +53,7 @@ export default function IsSpvsrDuesDetailsDetail() {
                 <Button variant={"unstyled"} onClick={onClickBack}>
                     <FaArrowLeft />
                 </Button>
-                {spvsrData?.team.name === teamData?.name && 
+                {teamData?.is_spvsr && 
                                                             <Menu>
                                                                 <MenuButton marginRight={1}>
                                                                     {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
@@ -104,7 +101,7 @@ export default function IsSpvsrDuesDetailsDetail() {
                         <VStack alignItems={"flex-start"} padding={10} spacing={5}>
                             <Text as="b" color={"main.500"} fontSize={"md"}>이월 금액 (A) </Text>
                             <Text fontSize={"md"}>{duesDetailData ? duesDetailData.carry_over.toLocaleString("ko-kr") : "0"} 원</Text>
-                            {spvsrData?.team.name === teamData?.name  ? <>
+                            {teamData?.is_spvsr  ? <>
                                                                             <Button onClick={onCarryOverOpen} backgroundColor={"main.500"} color={"white"} size={"md"}>입력하기</Button>
                                                                             <CarryOverAddModal isOpen={isCarryOverOpen} onClose={onCarryOverClose} />
                                                                         </>
@@ -129,7 +126,7 @@ export default function IsSpvsrDuesDetailsDetail() {
                         <VStack alignItems={"flex-start"} padding={3}>
                             <Text as="b" color={"main.500"} fontSize={"md"} > 입금 내역 </Text>
                         </VStack>
-                        {spvsrData?.team.name === teamData?.name ?          
+                        {teamData?.is_spvsr ?          
                                                                             <>
                                                                             <Button onClick={onDuesInAddOpen} my={5} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 입금 내역 추가하기 </Button>
                                                                             <DuesInItemAddModal isOpen={isDuesInAddOpen} onClose={onDuesInAddClose} />
@@ -144,7 +141,7 @@ export default function IsSpvsrDuesDetailsDetail() {
                                                                                                                 date={duesInItem.date}
                                                                                                                 amount={duesInItem.amount}
                                                                                                                 note={duesInItem.note}
-                                                                                                                is_spvsr={spvsrData && teamData && (spvsrData.team.name === teamData.name) ? true : false}
+                                                                                                                is_spvsr={teamData ? teamData.is_spvsr : false}
                                                                                                                 />
                                                                                                                     ): <Text>내역이 없습니다.</Text>}
                    
@@ -159,7 +156,7 @@ export default function IsSpvsrDuesDetailsDetail() {
                         <VStack alignItems={"flex-start"} padding={3}>
                             <Text as="b" color={"main.500"} fontSize={"md"} > 지출 내역 </Text>
                         </VStack>
-                        {spvsrData?.team.name === teamData?.name ? 
+                        {teamData?.is_spvsr ? 
                                                                             <>
                                                                             <Button onClick={onDuesOutAddOpen} my={5} backgroundColor={"black"} color={"white"} size={"xs"}> + 지출 내역 추가하기 </Button>
                                                                             <DuesOutItemAddModal isOpen={isDuesOutAddOpen} onClose={onDuesOutAddClose} />
@@ -174,7 +171,7 @@ export default function IsSpvsrDuesDetailsDetail() {
                                                                                                                     date={duesOutItem.date}
                                                                                                                     amount={duesOutItem.amount}
                                                                                                                     note={duesOutItem.note}
-                                                                                                                    is_spvsr={spvsrData && teamData && (spvsrData.team.name === teamData.name) ? true : false}
+                                                                                                                    is_spvsr={teamData ? teamData.is_spvsr : false}
                                                                                                                     />
                                                                                                                         ): <Text>내역이 없습니다.</Text>}
                         

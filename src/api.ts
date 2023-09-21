@@ -11,6 +11,18 @@ const instance = axios.create({
 
 export const getMe = () => instance.get("users/me/").then((response) => response.data);
 
+export interface IUpdateMeVariables {
+    is_spvsr : boolean;
+    is_player : boolean;
+}
+
+export const updateMe = ({ is_spvsr, is_player } : IUpdateMeVariables) => instance.put("users/me/", {is_spvsr, is_player}, {
+    headers :  {
+        "X-CSRFToken" : Cookie.get("csrftoken") || ""
+            // logIn 관련해서는 항상 보내줘야 하는 듯
+    },
+}).then((response) => response.status);
+
 export const logOut = () => instance.post("users/logout/", null, {
     // url, data, config 객체를 보낼 수 있음
     headers : {
@@ -88,7 +100,7 @@ export const isPlayerSuperplayers = () => instance.get("users/isplayer/superplay
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const isSpvsr = () => instance.get("users/isspvsr/").then((response) => response.data)
-export const isSpvsrTeam = () => instance.get("users/isspvsr/team/").then((response) => response.data)
+export const isSpvsrTeams = () => instance.get("users/isspvsr/teams/").then((response) => response.data)
 export const isSpvsrGames = () => instance.get("users/isspvsr/games/").then((response) => response.data)
 export const isSpvsrTomGames = () => instance.get("users/isspvsr/toms/").then((response) => response.data)
 export const isSpvsrSuperplayers = () => instance.get("users/isspvsr/superplayers/").then((response) => response.data)
@@ -728,12 +740,13 @@ export const scheduleDelete = ({ teamPk, schedulePk } : ISpvsrScheduleDeleteVari
 
 
 export interface ITeamUpdateVariables {
+    teamPk : string;
     description? : string;
     since? : number;
     code : number;
 }
 
-export const teamUpdate = ({ description, since, code } : ITeamUpdateVariables) => instance.put(`users/isspvsr/team/`, { description, since, code }, 
+export const teamUpdate = ({ teamPk, description, since, code } : ITeamUpdateVariables) => instance.put(`teams/${teamPk}/`, { description, since, code }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""

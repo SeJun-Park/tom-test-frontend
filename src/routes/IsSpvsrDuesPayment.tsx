@@ -3,18 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamDuesPaymentList, isSpvsr } from "../api";
+import { getTeam, getTeamDuesPaymentList } from "../api";
 import DuesPaymentAddModal from "../components/DuesPaymentAddModal";
 import DuesPaymentList from "../components/DuesPaymentList";
 import Empty from "../components/Empty";
 import KakaoADSmall from "../components/KakaoADSmall";
-import { IDuesPayment, ISpvsrUser, ITeam } from "../types";
+import { IDuesPayment, ITeam } from "../types";
 
 export default function IsSpvsrDuesPayment() {
 
     const { teamPk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
     const { isLoading : teamDuesPaymentsLoading, data : teamDuesPaymentsData, isError : teamDuesPaymentsError } = useQuery<IDuesPayment[]>(["teamDuesPayments", teamPk], getTeamDuesPaymentList);
 
@@ -40,7 +39,7 @@ export default function IsSpvsrDuesPayment() {
                 <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
                 <Text fontSize={"xl"} as="b"> 회비 납부 현황 </Text>
                 <Box>
-                        {spvsrData?.team.name === teamData?.name ? 
+                        {teamData?.is_spvsr ? 
                                                                     <>
                                                                         <Button onClick={onDuesPaymentAddOpen} backgroundColor={"main.500"} color={"white"} size={"sm"}> + 추가하기 </Button>
                                                                         <DuesPaymentAddModal isOpen={isDuesPaymentAddOpen} onClose={onDuesPaymentAddClose} />

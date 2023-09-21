@@ -4,10 +4,8 @@ import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaEdit, FaEllipsisV } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { getGame, getGameQuotas, isSpvsr } from "../api";
+import { getGame, getGameQuotas } from "../api";
 import { gameQuotasShareImageState } from "../atoms";
-import Capture from "../components/Capture";
-import CaptureButton from "../components/CaptureButton";
 import Empty from "../components/Empty";
 import FFT from "../components/formations/FFT";
 import FTTO from "../components/formations/FTTO";
@@ -18,13 +16,12 @@ import KakaoADSmall from "../components/KakaoADSmall";
 import KakaoShare from "../components/KakaoShare";
 import PlayerQuotasInfo from "../components/PlayerQuotasInfo";
 import { formatGamesDate } from "../lib/utils";
-import { IGame, IGameQuota, ISpvsrUser } from "../types";
+import { IGame, IGameQuota } from "../types";
 
 export default function IsSpvsrGameQuotas() {
 
     const { gamePk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
     const { isLoading : gameQuotasLoading, data : gameQuotasData, isError : gameQuotasError } = useQuery<IGameQuota[]>(["gameQuotas", gamePk], getGameQuotas);
 
@@ -77,7 +74,7 @@ export default function IsSpvsrGameQuotas() {
                 <Button variant={"unstyled"} onClick={onClickBack}>
                     <FaArrowLeft />
                 </Button>
-                {spvsrData?.team.name === gameData?.team.name ? 
+                {gameData?.team.is_spvsr ? 
                                                                         <Menu>
                                                                             <MenuButton marginRight={1}>
                                                                                 <FaEllipsisV />
@@ -102,7 +99,7 @@ export default function IsSpvsrGameQuotas() {
                 {/* <Box id="captureTarget"> */}
                     <TabPanels>
                     {gameQuotasData?.map((gameQuota, index) =>  <TabPanel key={index} p={0}>
-                        {spvsrData?.team.name === gameData?.team.name ?
+                        {gameData?.team.is_spvsr ?
                                                                     <HStack px={5} justifyContent={"flex-end"}>
                                                                         <Menu>
                                                                             <MenuButton py={3} pr={1}>

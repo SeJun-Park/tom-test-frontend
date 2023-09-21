@@ -6,19 +6,16 @@ import { useForm } from "react-hook-form";
 import { FaArrowLeft, FaMinus, FaPlus } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { gameQuotaUpdate, getGame, getGameQuota, isSpvsr } from "../api";
+import { gameQuotaUpdate, getGame, getGameQuota } from "../api";
 import { formationState } from "../atoms";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
-import FormationPlayer from "../components/FormationPlayer";
 import FFTpreview from "../components/formations/FFTpreview";
 import FTTOpreview from "../components/formations/FTTOpreview";
 import TFTpreview from "../components/formations/TFTpreview";
 import ProtectedPage from "../components/ProtectedPage";
-import SmallDivider from "../components/SmallDivider";
 import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
-import useUser from "../lib/useUser";
-import { Formation, IGame, IGameQuota, ISpvsrUser } from "../types";
+import { Formation, IGame, IGameQuota } from "../types";
 
 interface IUpdateGameQuotaForm {
     formation : string,
@@ -29,9 +26,6 @@ export default function UpdateGameQuota() {
 
     const { gamePk, quotaPk } = useParams();
 
-    const { user } = useUser();
-
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
     const { isLoading : gameQuotaLoading, data : gameQuotaData, isError : gameQuotaError } = useQuery<IGameQuota>(["gameQuota", gamePk, quotaPk], getGameQuota);
 
@@ -139,7 +133,7 @@ export default function UpdateGameQuota() {
     }
 
     useEffect(() => {
-        if (spvsrData?.team.name !== gameData?.team.name) {
+        if (!gameData?.team.is_spvsr) {
             navigate("/");
         }
 
@@ -148,7 +142,7 @@ export default function UpdateGameQuota() {
                 navigate(-1)
             }
         }
-    }, [spvsrData, gameData]);
+    }, [gameData]);
 
     useEffect(() => {
         if(gameQuotaData) {

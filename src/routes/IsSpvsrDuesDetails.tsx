@@ -14,7 +14,6 @@ export default function IsSpvsrDuesDetails() {
 
     const { teamPk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
     const { isLoading : teamDuesDetailsLoading, data : teamDuesDetailsData, isError : teamDuesDetailsError } = useQuery<IDuesDetail[]>(["teamDuesDetails", teamPk], getTeamDuesDetailList);
 
@@ -42,7 +41,7 @@ export default function IsSpvsrDuesDetails() {
                 <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
                 <Text fontSize={"xl"} as="b"> 회비 사용 내역 </Text>
                 <Box>
-                        {spvsrData?.team.name === teamData?.name ? 
+                        {teamData?.is_spvsr ? 
                                                                 <>
                                                                     <Button onClick={onDuesDetailAddOpen} backgroundColor={"point.500"} color={"black"} size={"sm"}> + 추가하기 </Button>
                                                                     <DuesDetailAddModal isOpen={isDuesDetailAddOpen} onClose={onDuesDetailAddClose} />

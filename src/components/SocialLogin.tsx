@@ -15,14 +15,10 @@ export default function SocialLogin() {
 
 
     return (
-        <Box mb={4}>
+        <Box mb={4} w={"80%"}>
             <VStack>
-                <Button as="a" href={`https://kauth.kakao.com/oauth/authorize?${kakaoParams}`} leftIcon={<FaComment />} backgroundColor={"point.500"} color={"black"} width={"100%"}> 카카오로 계속하기 </Button>
+                <Button as="a" href={`https://kauth.kakao.com/oauth/authorize?${kakaoParams}`} leftIcon={<FaComment />} backgroundColor={"#fae11c"} color={"#412423"} width={"100%"}> 카카오로 계속하기 </Button>
             </VStack>
-            <HStack my={8}>
-                {/* my는 margin top & bottom / mx는 margin left & right */}
-                <Divider />
-            </HStack>
         </Box>
     )
 }

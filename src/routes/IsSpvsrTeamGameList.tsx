@@ -26,8 +26,6 @@ export default function IsSpvsrTeamGameList() {
 
     const { teamPk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
-
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
     const { isLoading : teamGamesLoading, data : teamGamesData, isError : teamGamesError } = useQuery<ITinyGame[]>(["teamGames", teamPk], getTeamGames);
     const { isLoading : teamGoalsLoading, data : teamGoalsData, isError : teamGoalsError } = useQuery<IGoals>(["teamGoals", teamPk], getTeamGoals);
@@ -102,7 +100,7 @@ export default function IsSpvsrTeamGameList() {
             <HStack justifyContent={"space-between"} padding={5}>
                 <Text fontSize={"xl"} as="b"> {teamData?.name} </Text>
                 <Box>
-                    {spvsrData?.team.name === teamData?.name ? 
+                    {teamData?.is_spvsr ? 
                                                         <Link to={`/teams/${teamData?.id}/games/upload`}>
                                                             <Button backgroundColor={"point.500"} color={"black"} size={"xs"}> + NEW GAME </Button>
                                                         </Link> 

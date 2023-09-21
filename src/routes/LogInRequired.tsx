@@ -1,24 +1,19 @@
-import { Box, Button, Heading, HStack, LightMode, Text, useColorModeValue, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Heading, Text, VStack } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
 import { useRecoilValue } from "recoil";
 import { loginRequiredImageState } from "../atoms";
-import LoginModal from "../components/LoginModal";
-import SignUpModal from "../components/SignUpModal";
+import SocialLogin from "../components/SocialLogin";
 
 export default function LogInRequired() {
 
-    const logoColor = useColorModeValue("main.500", "white");
     const loginRequiredImage = useRecoilValue(loginRequiredImageState)
 
-    const { isOpen:isLoginOpen, onClose:onLoginClose, onOpen:onLoginOpen } = useDisclosure();
-    const { isOpen:isSignUpOpen, onClose:onSignUpClose, onOpen:onSignUpOpen } = useDisclosure();
-
     return (
-          <VStack justifyContent={"center"} minHeight={"100vh"}>
-              <Helmet>
-                  <title> 3OM | Home </title>
-              </Helmet>
-              <Box position="absolute" top={0} left={0} right={0} bottom={0}>
+              <VStack justifyContent={"center"} minHeight={"100vh"}>
+                <Helmet>
+                    <title> 3OM | Home </title>
+                </Helmet>
+                <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                   <Box
                   backgroundImage={`url(${loginRequiredImage})`}
                   backgroundSize="cover"
@@ -38,22 +33,12 @@ export default function LogInRequired() {
                     <Text color="white" mt={2}>
                       운영진을 위한
                     </Text>
-                    <Text color="white" mt={0}>
+                    <Text color="white" mt={0} mb={10}>
                       쉽고 편한 조기축구 팀 관리 서비스
                     </Text>
-                    <HStack spacing={4} mt={4}>
-                      <Button onClick={onLoginOpen}>로그인</Button>
-                      <LightMode>
-                        <Button onClick={onSignUpOpen} backgroundColor="main.500" color="white">
-                          가입하기
-                        </Button>
-                      </LightMode>
-                    </HStack>
+                    <SocialLogin />
                   </Box>
               </Box>
-              <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
-              <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose}/>
           </VStack>  
-          
     )
 }

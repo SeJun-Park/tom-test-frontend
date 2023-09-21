@@ -1,15 +1,13 @@
-import { Avatar, Badge, Box, Button, Card, CardBody, CardHeader, CircularProgress, CircularProgressLabel, Divider, Flex, Grid, Heading, HStack, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Select, SimpleGrid, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Button, Card, CardBody, CardHeader, Divider, Flex, Heading, HStack, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaArrowRight, FaCamera, FaReceipt, FaRunning, FaTasks, FaTrash, FaTrashAlt, FaUser } from "react-icons/fa";
+import { FaArrowRight, FaCamera, FaReceipt, FaRunning, FaTasks, FaTrashAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { getTeam, getTeamFeeds, getTeamGames, getTeamNotisByMonth, getTeamNotisMonth, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamSchedulesByMonth, getTeamSchedulesMonth, getTeamTomGames, isSpvsr } from "../api";
 import { teamScheduleShareImageState } from "../atoms";
 import BigDivider from "../components/BigDivider";
-import Capture from "../components/Capture";
-import CaptureButton from "../components/CaptureButton";
 import Empty from "../components/Empty";
 import Feed from "../components/Feed";
 import FeedAddModal from "../components/FeedAddModal";
@@ -22,7 +20,9 @@ import NullGame from "../components/NullGame";
 import Schedule from "../components/Schedule";
 import ScheduleAddModal from "../components/ScheduleAddModal";
 import SmallDivider from "../components/SmallDivider";
+import TeamPhotoDeleteModal from "../components/TeamPhotoDeleteModal";
 import TeamPhotoUploadModal from "../components/TeamPhotoUploadModal";
+import TeamUpdateModal from "../components/TeamUpdateModal";
 import { IFeed, INoti, ISchedule, ISpvsrUser, ITeam, ITinyGame, ITinyPlayer } from "../types";
 
 export default function IsSpvsrTeamHome() {
@@ -140,6 +140,17 @@ const { isOpen : isFeedOpen, onOpen : onFeedOpen, onClose : onFeedClose } = useD
 
 const shareImage = useRecoilValue(teamScheduleShareImageState);
 
+    
+const [tabIndex, setTabIndex] = useState(Number(localStorage.getItem('tabIndex')) || 0);
+
+useEffect(() => {
+  localStorage.setItem('tabIndex', tabIndex.toString());
+}, [tabIndex]);
+
+const { isOpen : isOpen, onOpen : onOpen, onClose : onClose } = useDisclosure()
+const { isOpen : isPhotoOpen, onOpen : onPhotoOpen, onClose : onPhotoClose } = useDisclosure()
+const { isOpen : isPhotoDeleteOpen, onOpen : onPhotoDeleteOpen, onClose : onPhotoDeleteClose } = useDisclosure()
+
     return (
         <>
             <Helmet>
@@ -147,15 +158,16 @@ const shareImage = useRecoilValue(teamScheduleShareImageState);
             </Helmet>
             <HStack alignItems={"flex-start"} padding={"5"}>
                 <Text fontSize={"xl"} as="b"> {teamData?.name} </Text>
-                {spvsrData?.team.name === teamData?.name ? 
+                {teamData?.is_spvsr ? 
                                 <Box justifyContent={"center"}>
                                     <Badge ml={1} bg={"point.500"} color={"black"}> 나의 팀 </Badge>
                                 </Box> 
                                         : null}
             </HStack>
-            <Tabs isFitted variant='enclosed'>
+            <Tabs isFitted variant='enclosed' index={tabIndex} onChange={setTabIndex}>
             <TabList mb='1em' justifyContent={"center"}>
                 <Tab _selected={{color : "main.500"}}> 팀 프로필 </Tab>
+                {teamData?.is_spvsr && <Tab _selected={{color : "main.500"}}> 팀 정보 </Tab>}
             </TabList>
             <TabPanels>
                 <TabPanel p={"0"}>
@@ -296,7 +308,7 @@ const shareImage = useRecoilValue(teamScheduleShareImageState);
                                                                                                     category={noti.category}
                                                                                                     payload={noti.payload}
                                                                                                     plan={teamData ? teamData?.plan : ""}
-                                                                                                    isspvsr={(spvsrData?.team.name === teamData?.name)}
+                                                                                                    isspvsr={teamData ? teamData.is_spvsr : false}
                                                                                                     />
                                                                                                     )
                                                                                                 })
@@ -308,7 +320,7 @@ const shareImage = useRecoilValue(teamScheduleShareImageState);
                             <TabPanel p={"0"}>
                                 <VStack alignItems={"flex-end"} px={5} pb={5}>
                                     <Box>
-                                        {spvsrData?.team.name === teamData?.name ? 
+                                        {teamData?.is_spvsr ? 
                                                                                 <Button onClick={onScheduleOpen} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 일정 추가하기 </Button>
                                                                                 // onClick={onOpen} 
                                                                                     : null}
@@ -336,7 +348,7 @@ const shareImage = useRecoilValue(teamScheduleShareImageState);
                                                                                                 dateTime={schedule.dateTime}
                                                                                                 category={schedule.category}
                                                                                                 title={schedule.title}
-                                                                                                isspvsr={(spvsrData?.team.name === teamData?.name)}
+                                                                                                isspvsr={teamData ? teamData.is_spvsr : false}
                                                                                                 />)
                                                                                                    : <Text padding={5}>등록된 일정이 없습니다.</Text>}
                                 </VStack>
@@ -358,7 +370,7 @@ const shareImage = useRecoilValue(teamScheduleShareImageState);
                                 {teamFeedsMonthData?.map((yearMonth) => <option key={yearMonth} value={yearMonth}>{yearMonth}</option>)}
                             </Select> */}
                             <VStack alignItems={"flex-end"} px={5} pb={5}>
-                                    {spvsrData?.team.name === teamData?.name ? 
+                                    {teamData?.is_spvsr ? 
                                                                         <>
                                                                             <Button onClick={onFeedOpen} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 피드 추가하기 </Button>
                                                                             <FeedAddModal isOpen={isFeedOpen} onClose={onFeedClose} />
@@ -377,7 +389,7 @@ const shareImage = useRecoilValue(teamScheduleShareImageState);
                                                                                         title={feed.title}
                                                                                         payload={feed.payload}
                                                                                         photos={feed.photos}
-                                                                                        isspvsr={(spvsrData?.team.name === teamData?.name)}
+                                                                                        isspvsr={teamData ? teamData.is_spvsr : false}
                                                                                         />
                                                                                     ) 
                                                                                 : <Text padding={5}>새로운 소식이 없습니다.</Text>}
@@ -430,6 +442,72 @@ const shareImage = useRecoilValue(teamScheduleShareImageState);
                         </TabPanels>
                     </Tabs>
                     <Empty />
+                </TabPanel>
+                <TabPanel p={"0"}>
+                    <VStack spacing={5}>
+                        <Text fontSize={"xl"} as="b" mt={3}> {teamData?.name} </Text>
+                        <HStack>
+                            <Avatar src={teamData ? teamData.avatar : ""} size={"2xl"} />
+                            { teamData && 
+                                                teamData.avatar ?
+                                                                        <VStack justifyContent={"center"}>
+                                                                            <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                                                                                <FaCamera size="15px" />
+                                                                            </Button>
+                                                                            <Button onClick={onPhotoDeleteOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                                                                                <FaTrashAlt size="15px" />
+                                                                            </Button>
+                                                                            <TeamPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
+                                                                            <TeamPhotoDeleteModal isOpen={isPhotoDeleteOpen} onClose={onPhotoDeleteClose} />
+                                                                        </VStack>  :
+                                                                        <HStack justifyContent={"center"}>
+                                                                            <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                                                                                <FaCamera size="15px" />
+                                                                            </Button>
+                                                                            <TeamPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
+                                                                        </HStack>
+                                                                        }
+                        </HStack>
+                    </VStack>
+                    {teamData?.description && (
+                        <VStack>
+                            <Card my={4} width={"90%"} textAlign={"center"}>
+                                <CardBody>
+                                    <Text fontSize={"sm"}>{teamData.description}</Text>
+                                </CardBody>
+                            </Card>
+                        </VStack>
+                    )}
+                    <VStack alignItems={"flex-start"} px={3}>
+                        <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> SINCE </Text>
+                        {/* <Text fontSize={"sm"}> {teamData ? (formatDate_pl(teamData.created_at)) : "-"} </Text> */}
+                        <Text fontSize={"sm"}> {teamData ? teamData.since : "-"} </Text>
+                        <Divider />
+                    </VStack>
+                    <BigDivider />
+                    <VStack alignItems={"flex-start"} px={3}>
+                        <Text as="b" color={"main.500"} fontSize={"sm"}> PLAN </Text>
+                        <Divider />
+                        <Text fontSize={"sm"}> {teamData ? teamData.plan : "-"} </Text>
+                        <Divider />
+                    </VStack>
+                    <SmallDivider />
+                    <VStack alignItems={"flex-start"} px={3}>
+                        {/* <Text as="b" color={"main.500"} mt={5} fontSize={"sm"}> BALL </Text>
+                        <Divider />
+                        <Text fontSize={"sm"}> 0 balls </Text>
+                        <Divider /> */}
+                        <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> TEAM CODE </Text>
+                        <Divider />
+                        <Text fontSize={"sm"}> {teamData ? (teamData.code) : "-"} </Text>
+                        <Divider />
+                    </VStack>
+                    <Empty />
+                        <VStack>
+                            <Button onClick={onOpen} backgroundColor={"point.500"} color={"black"} width={"80%"} disabled={true}> 팀 정보 업데이트 </Button>
+                        </VStack>
+                    <Empty />
+                    <TeamUpdateModal isOpen={isOpen} onClose={onClose} />
                 </TabPanel>
             </TabPanels>
         </Tabs>

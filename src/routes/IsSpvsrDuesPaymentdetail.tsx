@@ -6,8 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { getTeam, getTeamDuesPayment, getTeamDuesPaymentItems, isSpvsr } from "../api";
 import { duesPaymentDetailShareImageState } from "../atoms";
-import Capture from "../components/Capture";
-import CaptureButton from "../components/CaptureButton";
 import DuesPaymentDeleteModal from "../components/DuesPaymentDeleteModal";
 import DuesPaymentItem from "../components/DuesPaymentItem";
 import DuesPaymentItemAddModal from "../components/DuesPaymentItemAddModal";
@@ -16,14 +14,13 @@ import Empty from "../components/Empty";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
 import KakaoShare from "../components/KakaoShare";
-import { IDuesPayment, IDuesPaymentItem, ISpvsrUser, ITeam } from "../types";
+import { IDuesPayment, IDuesPaymentItem, ITeam } from "../types";
 
 export default function IsSpvsrDuesPaymentDetail() {
 
     const { teamPk, paymentPk } = useParams();
 
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr); 
     const { isLoading : duesPaymentLoading, data : duesPaymentData, isError : duesPaymentError } = useQuery<IDuesPayment>(["duesPayment", teamPk, paymentPk], getTeamDuesPayment);
     const { isLoading : duesPaymentItemsLoading, data : duesPaymentItemsData, isError : duesPaymentItemsError } = useQuery<IDuesPaymentItem[]>(["duesPaymentItems", teamPk, paymentPk], getTeamDuesPaymentItems);
 
@@ -48,7 +45,7 @@ export default function IsSpvsrDuesPaymentDetail() {
                 <Button variant={"unstyled"} onClick={onClickBack}>
                     <FaArrowLeft />
                 </Button>
-                {spvsrData?.team.name === teamData?.name && 
+                {teamData?.is_spvsr && 
                                                             <Menu>
                                                                 <MenuButton marginRight={1}>
                                                                     {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
@@ -96,7 +93,7 @@ export default function IsSpvsrDuesPaymentDetail() {
             </HStack>
             <HStack justifyContent={"space-between"} padding={5} mt={5}>
                 <Text as="b" color={"main.500"} fontSize={"md"} > 납부 현황 </Text>
-                {spvsrData?.team.name === teamData?.name && <Button onClick={onAddOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> + 항목 추가하기 </Button>}
+                {teamData?.is_spvsr && <Button onClick={onAddOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> + 항목 추가하기 </Button>}
                 <DuesPaymentItemAddModal isOpen={isAddOpen} onClose={onAddClose} />
             </HStack>
             <VStack padding={5}>
@@ -108,7 +105,7 @@ export default function IsSpvsrDuesPaymentDetail() {
                                                                                                         avatar={duesPaymentItem.player.avatar}
                                                                                                         name={duesPaymentItem.player.name}
                                                                                                         payment={duesPaymentItem.payment}
-                                                                                                        is_spvsr={spvsrData && teamData && (spvsrData.team.name === teamData.name) ? true : false}                                                                                                        
+                                                                                                        is_spvsr={teamData ? teamData.is_spvsr : false}                                                                                                        
                                                                                                         />
                                                                                                         ) : <Text> 비어 있습니다. </Text>}
             </VStack>

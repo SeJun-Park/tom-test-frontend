@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaMinus, FaPlus } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { getGame, isSpvsr } from "../api";
+import { getGame } from "../api";
 import { formationState } from "../atoms";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
@@ -17,14 +17,12 @@ import PlayerQuotasInfoPreview from "../components/PlayerQuotasInfoPreview";
 import ProtectedPage from "../components/ProtectedPage";
 import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
 import useUser from "../lib/useUser";
-import { IGame, ISpvsrUser } from "../types";
+import { IGame } from "../types";
 
 export default function UploadGameQuotas() {
 
     const { gamePk } = useParams();
-    const { user } = useUser();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,7 +170,7 @@ export default function UploadGameQuotas() {
         navigate(-1)
     }
 
-    if (spvsrData?.team.name !== gameData?.team.name) {
+    if (!gameData?.team.is_spvsr) {
         navigate("/")
     }
 

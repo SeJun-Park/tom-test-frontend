@@ -5,10 +5,10 @@ import Calendar from "react-calendar";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft  } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { gameUpload, getTeam, getTeamPlayers, isSpvsr } from "../api";
+import { gameUpload, getTeam, getTeamPlayers } from "../api";
 import Empty from "../components/Empty";
 import ProtectedPage from "../components/ProtectedPage";
-import { ISpvsrUser, ITeam, ITinyPlayer } from "../types";
+import { ITeam, ITinyPlayer } from "../types";
 import "../calender.css";
 import useUser from "../lib/useUser";
 import { Helmet } from "react-helmet";
@@ -27,7 +27,6 @@ export default function UploadGame() {
     const { teamPk } = useParams();
     const { user } = useUser();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
     const { isLoading : teamPlayersLoading, data : teamPlayersData, isError : teamPlayersError } = useQuery<ITinyPlayer[]>(["teamPlayers", teamPk], getTeamPlayers);
 
@@ -74,7 +73,7 @@ export default function UploadGame() {
         navigate(-1)
     }
 
-    if (spvsrData?.team.name !== teamData?.name) {
+    if (!teamData?.is_spvsr) {
         navigate("/")
     }
 

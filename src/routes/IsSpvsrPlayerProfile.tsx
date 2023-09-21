@@ -24,8 +24,6 @@ export default function IsSpvsrPlayerProfile() {
 
     const { playerPk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
-
     const { isLoading : playerLoading, data : playerData, isError : playerError } = useQuery<IPlayer>(["player", playerPk], getPlayer);
     const { isLoading : playerGamesLoading, data : playerGamesData, isError : playerGamesError } = useQuery<ITinyGame[]>(["playerGames", playerPk], getPlayerGames);
     const { isLoading : playerGoalsLoading, data : playerGoalsData, isError : playerGoalsError } = useQuery<IGoals>(["playerGoals", playerPk], getPlayerGoals);
@@ -53,7 +51,7 @@ export default function IsSpvsrPlayerProfile() {
                 <Button variant={"unstyled"} onClick={onClickBack}>
                     <FaArrowLeft />
                 </Button>
-                {spvsrData?.team.name === playerData?.team.name ? 
+                {playerData?.team.is_spvsr ? 
                                                                         <Menu>
                                                                             <MenuButton marginRight={1}>
                                                                                 {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
@@ -75,7 +73,7 @@ export default function IsSpvsrPlayerProfile() {
                     <Avatar src={playerData?.avatar} size={"xl"} />
                     {/* <Avatar src={"https://prodigits.co.uk/thumbs/wallpapers/p2ls/drawings/26/5761411112242453.jpg"} size={"sm"} ml={-10} showBorder={true} /> */}
                     
-                    { spvsrData?.team.name === playerData?.team.name ? 
+                    { playerData?.team.is_spvsr ? 
                                                                         playerData?.avatar ?
                                                                                             <VStack justifyContent={"center"}>
                                                                                                 <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
@@ -155,7 +153,7 @@ export default function IsSpvsrPlayerProfile() {
                     </Text>
                 </HStack>
             </VStack> */}
-            {spvsrData?.team.name === playerData?.team.name ? (
+            {playerData?.team.is_spvsr ? (
                 <HStack mt={4} justifyContent={"center"}>
                     {playerData?.connected_user ? <Button onClick={connectionModalonOpen} color={"main.500"} size={"sm"} variant={"ghost"}> 연결 상태 보기</Button> 
                                                         : (playerData?.connecting_user ? <Button onClick={connectingModalonOpen} backgroundColor={"point.500"} color={"black"} size={"sm"}> 연결중.. </Button>

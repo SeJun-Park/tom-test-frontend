@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaEllipsisV, FaShare, FaTrashAlt } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getGame, isSpvsr } from "../api";
+import { getGame } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import GameNoLink from "../components/GameNoLink";
@@ -13,7 +13,7 @@ import DeleteGameModal from "../components/GameDeleteModal";
 import GameVote from "../components/GameVote";
 import GoalPlayer from "../components/GoalPlayer";
 import Player from "../components/Player";
-import { IGame, ISpvsrUser } from "../types";
+import { IGame } from "../types";
 import GamePhotoUploadModal from "../components/GamePhotoUploadModal";
 import GamePhotoDeleteModal from "../components/GamePhotoDeleteModal";
 import GameVideoDeleteModal from "../components/GameVideoDeleteModal";
@@ -25,7 +25,6 @@ export default function IsSpvsrGameDetail() {
 
     const { gamePk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr);
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", gamePk], getGame);
 
     const navigate = useNavigate();
@@ -62,7 +61,6 @@ export default function IsSpvsrGameDetail() {
         onPhotoDeleteOpen();
     }
 
-    console.log(gameData?.quotas)
 
     return (
         <>
@@ -73,7 +71,7 @@ export default function IsSpvsrGameDetail() {
                 <Button variant={"unstyled"} onClick={onClickBack}>
                     <FaArrowLeft />
                 </Button>
-                {spvsrData?.team.name === gameData?.team.name ? 
+                {gameData?.team.is_spvsr ? 
                                                                         <Menu>
                                                                             <MenuButton marginRight={1}>
                                                                                 {/* <Avatar size={"md"} name={user?.name} src={user?.avatar} /> */}
@@ -157,7 +155,7 @@ export default function IsSpvsrGameDetail() {
                                                                         <Button backgroundColor={"main.500"} color={"white"} size={"md"}>포메이션 확인하기</Button>
                                                                     </Link>
                                                                 </VStack>
-                                                                        : spvsrData?.team.name === gameData?.team.name ?
+                                                                        : gameData?.team.is_spvsr ?
                                                                                 gameData && gameData.participants.length >= 11 ?
                                                                                 <VStack position="absolute" top="40%" align="center" width="100%">
                                                                                     <Link to={`/games/${gamePk}/quotas/upload`}>
@@ -180,7 +178,7 @@ export default function IsSpvsrGameDetail() {
                             <Divider mt={8}/>
                             <Text as="b" color={"main.500"} fontSize={"sm"} > Line-ups </Text>
                             <Divider />
-                            {gamePk && spvsrData?.team.name === gameData?.team.name ?          
+                            {gamePk && gameData?.team.is_spvsr ?          
                                                     <VStack alignItems={"flex-end"}>
                                                         <Button onClick={onPlayerDailyAddOpen} mb={5} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 용병 추가하기 </Button>
                                                         <PlayerDailyAddModal isOpen={isPlayerDailyAddOpen} onClose={onPlayerDailyAddClose} gamePk={gamePk} />
@@ -207,7 +205,7 @@ export default function IsSpvsrGameDetail() {
                                                 is_connecting={participant.is_connecting}
                                                 is_connected={participant.is_connected}
                                                 is_daily={participant.is_daily}
-                                                is_spvsr={spvsrData?.team.name === gameData?.team.name}
+                                                is_spvsr={gameData ? gameData.team.is_spvsr : false}
                                             />
                                         ))}
                         <Empty />
@@ -235,7 +233,7 @@ export default function IsSpvsrGameDetail() {
                                         <div className="video-container" key={video.id}>
                                             <iframe src={`https://www.youtube.com/embed/${videoID}`} frameBorder="0" allowFullScreen></iframe>
                                         </div>
-                                        {spvsrData?.team.name === gameData?.team.name ?
+                                        {gameData?.team.is_spvsr ?
                                             <HStack alignItems={"flex-end"}>
                                                 <Button onClick={onVideoDeleteOpen} variant={"outline"} color={"black"} size={"xs"}>
                                                     <FaTrashAlt size="12" />
@@ -246,7 +244,7 @@ export default function IsSpvsrGameDetail() {
                                     </>
                                 )
                             })}
-                            {spvsrData?.team.name === gameData?.team.name ?          
+                            {gameData?.team.is_spvsr ?          
                                                     <>
                                                         <Button onClick={onVideoAddOpen} my={5} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 유튜브 링크 추가하기 </Button>
                                                         <GameVideoAddModal isOpen={isVideoAddOpen} onClose={onVideoAddClose} />
@@ -263,7 +261,7 @@ export default function IsSpvsrGameDetail() {
                                 <Box key={photo.id} onClick={() => handleOpen(photo.file)} position="relative">
                                     <Image src={photo.file} objectFit="cover" objectPosition="center" height="100%" boxSize="100%" cursor="pointer" />
                                                             {
-                                                                spvsrData?.team.name === gameData?.team.name ? 
+                                                                gameData?.team.is_spvsr ? 
                                                                                                                 <>
                                                                                                                     <Button 
                                                                                                                         onClick={onCameraClick}
@@ -282,7 +280,7 @@ export default function IsSpvsrGameDetail() {
                                 </Box>
                                 ))}
                             </Grid>
-                            {spvsrData?.team.name === gameData?.team.name ?          
+                            {gameData?.team.is_spvsr ?          
                                                     <>
                                                         <Button onClick={onPhotoAddOpen} my={5} backgroundColor={"point.500"} color={"black"} size={"xs"}> + 사진 추가하기 </Button>
                                                         <GamePhotoUploadModal isOpen={isPhotoAddOpen} onClose={onPhotoAddClose} />

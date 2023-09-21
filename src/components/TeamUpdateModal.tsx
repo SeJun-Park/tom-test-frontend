@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Button, FormControl, FormHelperText, FormLabel, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { isSpvsrTeam, teamUpdate } from "../api";
+import { getTeam, isSpvsrTeams, teamUpdate } from "../api";
 import { FaCheck, FaKey, FaStream } from "react-icons/fa";
-import { ITinyTeam } from "../types";
+import { ITeam, ITinyTeam } from "../types";
+import { useParams } from "react-router-dom";
 
 interface TeamUpdateModalProps {
     isOpen : boolean;
@@ -18,8 +19,9 @@ interface ITeamUpdateForm {
 
 export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
 
-    const { isLoading : spvsrTeamLoading, data : spvsrTeamData, isError : spvsrTeamError } = useQuery<ITinyTeam>(["isSpvsrTeam"], isSpvsrTeam);
+    const { teamPk } = useParams();
 
+    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
     const { register, handleSubmit, formState : {errors}, reset : teamUpdateFormReset } = useForm<ITeamUpdateForm>();
 
     const toast = useToast();
@@ -35,7 +37,7 @@ export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
                 duration : 1000,
             });
             props.onClose();
-            queryClient.refetchQueries(["isSpvsrTeam"])
+            queryClient.refetchQueries(["team"])
         },
         onError : (error) => {
             console.log(error)
@@ -43,7 +45,9 @@ export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
     });
 
     const onSubmit = ( { description, since, code } :ITeamUpdateForm) => {
-        teamUpdateMutation.mutate({ description, since, code });
+        if(teamPk) {
+            teamUpdateMutation.mutate({ teamPk, description, since, code });
+        }
     }
 
     return (
@@ -60,7 +64,7 @@ export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
                         <FormLabel>
                             팀 이름
                         </FormLabel>
-                        <Input type={"text"} isReadOnly placeholder={spvsrTeamData?.name} variant={"flushed"} color={"gray.400"}/>
+                        <Input type={"text"} isReadOnly placeholder={teamData?.name} variant={"flushed"} color={"gray.400"}/>
                     </FormControl>
                     <FormControl>
                         <FormLabel>
@@ -68,7 +72,7 @@ export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
                         </FormLabel>
                         <InputGroup>
                             <InputLeftAddon children={<FaStream />} />
-                            <Input {...register("description")} type="text" isInvalid={Boolean(errors.description?.message)} defaultValue={spvsrTeamData ? spvsrTeamData.description : ""} placeholder={spvsrTeamData ? spvsrTeamData.description : ""} />
+                            <Input {...register("description")} type="text" isInvalid={Boolean(errors.description?.message)} defaultValue={teamData ? teamData.description : ""} placeholder={teamData ? teamData.description : ""} />
                         </InputGroup>
                     </FormControl>
                     <FormControl>
@@ -77,7 +81,7 @@ export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
                         </FormLabel>
                         <InputGroup>
                             <InputLeftAddon children={<FaCheck />} />
-                            <Input {...register("since")} type="number" min={0} isInvalid={Boolean(errors.since?.message)} defaultValue={spvsrTeamData ? spvsrTeamData.since.toString() : ""} placeholder={spvsrTeamData ? spvsrTeamData.since.toString() : ""} />
+                            <Input {...register("since")} type="number" min={0} isInvalid={Boolean(errors.since?.message)} defaultValue={teamData ? teamData.since.toString() : ""} placeholder={teamData ? teamData.since.toString() : ""} />
                         </InputGroup>
                     </FormControl>
                     <FormControl>
@@ -86,7 +90,7 @@ export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
                         </FormLabel>
                         <InputGroup>
                             <InputLeftAddon children={<FaKey />} />
-                            <Input {...register("code", {required:true})} type="number" min={0} isInvalid={Boolean(errors.code?.message)} defaultValue={spvsrTeamData ? spvsrTeamData.code.toString() : ""} placeholder={spvsrTeamData ? spvsrTeamData.code.toString() : ""} />
+                            <Input {...register("code", {required:true})} type="number" min={0} isInvalid={Boolean(errors.code?.message)} defaultValue={teamData ? teamData.code.toString() : ""} placeholder={teamData ? teamData.code.toString() : ""} />
                         </InputGroup>
                         <FormHelperText>* 팀 코드는 플레이어가 연결 요청 시 비밀번호 역할을 합니다.</FormHelperText>
                     </FormControl>

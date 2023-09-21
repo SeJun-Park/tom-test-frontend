@@ -42,7 +42,8 @@ export default function Header() {
             toast.update(toastId.current, {
                 status : "success",
                 title : "로그아웃 성공!",
-                description : "다음에 만나요."
+                description : "다음에 만나요.",
+                duration : 1000
             })
         }
 
