@@ -1,4 +1,4 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Card, CardBody, Divider, Grid, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Card, CardBody, Divider, Grid, HStack, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
@@ -64,6 +64,9 @@ export default function GameQuotasReadOnly() {
                         <KakaoADBig />
                 </Box>
             </VStack>
+
+           {gameData ? 
+           <>
             <VStack padding={5} mt={5}>
                 <Text as="b" fontSize={"xx-small"}> {gameData?.date ? (formatGamesDate(gameData.date)) : null} </Text>
                 <Text as="b" fontSize={"lg"}>{gameData?.team.name} vs {gameData?.vsteam}</Text>
@@ -75,11 +78,10 @@ export default function GameQuotasReadOnly() {
                     <Tab _selected={{color : "white", bgColor : "main.500"}}>쿼터별</Tab>
                     <Tab _selected={{color : "white", bgColor : "main.500"}}>플레이어별</Tab>
                 </TabList>
-                {/* <Box id="captureTarget"> */}
                     <TabPanels>
                         <TabPanel p={0}>
                         <Empty />
-                    {gameQuotasData?.map((gameQuota, index) =>  
+                    {gameQuotasData ? gameQuotasData.map((gameQuota, index) =>  
                                                                     <VStack padding={5}>
                                                                         { gameQuota.lineups.length === 11 ? 
                                                                             <>
@@ -108,12 +110,17 @@ export default function GameQuotasReadOnly() {
                                                                                                 </Card>
                                                                                                     )}
                                                                     </VStack>
-                                                                )}
+                                                                )
+                                                            :
+                                                            <VStack justifyContent={"center"} my={60}>
+                                                                <Spinner size={"lg"} />
+                                                            </VStack>
+                                                            }
                         </TabPanel>
                         <TabPanel p={0}>
                             <Empty />                                               
                             <VStack px={5}>
-                            {allPlayersData?.sort((a, b) => a.gameQuotaIndex.length - b.gameQuotaIndex.length).map((gameQuotasInfo, index) => 
+                            {allPlayersData ? allPlayersData.sort((a, b) => a.gameQuotaIndex.length - b.gameQuotaIndex.length).map((gameQuotasInfo, index) => 
                                                                             <PlayerQuotasInfo
                                                                                             key={index} 
                                                                                             playerPk={gameQuotasInfo.playerPk}
@@ -123,11 +130,23 @@ export default function GameQuotasReadOnly() {
                                                                                             formations={gameQuotasInfo.formations}
                                                                                             lineupsIndex={gameQuotasInfo.lineupsIndex}
                                                                                             />
-                                                                    )}
+                                                                    )
+                                                                :
+                                                                <VStack justifyContent={"center"} my={60}>
+                                                                    <Spinner size={"lg"} />
+                                                                </VStack>
+                                                                }
                             </VStack>
                         </TabPanel>
                     </TabPanels>
             </Tabs>
+            </>
+            :
+            <VStack justifyContent={"center"} my={60}>
+                <Spinner size={"lg"} />
+            </VStack>
+            }
+            
             <VStack mt={16}>
                 <Box w="320px" h="50px">
                         <KakaoADSmall />

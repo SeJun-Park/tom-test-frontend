@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, Divider, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Divider, HStack, Skeleton, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
@@ -30,98 +30,122 @@ export default function DuesDetailsDetailReadOnly() {
             <HStack justifyContent={"center"} height={20} px={5}>
                 <Text as="b" color="gray" fontSize={"xs"}>*본 페이지는 읽기 전용 페이지입니다.</Text>
             </HStack>
-            <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
-                <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
-                <Text fontSize={"xl"} as="b"> "{duesDetailData?.title}" 회비 사용 내역 </Text>
+            {teamData && duesDetailData ?
+            <>
+                <VStack alignItems={"flex-start"} padding={"5"} mb={2}>
+                    <Text fontSize={"xl"} as="b"> {teamData && teamData.name} </Text>
+                    <Text fontSize={"xl"} as="b"> "{duesDetailData?.title}" 회비 사용 내역 </Text>
+                </VStack>
+                {duesDetailData?.memo && (
+                            <VStack>
+                                <Card width={"90%"} textAlign={"center"}>
+                                    <CardBody>
+                                        <Text fontSize={"sm"}>{duesDetailData.memo}</Text>
+                                    </CardBody>
+                                </Card>
+                            </VStack>
+                        )}
+            </>
+                        :
+            <VStack justifyContent={"center"} my={20}>
+                <Spinner size={"lg"} />
             </VStack>
-            {duesDetailData?.memo && (
-                        <VStack>
-                            <Card width={"90%"} textAlign={"center"}>
-                                <CardBody>
-                                    <Text fontSize={"sm"}>{duesDetailData.memo}</Text>
-                                </CardBody>
-                            </Card>
-                        </VStack>
-                    )}
-            <VStack mt={8}>
-                <Box w="320px" h="100px">
-                        <KakaoADBig />
-                </Box>
-            </VStack>
-            <Tabs isLazy align={"center"} variant='soft-rounded' my={8}>
-                <TabList mb='1em'>
-                    <Tab _selected={{color : "white", bg : "main.500"}}> 최종 내역 </Tab>
-                    <Tab _selected={{color : "black", bg : "point.500"}}> 입금 내역 </Tab>
-                    <Tab _selected={{color : "white", bg : "black"}}> 지출 내역 </Tab>
-                </TabList>
-                <TabPanels>
-                    <TabPanel p={"0"}>
-                        <VStack padding={5}>
-                            <Text as="b" color={"main.500"} fontSize={"md"}>총 회비 잔액 (A+B-C) </Text>
-                            <Text as="b" fontSize={"xl"}>{duesDetailData?.carry_over && duesInAmountData && duesOutAmountData && (duesDetailData.carry_over + duesInAmountData.amount - duesOutAmountData.amount).toLocaleString("ko-kr")} 원</Text>
-                        </VStack>
-                        <Divider />
-                        <VStack alignItems={"flex-start"} padding={10} spacing={5}>
-                            <Text as="b" color={"main.500"} fontSize={"md"}>이월 금액 (A) </Text>
-                            <Text fontSize={"md"}>{duesDetailData ? duesDetailData.carry_over.toLocaleString("ko-kr") : "0"} 원</Text>
+            }
+                <VStack mt={8}>
+                    <Box w="320px" h="100px">
+                            <KakaoADBig />
+                    </Box>
+                </VStack>
+            {teamData && duesDetailData ?
+            <>
+                <Tabs isLazy align={"center"} variant='soft-rounded' my={8}>
+                    <TabList mb='1em'>
+                        <Tab _selected={{color : "white", bg : "main.500"}}> 최종 내역 </Tab>
+                        <Tab _selected={{color : "black", bg : "point.500"}}> 입금 내역 </Tab>
+                        <Tab _selected={{color : "white", bg : "black"}}> 지출 내역 </Tab>
+                    </TabList>
+                    <TabPanels>
+                        <TabPanel p={"0"}>
+                            <VStack padding={5}>
+                                <Text as="b" color={"main.500"} fontSize={"md"}>총 회비 잔액 (A+B-C) </Text>
+                                <Text as="b" fontSize={"xl"}>{duesDetailData?.carry_over && duesInAmountData && duesOutAmountData && (duesDetailData.carry_over + duesInAmountData.amount - duesOutAmountData.amount).toLocaleString("ko-kr")} 원</Text>
+                            </VStack>
                             <Divider />
-                            <Text as="b" color={"main.500"} fontSize={"md"}>총 입금액 (B) </Text>
-                            <Text fontSize={"md"}>{duesInAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
+                            <VStack alignItems={"flex-start"} padding={10} spacing={5}>
+                                <Text as="b" color={"main.500"} fontSize={"md"}>이월 금액 (A) </Text>
+                                <Text fontSize={"md"}>{duesDetailData ? duesDetailData.carry_over.toLocaleString("ko-kr") : "0"} 원</Text>
+                                <Divider />
+                                <Text as="b" color={"main.500"} fontSize={"md"}>총 입금액 (B) </Text>
+                                <Skeleton isLoaded={!duesInAmountLoading}>
+                                    <Text fontSize={"md"}>{duesInAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
+                                </Skeleton>
+                                <Divider />
+                                <Text as="b" color={"main.500"} fontSize={"md"}>총 지출액 (C) </Text>
+                                <Skeleton isLoaded={!duesOutAmountLoading}>
+                                    <Text fontSize={"md"}>{duesOutAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
+                                </Skeleton>
+                                <Divider />
+                            </VStack>
+        
+                        </TabPanel>
+                        <TabPanel p={"0"}>
+                            <VStack padding={5}>
+                                <Text as="b" color={"main.500"} fontSize={"md"}>총 입금액 </Text>
+                                <Skeleton isLoaded={!duesInAmountLoading}>
+                                    <Text as="b" fontSize={"xl"}>+ {duesInAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
+                                </Skeleton>
+                            </VStack>
+                            {/* <DuesItemEx /> */}
                             <Divider />
-                            <Text as="b" color={"main.500"} fontSize={"md"}>총 지출액 (C) </Text>
-                            <Text fontSize={"md"}>{duesOutAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
-                            <Divider />
-                        </VStack>
-    
-                    </TabPanel>
-                    <TabPanel p={"0"}>
-                        <VStack padding={5}>
-                            <Text as="b" color={"main.500"} fontSize={"md"}>총 입금액 </Text>
-                            <Text as="b" fontSize={"xl"}>+ {duesInAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
-                        </VStack>
-                        {/* <DuesItemEx /> */}
-                        <Divider />
-                        <VStack alignItems={"flex-start"} padding={3}>
-                            <Text as="b" color={"main.500"} fontSize={"md"} > 입금 내역 </Text>
-                        </VStack>
-                            {duesInItemsData && duesInItemsData.length !== 0 ? duesInItemsData.map((duesInItem, index) => 
-                                                                                                                <DuesInItem 
-                                                                                                                key={index}
-                                                                                                                id={duesInItem.id}
-                                                                                                                title={duesInItem.title}
-                                                                                                                date={duesInItem.date}
-                                                                                                                amount={duesInItem.amount}
-                                                                                                                note={duesInItem.note}
-                                                                                                                is_spvsr={false}
-                                                                                                                />
-                                                                                                                    ): <Text>내역이 없습니다.</Text>}
-                   
-                    </TabPanel>
-                    <TabPanel p={"0"}>
-                        <VStack padding={5}>
-                            <Text as="b" color={"main.500"} fontSize={"md"}>총 지출액 </Text>
-                            <Text as="b" fontSize={"xl"}>- {duesOutAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
-                        </VStack>
-                        {/* <DuesItemEx /> */}
-                        <Divider />
-                        <VStack alignItems={"flex-start"} padding={3}>
-                            <Text as="b" color={"main.500"} fontSize={"md"} > 지출 내역 </Text>
-                        </VStack>
-                            {duesOutItemsData && duesOutItemsData.length !== 0 ? duesOutItemsData.map((duesOutItem, index) => 
-                                                                                                                    <DuesOutItem 
+                            <VStack alignItems={"flex-start"} padding={3}>
+                                <Text as="b" color={"main.500"} fontSize={"md"} > 입금 내역 </Text>
+                            </VStack>
+                                {duesInItemsData && duesInItemsData.length !== 0 ? duesInItemsData.map((duesInItem, index) => 
+                                                                                                                    <DuesInItem 
                                                                                                                     key={index}
-                                                                                                                    id={duesOutItem.id}
-                                                                                                                    title={duesOutItem.title}
-                                                                                                                    date={duesOutItem.date}
-                                                                                                                    amount={duesOutItem.amount}
-                                                                                                                    note={duesOutItem.note}
+                                                                                                                    id={duesInItem.id}
+                                                                                                                    title={duesInItem.title}
+                                                                                                                    date={duesInItem.date}
+                                                                                                                    amount={duesInItem.amount}
+                                                                                                                    note={duesInItem.note}
                                                                                                                     is_spvsr={false}
                                                                                                                     />
                                                                                                                         ): <Text>내역이 없습니다.</Text>}
-                        
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
+                    
+                        </TabPanel>
+                        <TabPanel p={"0"}>
+                            <VStack padding={5}>
+                                <Text as="b" color={"main.500"} fontSize={"md"}>총 지출액 </Text>
+                                <Skeleton isLoaded={!duesOutAmountLoading}>
+                                    <Text as="b" fontSize={"xl"}>- {duesOutAmountData?.amount.toLocaleString("ko-kr")} 원</Text>
+                                </Skeleton>
+                            </VStack>
+                            {/* <DuesItemEx /> */}
+                            <Divider />
+                            <VStack alignItems={"flex-start"} padding={3}>
+                                <Text as="b" color={"main.500"} fontSize={"md"} > 지출 내역 </Text>
+                            </VStack>
+                                {duesOutItemsData && duesOutItemsData.length !== 0 ? duesOutItemsData.map((duesOutItem, index) => 
+                                                                                                                        <DuesOutItem 
+                                                                                                                        key={index}
+                                                                                                                        id={duesOutItem.id}
+                                                                                                                        title={duesOutItem.title}
+                                                                                                                        date={duesOutItem.date}
+                                                                                                                        amount={duesOutItem.amount}
+                                                                                                                        note={duesOutItem.note}
+                                                                                                                        is_spvsr={false}
+                                                                                                                        />
+                                                                                                                            ): <Text>내역이 없습니다.</Text>}
+                            
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
+            </>
+            :
+            <VStack justifyContent={"center"} my={60}>
+                <Spinner size={"lg"} />
+            </VStack>
+            }
             <Empty />
             <VStack mt={2}>
                 <Box w="320px" h="50px">

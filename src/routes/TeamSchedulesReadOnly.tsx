@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, Divider, HStack, Select, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Divider, HStack, Select, Skeleton, Spinner, Text, VStack } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
@@ -69,13 +69,17 @@ export default function TeamSchedulesReadOnly() {
                 <Text as="b" color="gray" fontSize={"xs"}>*본 페이지는 읽기 전용 페이지입니다.</Text>
             </HStack>
             <VStack alignItems={"flex-start"} padding={"5"}>
-                <Text fontSize={"xl"} as="b"> {teamData && teamData.name} 일정 </Text>
+                <Skeleton isLoaded={!teamLoading}>
+                    <Text fontSize={"xl"} as="b"> {teamData && teamData.name} 일정 </Text>
+                </Skeleton>
             </VStack>
             <VStack mt={5} mb={10}>
                 <Box w="320px" h="100px">
                         <KakaoADBig />
                 </Box>
             </VStack>
+            {teamData ? 
+            <>
             <Select my={5} onChange={handleChangeSchedulesDate} value={selectedSchedulesDate}>
                 {teamSchedulesMonth?.map((yearMonth) => <option key={yearMonth} value={yearMonth}>{yearMonth}</option>)}
             </Select>
@@ -104,6 +108,12 @@ export default function TeamSchedulesReadOnly() {
                                                                             />)
                                                                                 : <Text padding={5}>등록된 일정이 없습니다.</Text>}
             </VStack>
+            </>
+            :
+            <VStack justifyContent={"center"} my={60}>
+                <Spinner size={"lg"} />
+            </VStack>
+            }
             <Empty />
             <VStack mt={16}>
                 <Box w="320px" h="50px">
