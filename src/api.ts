@@ -757,10 +757,11 @@ export const teamUpdate = ({ teamPk, description, since, code } : ITeamUpdateVar
 
 
 export interface ITeamPhotoUploadVariables {
+    teamPk : string;
     avatar : string;
 }
 
-export const teamPhotoUpload = ({ avatar } : ITeamPhotoUploadVariables) => instance.put(`users/isspvsr/team/photo/`, { avatar }, 
+export const teamPhotoUpload = ({ teamPk, avatar } : ITeamPhotoUploadVariables) => instance.put(`teams/${teamPk}/photo/`, { avatar }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""
@@ -769,7 +770,12 @@ export const teamPhotoUpload = ({ avatar } : ITeamPhotoUploadVariables) => insta
     }
     ).then((response) => response.data)
 
-export const teamPhotoDelete = () => instance.delete(`users/isspvsr/team/photo/`, 
+
+export interface ITeamPhotoDeleteVariables {
+    teamPk : string;
+}
+
+export const teamPhotoDelete = ({teamPk} : ITeamPhotoDeleteVariables) => instance.delete(`teams/${teamPk}/photo/`, 
 {
     headers :  {
         "X-CSRFToken" : Cookie.get("csrftoken") || ""

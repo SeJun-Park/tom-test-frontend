@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Button, FormControl, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getUploadURL, teamPhotoUpload, uploadImage } from "../api";
+import { useParams } from "react-router-dom";
 
 interface TeamPhotoUploadModalProps {
     isOpen : boolean;
@@ -19,6 +20,8 @@ interface IUploadURLResponse {
 
 export default function TeamPhotoUploadModal ( props : TeamPhotoUploadModalProps ) {
 
+    const { teamPk } = useParams();
+
     const { watch, register, handleSubmit, formState : {errors}, reset : teamPhotoUploadFormReset } = useForm<ITeamPhotoUploadForm>();
 
     const toast = useToast();
@@ -29,12 +32,10 @@ export default function TeamPhotoUploadModal ( props : TeamPhotoUploadModalProps
             toast({
                 status : "success",
                 title : "팀 프로필 사진 등록 완료",
-                duration : 1000
                 // isClosable : true
             });
             props.onClose();
-            queryClient.refetchQueries(["isSpvsr"])
-            queryClient.refetchQueries(["isSpvsrTeam"])
+            queryClient.refetchQueries(["team"])
         },
         onError : (error) => {
             console.log("createPhotoMutation is onError")
@@ -45,12 +46,14 @@ export default function TeamPhotoUploadModal ( props : TeamPhotoUploadModalProps
     const uploadImageMutation = useMutation(uploadImage, {
         onSuccess : ({result}) => {
             // data 안에서 result를 뽑아내고 있음
-            teamPhotoUploadMutation.mutate({
-                avatar : `https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/${result.id}/public`,
-                    // SbAh~ZDWw 는 내 아이디의 해시 값, 그러므로 고정임
-                    // 이건 그냥 형식일 뿐, 별 다른 의미는 없음
-            })
-            
+            if(teamPk) {
+                teamPhotoUploadMutation.mutate({
+                    teamPk,
+                    avatar : `https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/${result.id}/public`,
+                        // SbAh~ZDWw 는 내 아이디의 해시 값, 그러므로 고정임
+                        // 이건 그냥 형식일 뿐, 별 다른 의미는 없음
+                })
+            }
         },
         onError : (error) => {
             console.log("uploadImageMutation is onError")

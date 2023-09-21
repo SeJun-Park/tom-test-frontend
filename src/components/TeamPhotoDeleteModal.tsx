@@ -2,6 +2,7 @@ import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { teamPhotoDelete } from "../api";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 interface TeamPhotoDeleteModalProps {
     isOpen : boolean;
@@ -9,6 +10,8 @@ interface TeamPhotoDeleteModalProps {
 }
 
 export default function TeamPhotoDeleteModal ( props : TeamPhotoDeleteModalProps ) {
+
+    const { teamPk } = useParams();
 
     const { register, handleSubmit, formState : {errors}, reset : teamPhotoDeleteFormReset } = useForm();
 
@@ -25,13 +28,14 @@ export default function TeamPhotoDeleteModal ( props : TeamPhotoDeleteModalProps
                 duration : 1000
             });
             props.onClose();
-            queryClient.refetchQueries(["isSpvsr"])
-            queryClient.refetchQueries(["isSpvsrTeam"])
+            queryClient.refetchQueries(["team"])
         },
     });
 
     const onSubmit = () => {
-        teamPhotoDeleteMutation.mutate();
+        if(teamPk) {
+            teamPhotoDeleteMutation.mutate({teamPk});
+        }
     }
 
     return (
