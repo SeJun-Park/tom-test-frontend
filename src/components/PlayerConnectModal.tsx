@@ -13,7 +13,6 @@ interface PlayerConnectModalProps {
 
 interface IPlayerConnectForm {
     playerPk : string;
-    code : number;
 }
 
 export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
@@ -38,8 +37,8 @@ export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
         },
     });
 
-    const onSubmit = ({ playerPk, code }:IPlayerConnectForm) => {
-        playerConnectingMutation.mutate({ playerPk, code });
+    const onSubmit = ({ playerPk }:IPlayerConnectForm) => {
+        playerConnectingMutation.mutate({ playerPk });
     }
 
     return (
@@ -59,14 +58,7 @@ export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
                                 {teamPlayersNotConnectedData?.map((player) => <option key={player.pk} value={player.pk}>{player.backnumber}. {player.name}</option>)}
                             </Select>
                     </FormControl>
-                    <FormControl>
-                    <FormLabel> 팀 코드 </FormLabel>
-                        <InputGroup>
-                            <InputLeftAddon children={<FaCheck />} />
-                            <Input {...register("code", {required:true})} type="number" min={0} isInvalid={Boolean(errors.code?.message)} />
-                        </InputGroup>
-                    </FormControl>
-                    {playerConnectingMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> code is wrong </Text>) : null}
+                    {playerConnectingMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> 문제가 발생했습니다. </Text>) : null}
                     <Button type="submit" isLoading={playerConnectingMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> 플레이어 연결하기 </Button>
                 </VStack>
             </ModalBody>

@@ -10,12 +10,10 @@ interface ISpvsrTeamRegisterForm {
     name : string;
     since : number;
     description? : string;
-    code : number;
 }
 
 export default function TeamRegister() {
     const { register, handleSubmit, formState : {errors}, reset : TeamRegisterFormReset } = useForm<ISpvsrTeamRegisterForm>();
-    const navigate = useNavigate();
     const toast = useToast();
     const queryClient = useQueryClient()
 
@@ -28,13 +26,12 @@ export default function TeamRegister() {
                 duration : 1000
             });
             queryClient.refetchQueries(["isSpvsr"])
-            queryClient.refetchQueries(["isSpvsrTeam"])
-            queryClient.refetchQueries(["isSpvsrGames"])
+            queryClient.refetchQueries(["isSpvsrTeams"])
         }
     })
 
-    const onSubmit = ({ name, since, description, code } : ISpvsrTeamRegisterForm) => {
-        teamRegisterMutation.mutate({ name, since, description, code });
+    const onSubmit = ({ name, since, description } : ISpvsrTeamRegisterForm) => {
+        teamRegisterMutation.mutate({ name, since, description });
         TeamRegisterFormReset();
     }
 
@@ -68,15 +65,6 @@ export default function TeamRegister() {
                         }/>
                             <Input type={"text"} {...register("description")} maxLength={20} isInvalid={Boolean(errors.description?.message)} placeholder="설명을 입력하세요 (선택, 20자 이내)" variant={"flushed"}/>
                 </InputGroup>
-                <InputGroup>
-                            <InputLeftElement children={
-                                <Box color={"gray.500"}>
-                                    <FaKey />
-                                </Box>
-                        }/>
-                            <Input type={"number"} min={0} {...register("code", { required : "팀 코드를 입력해주세요" })} isInvalid={Boolean(errors.since?.message)} required placeholder="팀 코드를 입력해주세요" variant={"flushed"}/>
-                </InputGroup>
-                <Text fontSize={"xs"} color={"gray"}>* 팀 코드는 플레이어가 연결 요청 시 비밀번호 역할을 합니다.</Text>
                 {teamRegisterMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> 같은 팀 이름이 존재합니다. </Text>) : null}
                 <Button isLoading={teamRegisterMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> 팀 등록하기 </Button>
             </VStack>

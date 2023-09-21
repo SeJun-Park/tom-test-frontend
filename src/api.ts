@@ -743,10 +743,9 @@ export interface ITeamUpdateVariables {
     teamPk : string;
     description? : string;
     since? : number;
-    code : number;
 }
 
-export const teamUpdate = ({ teamPk, description, since, code } : ITeamUpdateVariables) => instance.put(`teams/${teamPk}/`, { description, since, code }, 
+export const teamUpdate = ({ teamPk, description, since } : ITeamUpdateVariables) => instance.put(`teams/${teamPk}/`, { description, since }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""
@@ -790,12 +789,11 @@ export interface ISpvsrTeamRegsiterVariables {
     name : string;
     since : number;
     description? : string;
-    code : number;
 }
 
-export const teamRegister = ({ name, since, description, code } : ISpvsrTeamRegsiterVariables ) => 
+export const teamRegister = ({ name, since, description } : ISpvsrTeamRegsiterVariables ) => 
     instance.post("/teams/", 
-                { name, since, description, code }, 
+                { name, since, description }, 
                 {
                     headers :  {
                         "X-CSRFToken" : Cookie.get("csrftoken") || ""
@@ -862,10 +860,9 @@ export const getPlayerSuperplayers = async ({ queryKey } : QueryFunctionContext)
 
 export interface IPlayerConnectingVariables {
     playerPk : string,
-    code : number
 }
 
-export const playerConnecting = ({ playerPk, code } : IPlayerConnectingVariables) => instance.post(`players/${playerPk}/connecting/`, {code}, 
+export const playerConnecting = ({ playerPk } : IPlayerConnectingVariables) => instance.post(`players/${playerPk}/connecting/`, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""

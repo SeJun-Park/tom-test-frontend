@@ -307,7 +307,6 @@ const { isOpen : isPhotoDeleteOpen, onOpen : onPhotoDeleteOpen, onClose : onPhot
                                                                                                     title={noti.title}
                                                                                                     category={noti.category}
                                                                                                     payload={noti.payload}
-                                                                                                    plan={teamData ? teamData?.plan : ""}
                                                                                                     isspvsr={teamData ? teamData.is_spvsr : false}
                                                                                                     />
                                                                                                     )
@@ -478,28 +477,11 @@ const { isOpen : isPhotoDeleteOpen, onOpen : onPhotoDeleteOpen, onClose : onPhot
                             </Card>
                         </VStack>
                     )}
+                    <BigDivider />
                     <VStack alignItems={"flex-start"} px={3}>
                         <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> SINCE </Text>
                         {/* <Text fontSize={"sm"}> {teamData ? (formatDate_pl(teamData.created_at)) : "-"} </Text> */}
                         <Text fontSize={"sm"}> {teamData ? teamData.since : "-"} </Text>
-                        <Divider />
-                    </VStack>
-                    <BigDivider />
-                    <VStack alignItems={"flex-start"} px={3}>
-                        <Text as="b" color={"main.500"} fontSize={"sm"}> PLAN </Text>
-                        <Divider />
-                        <Text fontSize={"sm"}> {teamData ? teamData.plan : "-"} </Text>
-                        <Divider />
-                    </VStack>
-                    <SmallDivider />
-                    <VStack alignItems={"flex-start"} px={3}>
-                        {/* <Text as="b" color={"main.500"} mt={5} fontSize={"sm"}> BALL </Text>
-                        <Divider />
-                        <Text fontSize={"sm"}> 0 balls </Text>
-                        <Divider /> */}
-                        <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> TEAM CODE </Text>
-                        <Divider />
-                        <Text fontSize={"sm"}> {teamData ? (teamData.code) : "-"} </Text>
                         <Divider />
                     </VStack>
                     <Empty />

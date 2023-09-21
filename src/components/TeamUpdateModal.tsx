@@ -14,7 +14,6 @@ interface TeamUpdateModalProps {
 interface ITeamUpdateForm {
     description? : string;
     since? : number;
-    code : number;
 }
 
 export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
@@ -44,9 +43,9 @@ export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
         }
     });
 
-    const onSubmit = ( { description, since, code } :ITeamUpdateForm) => {
+    const onSubmit = ( { description, since } :ITeamUpdateForm) => {
         if(teamPk) {
-            teamUpdateMutation.mutate({ teamPk, description, since, code });
+            teamUpdateMutation.mutate({ teamPk, description, since });
         }
     }
 
@@ -83,16 +82,6 @@ export default function TeamUpdateModal ( props : TeamUpdateModalProps ) {
                             <InputLeftAddon children={<FaCheck />} />
                             <Input {...register("since")} type="number" min={0} isInvalid={Boolean(errors.since?.message)} defaultValue={teamData ? teamData.since.toString() : ""} placeholder={teamData ? teamData.since.toString() : ""} />
                         </InputGroup>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>
-                            팀 코드
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftAddon children={<FaKey />} />
-                            <Input {...register("code", {required:true})} type="number" min={0} isInvalid={Boolean(errors.code?.message)} defaultValue={teamData ? teamData.code.toString() : ""} placeholder={teamData ? teamData.code.toString() : ""} />
-                        </InputGroup>
-                        <FormHelperText>* 팀 코드는 플레이어가 연결 요청 시 비밀번호 역할을 합니다.</FormHelperText>
                     </FormControl>
                     {teamUpdateMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> 문제가 발생했습니다. </Text>) : null}
                     <Button type="submit" isLoading={teamUpdateMutation.isLoading} size={"md"} width="100%" backgroundColor={"point.500"} color={"black"}> 팀 정보 업데이트 </Button>

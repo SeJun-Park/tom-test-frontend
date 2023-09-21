@@ -11,7 +11,6 @@ interface INotiProps {
     title : string,
     category : string,
     payload : string,
-    plan : string,
     isspvsr : boolean
 }
 

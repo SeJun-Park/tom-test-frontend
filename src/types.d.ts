@@ -18,12 +18,10 @@ export interface IPlayerUser extends IUser {
 
 export interface ITinyTeam {
     pk : number,
-    code : number,
     avatar : string,
     description : string,
     name : string,
     since : number,
-    plan : string,
     is_spvsr : boolean,
 }
 

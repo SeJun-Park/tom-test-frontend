@@ -287,7 +287,6 @@ export default function IsPlayerTeamHome() {
                                                                                                     title={noti.title}
                                                                                                     category={noti.category}
                                                                                                     payload={noti.payload}
-                                                                                                    plan={teamData ? teamData?.plan : ""}
                                                                                                     isspvsr={false}
                                                                                                     />
                                                                                                     )
