@@ -862,7 +862,7 @@ export interface IPlayerConnectingVariables {
     playerPk : string,
 }
 
-export const playerConnecting = ({ playerPk } : IPlayerConnectingVariables) => instance.post(`players/${playerPk}/connecting/`, 
+export const playerConnecting = ({ playerPk } : IPlayerConnectingVariables) => instance.put(`players/${playerPk}/connecting/`, null,
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""
