@@ -59,7 +59,7 @@ export default function PlayerConnectModal ( props : PlayerConnectModalProps ) {
                             </Select>
                     </FormControl>
                     {playerConnectingMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> 문제가 발생했습니다. </Text>) : null}
-                    <Button type="submit" isLoading={playerConnectingMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> 플레이어 연결하기 </Button>
+                    <Button type="submit" isLoading={playerConnectingMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"}> 플레이어 연결 요청하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>
