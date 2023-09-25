@@ -51,7 +51,7 @@ export default function IsSpvsrPlayerConnectionModal ( props : IsSpvsrPlayerConn
             <ModalCloseButton />
             <ModalBody>
                 <VStack>
-                    <FormLabel>Connected User</FormLabel>
+                    <FormLabel>연결된 사용자</FormLabel>
                     <HStack p={5} justifyContent={"flex-start"} spacing={5} width={"100%"}>
                     <HStack spacing={3}>
                             <Avatar src={playerData?.connected_user ? playerData.connected_user.avatar : ""}></Avatar>
@@ -59,7 +59,7 @@ export default function IsSpvsrPlayerConnectionModal ( props : IsSpvsrPlayerConn
                         </HStack>
                     </HStack>
                     <Divider />
-                    <FormLabel>Connected Player</FormLabel>
+                    <FormLabel>플레이어</FormLabel>
                     <HStack p={5} justifyContent={"flex-start"} spacing={5} width={"100%"}>
                         <HStack spacing={3}>
                             <Avatar src={playerData?.avatar}></Avatar>

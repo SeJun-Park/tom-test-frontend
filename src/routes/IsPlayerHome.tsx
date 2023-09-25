@@ -129,7 +129,8 @@ export default function IsPlayerHome() {
                                                                             <VStack>
                                                                                 {/* <Heading size='sm'>{props.title}</Heading> */}
                                                                                 <Text as="b">연결된 팀이 없습니다.</Text>
-                                                                                <Text as="b">상단 검색 버튼으로 나의 팀을 검색해보세요! </Text>
+                                                                                <Text as="b">상단 검색 버튼으로 나의 팀을 검색하고, </Text>
+                                                                                <Text as="b">나의 플레이어와 연결하세요!</Text>
                                                                             </VStack>
                                                                             </Box>
                                                                         </Flex>
