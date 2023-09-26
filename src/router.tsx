@@ -33,6 +33,7 @@ import DuesPaymentDetailReadOnly from "./routes/DuesPaymentDetailReadOnly";
 import DuesDetailsDetailReadOnly from "./routes/DuesDetailsDetailReadOnly";
 import GameQuotasReadOnly from "./routes/GameQuotasReadOnly";
 import TeamSchedulesReadOnly from "./routes/TeamSchedulesReadOnly";
+import TeamRegister from "./routes/TeamRegister";
 
 const router = createBrowserRouter(
     [
@@ -68,6 +69,10 @@ const router = createBrowserRouter(
                 {
                     path : "teams/search",
                     element : <SearchTeam />
+                },
+                {
+                    path : "teams/register",
+                    element : <TeamRegister />
                 },
                 {
                     path : "teams/:teamPk/update",

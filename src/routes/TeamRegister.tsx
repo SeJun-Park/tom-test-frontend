@@ -1,10 +1,11 @@
-import { Box, Button, Input, InputGroup, InputLeftElement, Text, useToast, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Input, InputGroup, InputLeftElement, Text, useToast, VStack } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
-import { FaFutbol, FaStream, FaCheck, FaKey } from "react-icons/fa";
+import { FaFutbol, FaStream, FaCheck, FaKey, FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { teamRegister } from "../api";
+import Empty from "../components/Empty";
 
 interface ISpvsrTeamRegisterForm {
     name : string;
@@ -14,6 +15,7 @@ interface ISpvsrTeamRegisterForm {
 
 export default function TeamRegister() {
     const { register, handleSubmit, formState : {errors}, reset : TeamRegisterFormReset } = useForm<ISpvsrTeamRegisterForm>();
+    const navigate = useNavigate();
     const toast = useToast();
     const queryClient = useQueryClient()
 
@@ -35,12 +37,21 @@ export default function TeamRegister() {
         TeamRegisterFormReset();
     }
 
+    const onClickBack = () => {
+        navigate(-1)
+    }
+
     return (
         <>
             <Helmet>
                 <title>삼오엠 | 팀 등록하기</title>
             </Helmet>
-            <VStack as="form" onSubmit={handleSubmit(onSubmit)} spacing={2} p={10} mt={100}>
+            <HStack justifyContent={"space-between"} height={20} px={5}>
+                <Button variant={"unstyled"} onClick={onClickBack}>
+                    <FaArrowLeft />
+                </Button>
+            </HStack>
+            <VStack as="form" onSubmit={handleSubmit(onSubmit)} spacing={2} p={10} mt={50}>
                 <InputGroup>
                             <InputLeftElement children={
                                 <Box color={"gray.500"}>
@@ -68,6 +79,10 @@ export default function TeamRegister() {
                 {teamRegisterMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> 같은 팀 이름이 존재합니다. </Text>) : null}
                 <Button isLoading={teamRegisterMutation.isLoading} type="submit"  backgroundColor={"main.500"} color={"white"} width={"100%"} marginTop={4} variant={"unstyled"}> 팀 등록하기 </Button>
             </VStack>
+            <Empty />
+            <Empty />
+            <Empty />
+            <Empty />
         </>
     )
 }
