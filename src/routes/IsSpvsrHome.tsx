@@ -19,7 +19,7 @@ export default function IsSpvsrHome() {
         <SpvsrOnlyPage>
             <ProtectedPage>
                 <Helmet>
-                    <title>{ spvsrData ? ("3OM | Home") : "Loading.." }</title>
+                    <title>{ spvsrData ? ("삼오엠 | 홈") : "Loading.." }</title>
                 </Helmet>
                 {!spvsrLoading ? 
                                     <>

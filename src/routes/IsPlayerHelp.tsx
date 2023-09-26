@@ -15,7 +15,7 @@ export default function IsPlayerHelp() {
     return (
         <>
             <Helmet>
-                <title>3OM | 고객센터</title>
+                <title>삼오엠 | 고객센터</title>
             </Helmet>
             <HStack justifyContent={"space-between"} height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

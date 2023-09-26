@@ -47,7 +47,7 @@ export default function SearchTeam() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>"3OM | SearchTeam"</title>
+                <title>삼오엠 | 팀 찾기</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

@@ -35,7 +35,7 @@ export default function IsSpvsrTeamPlayerList() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ teamData ? (`3OM | ${teamData.name} Player List`) : "Loading.." }</title>
+                <title>{ teamData ? (`삼오엠 | ${teamData.name} 플레이어`) : "Loading.." }</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

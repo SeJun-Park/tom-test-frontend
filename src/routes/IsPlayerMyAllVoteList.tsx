@@ -27,7 +27,7 @@ export default function IsPlayerMyAllVoteList() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ isPlayerData ? ("3OM | 3OM Game List") : "Loading.." }</title>
+                <title>{ isPlayerData ? ("삼오엠 | 투표") : "Loading.." }</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

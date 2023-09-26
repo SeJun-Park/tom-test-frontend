@@ -65,7 +65,7 @@ export default function IsSpvsrGameDetail() {
     return (
         <>
             <Helmet>
-                <title>{ gameData ? (`3OM | ${gameData.team.name} vs ${gameData.vsteam}`) : "Loading.." }</title>
+                <title>{ gameData ? (`삼오엠 | ${gameData.team.name} vs ${gameData.vsteam}`) : "Loading.." }</title>
             </Helmet>
             <HStack justifyContent={"space-between"} height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

@@ -38,7 +38,7 @@ export default function TeamRegister() {
     return (
         <>
             <Helmet>
-                <title>3OM | TeamRegister</title>
+                <title>삼오엠 | 팀 등록하기</title>
             </Helmet>
             <VStack as="form" onSubmit={handleSubmit(onSubmit)} spacing={2} p={10} mt={100}>
                 <InputGroup>

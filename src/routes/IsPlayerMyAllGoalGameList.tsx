@@ -27,7 +27,7 @@ export default function IsPlayerMyAllGoalGameList() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ isPlayerData ? ("3OM | GoalGameList") : "Loading.." }</title>
+                <title>{ isPlayerData ? ("삼오엠 | 골 넣은 경기") : "Loading.." }</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

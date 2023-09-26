@@ -27,7 +27,7 @@ export default function PlayerGameList() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ playerData ? (`3OM | ${playerData.backnumber}.${playerData.name} Game List`) : "Loading.." }</title>
+                <title>{ playerData ? (`삼오엠 | ${playerData.backnumber}.${playerData.name} 경기`) : "Loading.." }</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

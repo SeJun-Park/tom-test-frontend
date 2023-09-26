@@ -14,7 +14,7 @@ export default function Community() {
     return (
         <>
             <Helmet>
-                <title> 3OM | Community </title>
+                <title> 삼오엠 | 커뮤니티 </title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

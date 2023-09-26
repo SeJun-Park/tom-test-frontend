@@ -25,7 +25,7 @@ export default function IsPlayerMyAllGameList() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ isPlayerData ? ("3OM | GameList") : "Loading.." }</title>
+                <title>{ isPlayerData ? ("삼오엠 | 경기 리스트") : "Loading.." }</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

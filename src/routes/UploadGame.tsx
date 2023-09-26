@@ -81,7 +81,7 @@ export default function UploadGame() {
         <ProtectedPage>
             <SpvsrOnlyPage>
                 <Helmet>
-                    <title>{ teamData ? (`3OM | ${teamData.name} Game Upload`) : "Loading.." }</title>
+                    <title>{ teamData ? (`삼오엠 | ${teamData.name} 경기 등록`) : "Loading.." }</title>
                 </Helmet>
                 <HStack height={20} px={5}>
                     <Button variant={"unstyled"} onClick={onClickBack}>

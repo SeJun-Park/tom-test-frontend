@@ -31,7 +31,7 @@ export default function IsPlayerPlayerProfile() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ playerData ? (`3OM | ${playerData.team.name} / ${playerData.backnumber}.${playerData.name}`) : "Loading.." }</title>
+                <title>{ playerData ? (`삼오엠 | ${playerData.team.name} / ${playerData.backnumber}.${playerData.name}`) : "Loading.." }</title>
             </Helmet>
             <HStack height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>

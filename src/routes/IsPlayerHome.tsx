@@ -32,7 +32,7 @@ export default function IsPlayerHome() {
     return (
         <ProtectedPage>
             <Helmet>
-                <title>{ isPlayerData ? ("3OM | Home") : "Loading.." }</title>
+                <title>{ isPlayerData ? ("삼오엠 | 플레이어 홈") : "Loading.." }</title>
             </Helmet>
             <VStack alignItems={"flex-end"} px={5}>
                 <Box w="320px" h="100px">

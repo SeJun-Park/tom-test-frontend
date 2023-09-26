@@ -11,7 +11,7 @@ export default function LogInRequired() {
     return (
               <VStack justifyContent={"center"} minHeight={"100vh"}>
                 <Helmet>
-                    <title> 3OM | Home </title>
+                    <title> 삼오엠 | 홈 </title>
                 </Helmet>
                 <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                   <Box

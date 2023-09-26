@@ -63,7 +63,7 @@ export default function TeamSchedulesReadOnly() {
     return (
         <>
             <Helmet>
-                <title>{teamData ? `${teamData.name}의 회비 납부 현황` : "Loading..."}</title>
+                <title>{teamData ? `${teamData.name}의 일정` : "Loading..."}</title>
             </Helmet>
             <HStack justifyContent={"center"} height={20} px={5}>
                 <Text as="b" color="gray" fontSize={"xs"}>*본 페이지는 읽기 전용 페이지입니다.</Text>

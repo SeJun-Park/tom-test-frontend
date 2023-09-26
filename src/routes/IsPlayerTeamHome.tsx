@@ -140,7 +140,7 @@ export default function IsPlayerTeamHome() {
     return (
         <>
             <Helmet>
-                <title>{ teamData ? (`3OM | ${teamData.name} Home`) : "Loading.." }</title>
+                <title>{ teamData ? (`삼오엠 | ${teamData.name} 홈`) : "Loading.." }</title>
             </Helmet>
             <HStack alignItems={"flex-start"} padding={"5"}>
                 <Text fontSize={"xl"} as="b"> {teamData?.name} </Text>
