@@ -1,8 +1,9 @@
-import { Box, Button, Card, CardHeader, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardHeader, Flex, Heading, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaArrowRight, FaComment, FaInstagram, FaQuestionCircle, FaYoutube } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import KakaoADBig from "../components/KakaoADBig";
+import UserDeleteModal from "../components/UserDeleteModal";
 
 export default function IsSpvsrHelp() {
 
@@ -11,6 +12,8 @@ export default function IsSpvsrHelp() {
     const onClickBack = () => {
         navigate(-1)
     }
+
+    const { isOpen : isOpen, onOpen : onOpen, onClose : onClose } = useDisclosure()
 
     return (
         <>
@@ -114,7 +117,8 @@ export default function IsSpvsrHelp() {
                 </Link>
             </VStack>
             <HStack justifyContent={"flex-end"} my={10}>
-                <Button size={"sm"} width="100%" color={"gray"} variant="ghost"> 회원 탈퇴 </Button>
+                <Button onClick={onOpen} size={"sm"} width="100%" color={"gray"} variant="ghost"> 회원 탈퇴 </Button>
+                <UserDeleteModal isOpen={isOpen} onClose={onClose} />
             </HStack>
         </>
     )
