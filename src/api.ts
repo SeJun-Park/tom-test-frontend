@@ -32,6 +32,12 @@ export const logOut = () => instance.post("users/logout/", null, {
     }
 }).then((response) => response.data);
 
+export const userDelete = () => instance.delete("users/me/", {
+    headers : {
+    "X-CSRFToken" : Cookie.get("csrftoken") || ""
+    }
+}).then((response) => response.data);
+
 
 export interface IPlayerLoginVariables {
     code : string;
