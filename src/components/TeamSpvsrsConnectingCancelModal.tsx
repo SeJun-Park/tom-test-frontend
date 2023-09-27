@@ -47,7 +47,7 @@ export default function TeamSpvsrsConnectingCancelModal ( props : TeamSpvsrsConn
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> {props.teamName} 팀 관리자로 등록 요청을 취소하시겠습니까? </ModalHeader>
+            <ModalHeader> 이름 : {props.teamName} <br/> 팀 관리자로 등록 요청을 취소하시겠습니까? </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
                     <Button type={"submit"} isLoading={teamSpvsrsConnectingCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 요청 취소하기 </Button>

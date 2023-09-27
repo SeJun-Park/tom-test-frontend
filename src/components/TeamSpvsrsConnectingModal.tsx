@@ -47,7 +47,7 @@ export default function TeamSpvsrsConnectingModal ( props : TeamSpvsrsConnecting
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> {props.teamName} 팀 관리자로 <br/> 등록을 요청하시겠습니까? </ModalHeader>
+            <ModalHeader> 이름 : {props.teamName} <br/> 팀 관리자로 등록을 요청하시겠습니까? </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
                     <Button type={"submit"} isLoading={teamSpvsrsConnectingMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 등록 요청하기 </Button>
