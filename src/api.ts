@@ -119,6 +119,19 @@ export const getTeamReadOnly = async ({ queryKey } : QueryFunctionContext) => {
     return response.data
 }
 
+export const getTeamSpvsrs = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/spvsrs/`)
+    return response.data
+}
+
+export const getTeamConnectingSpvsrs = async ({ queryKey } : QueryFunctionContext) => {
+    const [ _, teamPk ] = queryKey;
+    const response = await instance.get(`teams/${teamPk}/connecting-spvsrs/`)
+    return response.data
+}
+
+
 export const getTeamGames = async ({ queryKey } : QueryFunctionContext) => {
     const [ _, teamPk ] = queryKey;
     const response = await instance.get(`teams/${teamPk}/games/`)
@@ -202,6 +215,77 @@ export const getTeamVSteams = async ({ queryKey } : QueryFunctionContext) => {
     const response = await instance.get(`teams/${teamPk}/vsteams/`)
     return response.data
 }
+
+
+export interface ITeamSpvsrsConnectingVariables {
+    teamPk : string,
+}
+
+export const teamSpvsrsConnecting = ({ teamPk } : ITeamSpvsrsConnectingVariables) => instance.post(`teams/${teamPk}/spvsrs/connecting/`, null,
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+export interface ITeamSpvsrsConnectingCancelVariables {
+    teamPk : string,
+}
+
+export const teamSpvsrsConnectingCancel = ({ teamPk } : ITeamSpvsrsConnectingCancelVariables) => instance.put(`teams/${teamPk}/connecting/cancel/`, null, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ITeamSpvsrsConnectVariables {
+    teamPk : string,
+}
+
+export const teamSpvsrsConnect = ({ teamPk } : ITeamSpvsrsConnectVariables) => instance.post(`teams/${teamPk}/connect/`, null, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ITeamSpvsrsConnectCancelVariables {
+    teamPk : string,
+}
+
+export const teamSpvsrsConnectCancel = ({ teamPk } : ITeamSpvsrsConnectCancelVariables) => instance.put(`teams/${teamPk}/connect/cancel/`, null, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ITeamDeleteVariables {
+    teamPk : string
+}
+
+export const teamDelete = ({ teamPk } : ITeamDeleteVariables) => instance.delete(`teams/${teamPk}/`, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+  
+
 
 export interface IGetTeamStatsRelativeVariables {
     teamPk : string,

@@ -9,6 +9,7 @@ export interface IUser {
 }
 
 export interface ISpvsrUser extends IUser {
+    is_founder : boolean
 }
 
 export interface IPlayerUser extends IUser {
@@ -27,7 +28,9 @@ export interface ITinyTeam {
 
 export interface ITeam extends ITinyTeam {
     id : number,
+    is_connecting_spvsr : boolean,
     founder : ISpvsrUser,
+    is_founder : boolean,
     is_connected : boolean,
     is_connected_player_pk : number,
     is_connecting : boolean,

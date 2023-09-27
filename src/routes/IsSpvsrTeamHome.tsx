@@ -2,10 +2,10 @@ import { Avatar, Badge, Box, Button, Card, CardBody, CardHeader, Divider, Flex, 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaArrowRight, FaCamera, FaReceipt, FaRunning, FaTasks, FaTrashAlt, FaUser } from "react-icons/fa";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { FaArrowRight, FaCamera, FaMinusCircle, FaReceipt, FaRunning, FaTasks, FaTrashAlt, FaUser } from "react-icons/fa";
+import { Link, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { getTeam, getTeamFeeds, getTeamGames, getTeamNotisByMonth, getTeamNotisMonth, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamSchedulesByMonth, getTeamSchedulesMonth, getTeamTomGames, isSpvsr } from "../api";
+import { getTeam, getTeamConnectingSpvsrs, getTeamFeeds, getTeamGames, getTeamNotisByMonth, getTeamNotisMonth, getTeamPlayers, getTeamPlayersConnected, getTeamPlayersConnecting, getTeamSchedulesByMonth, getTeamSchedulesMonth, getTeamSpvsrs, getTeamTomGames, isSpvsr } from "../api";
 import { teamScheduleShareImageState } from "../atoms";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
@@ -20,8 +20,13 @@ import NullGame from "../components/NullGame";
 import Schedule from "../components/Schedule";
 import ScheduleAddModal from "../components/ScheduleAddModal";
 import SmallDivider from "../components/SmallDivider";
+import TeamDeleteModal from "../components/TeamDeleteModal";
 import TeamPhotoDeleteModal from "../components/TeamPhotoDeleteModal";
 import TeamPhotoUploadModal from "../components/TeamPhotoUploadModal";
+import TeamSpvsrsConnectCancelModal from "../components/TeamSpvsrsConnectCancelModal";
+import TeamSpvsrsConnectingCancelModal from "../components/TeamSpvsrsConnectingCancelModal";
+import TeamSpvsrsConnectingModal from "../components/TeamSpvsrsConnectingModal";
+import TeamSpvsrsConnectModal from "../components/TeamSpvsrsConnectModal";
 import TeamUpdateModal from "../components/TeamUpdateModal";
 import { IFeed, INoti, ISchedule, ISpvsrUser, ITeam, ITinyGame, ITinyPlayer } from "../types";
 
@@ -29,9 +34,9 @@ export default function IsSpvsrTeamHome() {
 
     const { teamPk } = useParams();
 
-    const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr); 
     const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
-    const { isLoading : teamPlayersConnectedLoading, data : teamPlayersConnectedData, isError : teamPlayersConnectedError } = useQuery<ITinyPlayer[]>(["teamConnectedPlayers", teamPk], getTeamPlayersConnected);
+    const { isLoading : teamSpvsrsLoading, data : teamSpvsrsData, isError : teamSpvsrsError } = useQuery<ISpvsrUser[]>(["teamSpvsrs", teamPk], getTeamSpvsrs);
+    const { isLoading : teamConnectingSpvsrsLoading, data : teamConnectingSpvsrsData, isError : teamConnectingSpvsrsError } = useQuery<ISpvsrUser[]>(["teamConnectingSpvsrs", teamPk], getTeamConnectingSpvsrs);
     const { isLoading : teamPlayersConnectingLoading, data : teamPlayersConnectingData, isError : teamPlayersConnectingError } = useQuery<ITinyPlayer[]>(["teamConnectingPlayers", teamPk], getTeamPlayersConnecting);
     const { isLoading : teamGamesLoading, data : teamGamesData, isError : teamGamesError } = useQuery<ITinyGame[]>(["teamGames", teamPk], getTeamGames);
     const { isLoading : teamTomGamesLoading, data : teamTomGamesData, isError : teamTomGamesError } = useQuery<ITinyGame[]>(["teamTomGames", teamPk], getTeamTomGames);
@@ -150,19 +155,43 @@ useEffect(() => {
 const { isOpen : isOpen, onOpen : onOpen, onClose : onClose } = useDisclosure()
 const { isOpen : isPhotoOpen, onOpen : onPhotoOpen, onClose : onPhotoClose } = useDisclosure()
 const { isOpen : isPhotoDeleteOpen, onOpen : onPhotoDeleteOpen, onClose : onPhotoDeleteClose } = useDisclosure()
+const { isOpen : isDeleteOpen, onOpen : onDeleteOpen, onClose : onDeleteClose } = useDisclosure()
+
+const { isOpen : isTeamSpvsrsConnectingOpen, onOpen : onTeamSpvsrsConnectingOpen, onClose : onTeamSpvsrsConnectingClose } = useDisclosure()
+const { isOpen : isTeamSpvsrsConnectingCancelOpen, onOpen : onTeamSpvsrsConnectingCancelOpen, onClose : onTeamSpvsrsConnectingCancelClose } = useDisclosure()
+const { isOpen : isTeamSpvsrsConnectOpen, onOpen : onTeamSpvsrsConnectOpen, onClose : onTeamSpvsrsConnectClose } = useDisclosure()
+const { isOpen : isTeamSpvsrsConnectCancelOpen, onOpen : onTeamSpvsrsConnectCancelOpen, onClose : onTeamSpvsrsConnectCancelClose } = useDisclosure()
 
     return (
         <>
             <Helmet>
                 <title>{ teamData ? (`삼오엠 | ${teamData.name} 홈`) : "Loading.." }</title>
             </Helmet>
-            <HStack alignItems={"flex-start"} padding={"5"}>
-                <Text fontSize={"xl"} as="b"> {teamData?.name} </Text>
-                {teamData?.is_spvsr ? 
-                                <Box justifyContent={"center"}>
-                                    <Badge ml={1} bg={"point.500"} color={"black"}> 나의 팀 </Badge>
-                                </Box> 
-                                        : null}
+            <HStack padding={"5"} justifyContent={"space-between"}>            
+                <HStack>
+                    <Text fontSize={"xl"} as="b"> {teamData?.name} </Text>
+                    {teamData?.is_spvsr && 
+                                    <Box justifyContent={"center"}>
+                                        <Badge ml={1} bg={"point.500"} color={"black"}> 나의 팀 </Badge>
+                                    </Box>}
+                    {teamData?.is_founder && 
+                                    <Box justifyContent={"center"}>
+                                        <Badge bg={"main.500"} color={"white"}> 최고 관리자 </Badge>
+                                    </Box>}
+                </HStack>
+                {!teamData?.is_spvsr ? !teamData?.is_connecting_spvsr ?
+                                        <>
+                                            <Button onClick={onTeamSpvsrsConnectingOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> + 관리자 신청하기 </Button>
+                                            <TeamSpvsrsConnectingModal isOpen={isTeamSpvsrsConnectingOpen} onClose={onTeamSpvsrsConnectingClose} teamName={teamData ? teamData.name : ""} />
+                                        </>
+                                        :
+                                        <>
+                                            <Button onClick={onTeamSpvsrsConnectingCancelOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> - 관리자 신청 취소 </Button>
+                                            <TeamSpvsrsConnectingCancelModal isOpen={isTeamSpvsrsConnectingCancelOpen} onClose={onTeamSpvsrsConnectingCancelClose} teamName={teamData ? teamData.name : ""} />
+                                        </>
+                                        :
+                                        null
+                                        } 
             </HStack>
             <Tabs isFitted variant='enclosed' index={tabIndex} onChange={setTabIndex}>
             <TabList mb='1em' justifyContent={"center"}>
@@ -442,55 +471,189 @@ const { isOpen : isPhotoDeleteOpen, onOpen : onPhotoDeleteOpen, onClose : onPhot
                     </Tabs>
                     <Empty />
                 </TabPanel>
-                <TabPanel p={"0"}>
-                    <VStack spacing={5}>
-                        <Text fontSize={"xl"} as="b" mt={3}> {teamData?.name} </Text>
-                        <HStack>
-                            <Avatar src={teamData ? teamData.avatar : ""} size={"2xl"} />
-                            { teamData && 
-                                                teamData.avatar ?
-                                                                        <VStack justifyContent={"center"}>
-                                                                            <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
-                                                                                <FaCamera size="15px" />
-                                                                            </Button>
-                                                                            <Button onClick={onPhotoDeleteOpen} variant={"outline"} color={"gray"} size={"sm"}>
-                                                                                <FaTrashAlt size="15px" />
-                                                                            </Button>
-                                                                            <TeamPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
-                                                                            <TeamPhotoDeleteModal isOpen={isPhotoDeleteOpen} onClose={onPhotoDeleteClose} />
-                                                                        </VStack>  :
-                                                                        <HStack justifyContent={"center"}>
-                                                                            <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
-                                                                                <FaCamera size="15px" />
-                                                                            </Button>
-                                                                            <TeamPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
-                                                                        </HStack>
-                                                                        }
-                        </HStack>
-                    </VStack>
-                    {teamData?.description && (
-                        <VStack>
-                            <Card my={4} width={"90%"} textAlign={"center"}>
-                                <CardBody>
-                                    <Text fontSize={"sm"}>{teamData.description}</Text>
-                                </CardBody>
-                            </Card>
-                        </VStack>
-                    )}
-                    <BigDivider />
-                    <VStack alignItems={"flex-start"} px={3}>
-                        <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> SINCE </Text>
-                        {/* <Text fontSize={"sm"}> {teamData ? (formatDate_pl(teamData.created_at)) : "-"} </Text> */}
-                        <Text fontSize={"sm"}> {teamData ? teamData.since : "-"} </Text>
-                        <Divider />
-                    </VStack>
-                    <Empty />
-                        <VStack>
-                            <Button onClick={onOpen} backgroundColor={"point.500"} color={"black"} width={"80%"} disabled={true}> 팀 정보 업데이트 </Button>
-                        </VStack>
-                    <Empty />
-                    <TeamUpdateModal isOpen={isOpen} onClose={onClose} />
-                </TabPanel>
+                {teamData?.is_spvsr ? 
+                                            <TabPanel p={"0"}>
+                                                <VStack spacing={5}>
+                                                    <Text fontSize={"xl"} as="b" mt={3}> {teamData?.name} </Text>
+                                                    <HStack>
+                                                        <Avatar src={teamData ? teamData.avatar : ""} size={"2xl"} />
+                                                        { teamData && 
+                                                                            teamData.avatar ?
+                                                                                                    <VStack justifyContent={"center"}>
+                                                                                                        <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                                                                                                            <FaCamera size="15px" />
+                                                                                                        </Button>
+                                                                                                        <Button onClick={onPhotoDeleteOpen} variant={"outline"} color={"gray"} size={"sm"}>
+                                                                                                            <FaTrashAlt size="15px" />
+                                                                                                        </Button>
+                                                                                                        <TeamPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
+                                                                                                        <TeamPhotoDeleteModal isOpen={isPhotoDeleteOpen} onClose={onPhotoDeleteClose} />
+                                                                                                    </VStack>  :
+                                                                                                    <HStack justifyContent={"center"}>
+                                                                                                        <Button onClick={onPhotoOpen} variant={"outline"} color={"gray"}>
+                                                                                                            <FaCamera size="20px" />
+                                                                                                        </Button>
+                                                                                                        <TeamPhotoUploadModal isOpen={isPhotoOpen} onClose={onPhotoClose} />
+                                                                                                    </HStack>
+                                                                                                    }
+                                                    </HStack>
+                                                </VStack>
+                                                {teamData?.description && (
+                                                    <VStack>
+                                                        <Card my={4} width={"90%"} textAlign={"center"}>
+                                                            <CardBody>
+                                                                <Text fontSize={"sm"}>{teamData.description}</Text>
+                                                            </CardBody>
+                                                        </Card>
+                                                    </VStack>
+                                                )}
+                                                {/* <BigDivider /> */}
+                                                <VStack alignItems={"flex-start"} px={3}>
+                                                    <Text as="b" color={"main.500"} mt={10} fontSize={"sm"}> SINCE </Text>
+                                                    {/* <Text fontSize={"sm"}> {teamData ? (formatDate_pl(teamData.created_at)) : "-"} </Text> */}
+                                                    <Text fontSize={"sm"}> {teamData ? teamData.since : "-"} </Text>
+                                                    <Divider />
+                                                </VStack>
+                                                {/* <BigDivider /> */}
+                                                {/* <SmallDivider /> */}
+                                                <Empty />
+                                                    <VStack>
+                                                        <Button onClick={onOpen} backgroundColor={"point.500"} color={"black"} width={"80%"}> 팀 정보 업데이트 </Button>
+                                                        {teamData.is_founder && <>
+                                                                                    <Button onClick={onDeleteOpen} backgroundColor={"black"} color={"white"} width={"80%"}> 팀 삭제하기 </Button>
+                                                                                    <TeamDeleteModal isOpen={isDeleteOpen} onClose={onDeleteClose} teamName={teamData.name} />
+                                                                                </>}
+                                                    </VStack>
+                                                    <BigDivider />
+                                                    <VStack alignItems={"flex-start"} px={5} my={8}>
+                                                        <Text as="b" color={"main.500"} fontSize={"md"}> 관리자 </Text>
+                                                        <Divider />
+                                                        {teamSpvsrsData?.map((spvsr) => 
+                                                                                        <HStack mb={3} justifyContent={"space-between"}>
+                                                                                            <HStack>
+                                                                                                <HStack spacing={3}>
+                                                                                                    <Avatar src={spvsr.avatar}></Avatar>
+                                                                                                    <Text as="b" fontSize={"sm"}>{spvsr.username}</Text>
+                                                                                                </HStack>
+                                                                                            {spvsr.is_founder && teamData.is_founder ?
+                                                                                                                <Box justifyContent={"center"} ml={1}>
+                                                                                                                    <Badge bg={"gray.100"} color={"main.500"}> 최고 관리자 </Badge>
+                                                                                                                </Box> : null}
+                                                                                            </HStack>
+                                                                                            {!spvsr.is_founder && teamData.is_founder ?
+                                                                                            <>
+                                                                                                <Button onClick={onTeamSpvsrsConnectCancelOpen} variant={"unstyled"}>
+                                                                                                    <Box display={"flex"} justifyContent={"center"} alignItems={"center"} color={"black"}>
+                                                                                                        <FaMinusCircle />
+                                                                                                    </Box>
+                                                                                                </Button>
+                                                                                                <TeamSpvsrsConnectCancelModal isOpen={isTeamSpvsrsConnectCancelOpen} onClose={onTeamSpvsrsConnectCancelClose} userName={spvsr.username} />
+                                                                                            </> : null
+                                                                                                }
+                                                                                        </HStack>)}
+                                                    </VStack>
+                                                    {!teamData.is_founder && 
+                                                                            <VStack>
+                                                                                <Button onClick={onTeamSpvsrsConnectCancelOpen} mt={10} backgroundColor={"black"} color={"white"} size={"xs"}> - 관리자 해제하기 </Button>
+                                                                                <TeamSpvsrsConnectCancelModal isOpen={isTeamSpvsrsConnectCancelOpen} onClose={onTeamSpvsrsConnectCancelClose} userName={"나"} />
+                                                                            </VStack>}
+                                                    {teamData.is_founder &&
+                                                        <VStack alignItems={"flex-start"} px={5} my={8}>
+                                                            <Text as="b" color={"main.500"} fontSize={"md"}> 관리자 요청 </Text>
+                                                            <Divider />
+                                                            {teamConnectingSpvsrsData && teamConnectingSpvsrsData?.length !== 0 ? 
+                                                                                teamConnectingSpvsrsData.map((connectingSpvsr) => 
+                                                                                        <HStack mb={3} justifyContent={"space-between"}>
+                                                                                            <HStack>
+                                                                                                <HStack spacing={3}>
+                                                                                                    <Avatar src={connectingSpvsr.avatar}></Avatar>
+                                                                                                    <Text as="b" fontSize={"sm"}>{connectingSpvsr.username}</Text>
+                                                                                                </HStack>
+                                                                                            </HStack>
+                                                                                            <HStack ml={3} spacing={1}>
+                                                                                                <Button onClick={onTeamSpvsrsConnectOpen} size={"xs"} bgColor={"main.500"} color={"white"}>
+                                                                                                    수락
+                                                                                                </Button>
+                                                                                                <TeamSpvsrsConnectModal isOpen={isTeamSpvsrsConnectOpen} onClose={onTeamSpvsrsConnectClose} userName={connectingSpvsr.username} />
+                                                                                                <Button onClick={onTeamSpvsrsConnectingCancelOpen} size={"xs"} bgColor={"black"} color={"white"}>
+                                                                                                    거부
+                                                                                                </Button>
+                                                                                                <TeamSpvsrsConnectingCancelModal isOpen={isTeamSpvsrsConnectingCancelOpen} onClose={onTeamSpvsrsConnectingCancelClose} teamName={teamData.name} />
+                                                                                            </HStack>
+                                                                                        </HStack>) : <Text fontSize={"sm"}>요청한 사용자가 없습니다.</Text>}
+                                                        </VStack>
+                                                    }
+                                                <Empty />
+                                                <TeamUpdateModal isOpen={isOpen} onClose={onClose} />
+                                            </TabPanel>
+                                            :
+                                            <TabPanel p={"0"}>
+                                                <VStack alignItems={"flex-start"} px={5} my={8}>
+                                                    <Text>팀 관리자만 볼 수 있습니다.</Text>
+                                                </VStack>
+                                            </TabPanel>
+                                        }
+                {teamData?.is_spvsr && 
+                                        <TabPanel p={"0"}>
+                                            <VStack alignItems={"flex-start"} px={5} my={8}>
+                                                <Text as="b" color={"main.500"} fontSize={"md"}> 관리자 </Text>
+                                                <Divider />
+                                                {teamSpvsrsData?.map((spvsr) => 
+                                                                                <HStack mb={3} justifyContent={"space-between"}>
+                                                                                    <HStack>
+                                                                                        <HStack spacing={3}>
+                                                                                            <Avatar src={spvsr.avatar}></Avatar>
+                                                                                            <Text as="b" fontSize={"sm"}>{spvsr.username}</Text>
+                                                                                        </HStack>
+                                                                                    {spvsr.is_founder && teamData.is_founder ?
+                                                                                                        <Box justifyContent={"center"} ml={1}>
+                                                                                                            <Badge bg={"gray.100"} color={"main.500"}> 최고 관리자 </Badge>
+                                                                                                        </Box> : null}
+                                                                                    </HStack>
+                                                                                    {!spvsr.is_founder && teamData.is_founder ?
+                                                                                    <>
+                                                                                        <Button onClick={onTeamSpvsrsConnectCancelOpen} variant={"unstyled"}>
+                                                                                            <Box display={"flex"} justifyContent={"center"} alignItems={"center"} color={"black"}>
+                                                                                                <FaMinusCircle />
+                                                                                            </Box>
+                                                                                        </Button>
+                                                                                        <TeamSpvsrsConnectCancelModal isOpen={isTeamSpvsrsConnectCancelOpen} onClose={onTeamSpvsrsConnectCancelClose} userName={spvsr.username} />
+                                                                                    </> : null
+                                                                                        }
+                                                                                </HStack>)}
+                                            </VStack>
+                                            {!teamData.is_founder && 
+                                                                    <VStack>
+                                                                        <Button mt={10} backgroundColor={"black"} color={"white"} size={"xs"}> - 관리자 해제하기 </Button>
+                                                                    </VStack>}
+                                            {teamData.is_founder &&
+                                                <VStack alignItems={"flex-start"} px={5} my={8}>
+                                                    <Text as="b" color={"main.500"} fontSize={"md"}> 관리자 요청 </Text>
+                                                    <Divider />
+                                                    {teamConnectingSpvsrsData && teamConnectingSpvsrsData?.length !== 0 ? 
+                                                                        teamConnectingSpvsrsData.map((connectingSpvsr) => 
+                                                                                <HStack mb={3} justifyContent={"space-between"}>
+                                                                                    <HStack>
+                                                                                        <HStack spacing={3}>
+                                                                                            <Avatar src={connectingSpvsr.avatar}></Avatar>
+                                                                                            <Text as="b" fontSize={"sm"}>{connectingSpvsr.username}</Text>
+                                                                                        </HStack>
+                                                                                    </HStack>
+                                                                                    <HStack ml={3} spacing={1}>
+                                                                                        <Button onClick={onTeamSpvsrsConnectOpen} size={"xs"} bgColor={"main.500"} color={"white"}>
+                                                                                            수락
+                                                                                        </Button>
+                                                                                        <TeamSpvsrsConnectModal isOpen={isTeamSpvsrsConnectOpen} onClose={onTeamSpvsrsConnectClose} userName={connectingSpvsr.username} />
+                                                                                        <Button onClick={onTeamSpvsrsConnectingCancelOpen} size={"xs"} bgColor={"black"} color={"white"}>
+                                                                                            거부
+                                                                                        </Button>
+                                                                                        <TeamSpvsrsConnectingCancelModal isOpen={isTeamSpvsrsConnectingCancelOpen} onClose={onTeamSpvsrsConnectingCancelClose} teamName={teamData.name} />
+                                                                                    </HStack>
+                                                                                </HStack>) : <Text fontSize={"sm"}>요청한 사용자가 없습니다.</Text>}
+                                                </VStack>
+                                            }
+                                        </TabPanel>    
+                }
             </TabPanels>
         </Tabs>
         <Empty />
