@@ -1,10 +1,13 @@
 import { Avatar, Box, Button, Divider, Heading, HStack, Text, useDisclosure, VStack } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { FaUserNinja } from "react-icons/fa"
+import { useRecoilValue } from "recoil"
 import { getGame } from "../api"
+import { gameTomsShareImageState } from "../atoms"
 import { formatDate } from "../lib/utils"
 import { IGame, IGameVote } from "../types"
 import Empty from "./Empty"
+import KakaoShare from "./KakaoShare"
 import TomVoteModal from "./TomVoteModal"
 
 interface IGameVoteIngProps {
@@ -16,6 +19,8 @@ export default function GameVoteIng( props : IGameVoteIngProps) {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { isLoading : gameLoading, data : gameData, isError : gameError } = useQuery<IGame>(["game", props.gamePk], getGame);
+
+    const shareImage = useRecoilValue(gameTomsShareImageState)
 
     return (
         <>
@@ -50,7 +55,14 @@ export default function GameVoteIng( props : IGameVoteIngProps) {
                                          : 
                                     <VStack py={4} width={"100%"}> 
                                         <Button onClick={onOpen} width={"100%"} backgroundColor={"main.500"} color={"white"} > 투표하기 </Button>
-                                        <Button width={"100%"} backgroundColor={"point.500"} color={"black"} > 카톡으로 공유하기 </Button>
+                                        <KakaoShare 
+                                                title={`${gameData?.team} vs ${gameData?.vsteam}`}
+                                                description={"3명의 엠오엠, 삼오엠을 투표해주세요!"}
+                                                imageUrl={shareImage}
+                                                mobileWebUrl={`https://www.3manofthematch.com/${props.gamePk}/readonly`}
+                                                webUrl={`https://www.3manofthematch.com/${props.gamePk}/readonly`}
+                                                btnTitle={"투표하러 가기"}
+                                        />
                                     </VStack>
                                     }
                 <Divider pt={2} />

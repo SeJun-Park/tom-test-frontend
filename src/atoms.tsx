@@ -10,24 +10,29 @@ export const gameAvatarState = atom({
     default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/a703565c-e647-46fd-d0c0-5b7a2ea3d600/public"
 })
 
+export const gameTomsShareImageState = atom({
+    key : "gameTomsShareImage",
+    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/aa7939f9-ee2f-4f14-f5ba-61ed7f88da00/public"
+})
+
 export const gameQuotasShareImageState = atom({
     key : "gameQuotasShareImage",
-    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/c33ba714-86cc-41cb-52da-4518e8d6e100/public"
+    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/18c9136f-6390-46b0-b2f5-aadb868c2f00/public"
 })
 
 export const teamScheduleShareImageState = atom({
     key : "teamScheduleShareImage",
-    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/c33ba714-86cc-41cb-52da-4518e8d6e100/public"
+    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/a10c1b78-899c-4110-e600-420bcc7e1200/public"
 })
 
 export const duesDetailsDetailShareImageState = atom({
     key : "duesDetailsDetailShareImage",
-    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/dba7b76e-3afb-44f2-9700-49b9e95b5e00/public"
+    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/d045e373-754f-48d1-0adc-c19128547600/public"
 })
 
 export const duesPaymentDetailShareImageState = atom({
     key : "duesPaymentDetailShareImage",
-    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/f3ede3d3-24b5-4a0c-3a88-75e5e25c0700/public"
+    default : "https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/03609efa-45e6-40a0-44bf-6c8e0e6b7a00/public"
 })
 
 export const formationState = atom({

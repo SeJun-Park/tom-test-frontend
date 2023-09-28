@@ -34,6 +34,7 @@ import DuesDetailsDetailReadOnly from "./routes/DuesDetailsDetailReadOnly";
 import GameQuotasReadOnly from "./routes/GameQuotasReadOnly";
 import TeamSchedulesReadOnly from "./routes/TeamSchedulesReadOnly";
 import TeamRegister from "./routes/TeamRegister";
+import GameVoteReadOnly from "./routes/GameVoteReadOnly";
 
 const router = createBrowserRouter(
     [
@@ -146,7 +147,10 @@ const router = createBrowserRouter(
                     path : "games/:gamePk",
                     element : <GameDetail />
                 },
-
+                {
+                    path : "games/:gamePk/readonly",
+                    element : <GameVoteReadOnly />
+                },
                 {
                     path : "games/:gamePk/update",
                     element : <UpdateGame />

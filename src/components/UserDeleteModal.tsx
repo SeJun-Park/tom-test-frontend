@@ -46,7 +46,7 @@ export default function UserDeleteModal ( props : UserDeleteModalProps ) {
                     <Text fontSize={"sm"} color={"gray"}> 회원을 탈퇴하면 삼오엠에 저장된 사용자 정보는 <br/> 모두 삭제되지만, 카카오 연동은 유지됩니다. </Text>
                     <Text fontSize={"xs"} color={"gray"}> *카카오 연동은 카카오톡에 접속하여 아래 경로를 통해 끊을 수 있습니다. <br/> 더보기 - 설정 - 카카오계정 - 연결된 서비스 관리 - 외부 서비스</Text>
                     {userDeleteMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> 문제가 발생했습니다. </Text>) : null}
-                    <Button onClick={onClick} isLoading={userDeleteMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 탈퇴하기 </Button>
+                    <Button mt={3} onClick={onClick} isLoading={userDeleteMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 탈퇴하기 </Button>
                 </VStack>
             </ModalBody>
         </ModalContent>
