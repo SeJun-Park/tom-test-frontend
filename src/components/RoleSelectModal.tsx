@@ -86,7 +86,7 @@ export default function RoleSelectModal() {
     return (
         <>
         <Helmet>
-            <title>{ "3OM | 로그인" }</title>
+            <title>삼오엠</title>
         </Helmet>
     <Modal motionPreset="slideInBottom" size={"3xl"} isOpen={isOpen} onClose={onClose} isCentered closeOnOverlayClick={false}>
     {/* motionPreset prop을 이용하면 모달이 나타나는 모양을 지정할 수 있음, default는 "scale" */}
