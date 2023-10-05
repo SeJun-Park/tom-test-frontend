@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import Empty from "../components/Empty";
 import SocialLogin from "../components/SocialLogin";
+import KakaoADBig from "../components/KakaoADBig";
 
 export default function LogInRequired() {
 
@@ -13,7 +14,7 @@ export default function LogInRequired() {
                 </Helmet>              
                                     <VStack alignItems={"flex-end"} px={5} >
                                         <Box w="90%" h="100px" borderWidth="1px">
-                                                {/* <KakaoADBig /> */}
+                                                <KakaoADBig />
                                         </Box>
                                     </VStack>
                                     <VStack alignItems={"flex-end"} padding={5}>
@@ -57,13 +58,13 @@ export default function LogInRequired() {
                                         </TabList>
                                         <TabPanels>
                                             <TabPanel p={"0"}>
-                                                <VStack px={3}  mt={8} py={3}>
-                                                    {/* <Heading size='sm'>{props.title}</Heading> */}
+                                                <VStack px={3} mt={8} py={3}>
                                                     <Text as="b" mb={3}>3manofthematch</Text>
                                                     <SocialLogin />
-                                                    <Text my={3} textAlign={"center"}>운영진을 위한, <br/> 쉽고 편한 조기축구 팀 관리 서비스</Text>
-                                                    {/* <Divider mt={5} /> */}
-                                                    <Text mt={6} as="b" color={"gray"} fontSize={"xs"}>관리자 또는 플레이어로 로그인하여 <br/> 나의 팀을 등록하거나 검색해보세요!</Text>
+                                                    <VStack mt={3} spacing={3}>
+                                                      <Text textAlign={"center"}>운영진을 위한, <br/> 쉽고 편한 조기축구 팀 관리 서비스</Text>
+                                                      <Text as="b" color={"gray"} fontSize={"xs"}>관리자 또는 플레이어로 로그인하여 <br/> 나의 팀을 등록하거나 검색해보세요!</Text>
+                                                    </VStack>
                                                 </VStack>
                                                 <Empty />
                                             </TabPanel>
