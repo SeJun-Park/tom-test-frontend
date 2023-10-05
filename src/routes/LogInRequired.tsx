@@ -18,7 +18,7 @@ export default function LogInRequired() {
                                         </Box>
                                     </VStack>
                                     <VStack alignItems={"flex-end"} padding={5}>
-                                        <VStack position="relative" width="90%" height="100">
+                                        <VStack position="relative" width="90%" height="75">
                                                 <Link to={"/community"}>
                                                     <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                                         <Box
@@ -61,10 +61,10 @@ export default function LogInRequired() {
                                                 <VStack px={3} mt={8} py={3}>
                                                     <Text as="b" mb={3}>3manofthematch</Text>
                                                     <SocialLogin />
-                                                    <VStack mt={3} spacing={3}>
-                                                      <Text textAlign={"center"}>운영진을 위한, <br/> 쉽고 편한 조기축구 팀 관리 서비스</Text>
-                                                      <Text as="b" color={"gray"} fontSize={"xs"}>관리자 또는 플레이어로 로그인하여 <br/> 나의 팀을 등록하거나 검색해보세요!</Text>
-                                                    </VStack>
+                                                </VStack>
+                                                <VStack mt={3} spacing={3}>
+                                                  <Text textAlign={"center"}>운영진을 위한, <br/> 쉽고 편한 조기축구 팀 관리 서비스</Text>
+                                                  <Text as="b" color={"gray"} fontSize={"xs"}>관리자 또는 플레이어로 로그인하여 <br/> 나의 팀을 등록하거나 검색해보세요!</Text>
                                                 </VStack>
                                                 <Empty />
                                             </TabPanel>
