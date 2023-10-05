@@ -35,12 +35,12 @@ export default function IsPlayerHome() {
                 <title>{ isPlayerData ? ("삼오엠 | 플레이어 홈") : "Loading.." }</title>
             </Helmet>
             <VStack alignItems={"flex-end"} px={5}>
-                <Box w="320px" h="100px">
+                <Box w="90%" h="100px">
                         <KakaoADBig />
                 </Box>
             </VStack>
             <VStack alignItems={"flex-end"} padding={"5"}>
-                <VStack position="relative" width="320px" height="75">
+                <VStack position="relative" width="90%" height="75">
                     <Link to={"/community"}>
                         <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                             <Box
