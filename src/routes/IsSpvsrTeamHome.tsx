@@ -196,7 +196,7 @@ const { isOpen : isTeamSpvsrsConnectCancelOpen, onOpen : onTeamSpvsrsConnectCanc
             <Tabs isFitted variant='enclosed' index={tabIndexThome} onChange={setTabIndexThome}>
             <TabList mb='1em' justifyContent={"center"}>
                 <Tab _selected={{color : "main.500"}}> 팀 프로필 </Tab>
-                {teamData?.is_spvsr && <Tab _selected={{color : "main.500"}}> 팀 정보 </Tab>}
+                <Tab _selected={{color : "main.500"}}> 팀 정보 </Tab>
             </TabList>
             <TabPanels>
                 <TabPanel p={"0"}>
