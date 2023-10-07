@@ -7,7 +7,6 @@ import { FaArrowLeft, FaFutbol } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { searchTeam } from "../api";
 import Empty from "../components/Empty";
-import ProtectedPage from "../components/ProtectedPage";
 import Team from "../components/Team";
 import { ITinyTeam } from "../types";
 
@@ -45,7 +44,7 @@ export default function SearchTeam() {
     }
 
     return (
-        <ProtectedPage>
+        <>
             <Helmet>
                 <title>삼오엠 | 팀 찾기</title>
             </Helmet>
@@ -94,6 +93,6 @@ export default function SearchTeam() {
             <Empty />
             <Empty />
             <Empty />
-        </ProtectedPage>
+        </>
     )
 }

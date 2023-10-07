@@ -15,7 +15,7 @@ export default function KakaoConfirm() {
             toast({
                 status : "success",
                 title : "환영합니다!",
-                description : "Happy 3OM!",
+                description : "즐거운 삼오엠!",
                 position : "bottom-right",
                 duration : 1000
             })
@@ -52,7 +52,7 @@ export default function KakaoConfirm() {
     return (
     <VStack justifyContent={"center"} mt={40}>
         <Heading> 로그인 중... </Heading>
-        <Text> 3OM에 오신 걸 환영합니다. </Text>
+        <Text> 삼오엠에 오신 걸 환영합니다. </Text>
         <Spinner size={"lg"} />
         <Empty />
         <Empty />

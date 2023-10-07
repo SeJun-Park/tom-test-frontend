@@ -119,6 +119,8 @@ export const getTeam = async ({ queryKey } : QueryFunctionContext) => {
     return response.data
 }
 
+export const getTeamsRecently = () => instance.get("teams/recently/").then((response) => response.data)
+
 export const getTeamReadOnly = async ({ queryKey } : QueryFunctionContext) => {
     const [ _, teamPk ] = queryKey;
     const response = await instance.get(`teams/${teamPk}/readonly/`)
