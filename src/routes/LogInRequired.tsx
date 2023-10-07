@@ -125,6 +125,7 @@ export default function LogInRequired() {
                                 </HStack>
                                 <Empty />
                                 <SocialLogin />
+                                <Empty />
                                 <HStack>
                                     <Box color={"main.500"}>
                                         <FaUserCog />

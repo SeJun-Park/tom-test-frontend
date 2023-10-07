@@ -16,23 +16,23 @@ import { IGoals, IPlayerUser, ITeam, ITinyGame, ITinyTeam } from "../types"
 
 export default function IsPlayerHome() {
 
-    const { isLoading : teamsRecentlyLoading, data : teamsRecentlyData, isError : teamsRecentlyError } = useQuery<ITeam[]>(["team"], getTeamsRecently);
+    const { isLoading : teamsRecentlyLoading, data : teamsRecentlyData, isError : teamsRecentlyError } = useQuery<ITinyTeam[]>(["teamsRecently"], getTeamsRecently);
     const { isLoading : isPlayerLoading, data : isPlayerData, isError : isPlayerError } = useQuery<IPlayerUser>(["isPlayer"], isPlayer); 
     const { isLoading : isPlayerTeamsLoading, data : isPlayerTeamsData, isError : isPlayerTeamsError } = useQuery<ITinyTeam[]>(["isPlayerTeams"], isPlayerTeams);
     const { isLoading : isPlayerGamesLoading, data : isPlayerGamesData, isError : isPlayerGamesError } = useQuery<ITinyGame[]>(["isPlayerGames"], isPlayerGames);
     const { isLoading : isPlayerTomGamesLoading, data : isPlayerTomGamesData, isError : isPlayerTomGamesError } = useQuery<ITinyGame[]>(["isPlayerTomGames"], isPlayerTomGames);
     const { isLoading : isPlayerGoalsLoading, data : isPlayerGoalsData, isError : isPlayerGoalsError } = useQuery<IGoals>(["isPlayerGoals"], isPlayerGoals);
 
-    const [tabIndex, setTabIndex] = useState(Number(localStorage.getItem('tabIndex')) || 0);
+    const [tabIndexHome, setTabIndexHome] = useState(Number(localStorage.getItem('tabIndexHome')) || 0);
 
     useEffect(() => {
-      localStorage.setItem('tabIndex', tabIndex.toString());
-    }, [tabIndex]);
+      localStorage.setItem('tabIndexHome', tabIndexHome.toString());
+    }, [tabIndexHome]);
 
     const [tabIndexHomeSub, setTabIndexHomeSub] = useState(Number(localStorage.getItem('tabIndexHomeSub')) || 0);
 
     useEffect(() => {
-      localStorage.setItem('tabIndexHomeSub', tabIndex.toString());
+      localStorage.setItem('tabIndexHomeSub', tabIndexHomeSub.toString());
     }, [tabIndexHomeSub]);
 
     return (
@@ -40,7 +40,7 @@ export default function IsPlayerHome() {
             <Helmet>
                 <title>삼오엠 | 홈</title>
             </Helmet>              
-            <Tabs variant='soft-rounded' isLazy align="center" index={tabIndex} onChange={setTabIndex}>
+            <Tabs variant='soft-rounded' isLazy align="center" index={tabIndexHome} onChange={setTabIndexHome}>
                 <TabList mb='1em'>
                     <Tab _selected={{color : "white", bgColor : "main.500"}}>홈</Tab>
                     <Tab _selected={{color : "white", bgColor : "main.500"}}>나</Tab>

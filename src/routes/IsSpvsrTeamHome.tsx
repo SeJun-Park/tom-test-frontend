@@ -146,11 +146,11 @@ const { isOpen : isFeedOpen, onOpen : onFeedOpen, onClose : onFeedClose } = useD
 const shareImage = useRecoilValue(teamScheduleShareImageState);
 
     
-const [tabIndex, setTabIndex] = useState(Number(localStorage.getItem('tabIndex')) || 0);
+const [tabIndexThome, setTabIndexThome] = useState(Number(localStorage.getItem('tabIndexThome')) || 0);
 
 useEffect(() => {
-  localStorage.setItem('tabIndex', tabIndex.toString());
-}, [tabIndex]);
+  localStorage.setItem('tabIndexThome', tabIndexThome.toString());
+}, [tabIndexThome]);
 
 const { isOpen : isOpen, onOpen : onOpen, onClose : onClose } = useDisclosure()
 const { isOpen : isPhotoOpen, onOpen : onPhotoOpen, onClose : onPhotoClose } = useDisclosure()
@@ -193,7 +193,7 @@ const { isOpen : isTeamSpvsrsConnectCancelOpen, onOpen : onTeamSpvsrsConnectCanc
                                         null
                                         } 
             </HStack>
-            <Tabs isFitted variant='enclosed' index={tabIndex} onChange={setTabIndex}>
+            <Tabs isFitted variant='enclosed' index={tabIndexThome} onChange={setTabIndexThome}>
             <TabList mb='1em' justifyContent={"center"}>
                 <Tab _selected={{color : "main.500"}}> 팀 프로필 </Tab>
                 {teamData?.is_spvsr && <Tab _selected={{color : "main.500"}}> 팀 정보 </Tab>}
