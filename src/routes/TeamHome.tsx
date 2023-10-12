@@ -2,16 +2,19 @@ import useUser from "../lib/useUser";
 import ProtectedPage from "../components/ProtectedPage";
 import IsPlayerTeamHome from "./IsPlayerTeamHome";
 import IsSpvsrTeamHome from "./IsSpvsrTeamHome";
+import IsNotLoggedInTeamHome from "./IsNotLoggedInTeamHome";
 
 export default function TeamHome() {
-    const { user } = useUser();
+    const { userLoading, isLoggedIn, user } = useUser();
     return (
-        <ProtectedPage>
-            <>
-            {user?.is_player ? <IsPlayerTeamHome /> : (
-                            user?.is_spvsr ? <IsSpvsrTeamHome /> : null
-                            )}
-            </>
-        </ProtectedPage>
+        <>
+            {!userLoading && (
+                !isLoggedIn ? <IsNotLoggedInTeamHome /> : (
+                    user?.is_player ? <IsPlayerTeamHome /> : (
+                        user?.is_spvsr ? <IsSpvsrTeamHome /> : null
+                    )
+                )
+            )}
+        </>
     )
 }
