@@ -23,8 +23,10 @@ import SmallDivider from "../components/SmallDivider";
 import TeamDeleteModal from "../components/TeamDeleteModal";
 import TeamPhotoDeleteModal from "../components/TeamPhotoDeleteModal";
 import TeamPhotoUploadModal from "../components/TeamPhotoUploadModal";
-import TeamSpvsrsConnectCancelModal from "../components/TeamSpvsrsConnectCancelModal";
-import TeamSpvsrsConnectingCancelModal from "../components/TeamSpvsrsConnectingCancelModal";
+import TeamSpvsrsConnectCancelByFounderModal from "../components/TeamSpvsrsConnectCancelByFounderModal";
+import TeamSpvsrsConnectCancelByOneselfModal from "../components/TeamSpvsrsConnectCancelByOneselfModal";
+import TeamSpvsrsConnectingCancelByFounderModal from "../components/TeamSpvsrsConnectingCancelByFounderModal";
+import TeamSpvsrsConnectingCancelByOneselfModal from "../components/TeamSpvsrsConnectingCancelByOneselfModal";
 import TeamSpvsrsConnectingModal from "../components/TeamSpvsrsConnectingModal";
 import TeamSpvsrsConnectModal from "../components/TeamSpvsrsConnectModal";
 import TeamUpdateModal from "../components/TeamUpdateModal";
@@ -158,9 +160,40 @@ const { isOpen : isPhotoDeleteOpen, onOpen : onPhotoDeleteOpen, onClose : onPhot
 const { isOpen : isDeleteOpen, onOpen : onDeleteOpen, onClose : onDeleteClose } = useDisclosure()
 
 const { isOpen : isTeamSpvsrsConnectingOpen, onOpen : onTeamSpvsrsConnectingOpen, onClose : onTeamSpvsrsConnectingClose } = useDisclosure()
-const { isOpen : isTeamSpvsrsConnectingCancelOpen, onOpen : onTeamSpvsrsConnectingCancelOpen, onClose : onTeamSpvsrsConnectingCancelClose } = useDisclosure()
+const { isOpen : isTeamSpvsrsConnectingCancelByOneselfOpen, onOpen : onTeamSpvsrsConnectingCancelByOneselfOpen, onClose : onTeamSpvsrsConnectingCancelByOneselfClose } = useDisclosure()
+const { isOpen : isTeamSpvsrsConnectingCancelByFounderOpen, onOpen : onTeamSpvsrsConnectingCancelByFounderOpen, onClose : onTeamSpvsrsConnectingCancelByFounderClose } = useDisclosure()
 const { isOpen : isTeamSpvsrsConnectOpen, onOpen : onTeamSpvsrsConnectOpen, onClose : onTeamSpvsrsConnectClose } = useDisclosure()
-const { isOpen : isTeamSpvsrsConnectCancelOpen, onOpen : onTeamSpvsrsConnectCancelOpen, onClose : onTeamSpvsrsConnectCancelClose } = useDisclosure()
+const { isOpen : isTeamSpvsrsConnectCancelByFounderOpen, onOpen : onTeamSpvsrsConnectCancelByFounderOpen, onClose : onTeamSpvsrsConnectCancelByFounderClose } = useDisclosure()
+const { isOpen : isTeamSpvsrsConnectCancelByOneselfOpen, onOpen : onTeamSpvsrsConnectCancelByOneselfOpen, onClose : onTeamSpvsrsConnectCancelByOneselfClose } = useDisclosure()
+
+const [selectedUserName, setSelectedUserName] = useState<string>("");
+const [selectedUserId, setSelectedUserId] = useState<number>(0);
+
+
+const onMinusBtnClick = (username: string, userId: number) => {
+    setSelectedUserName(username);
+    setSelectedUserId(userId);
+    // 기존 모달을 열기 위한 로직...
+    onTeamSpvsrsConnectCancelByFounderOpen();
+};
+
+const [selectedRUserName, setSelectedRUserName] = useState<string>("");
+const [selectedRUserId, setSelectedRUserId] = useState<number>(0);
+
+
+const onAllowBtnClick = (username: string, userId: number) => {
+    setSelectedRUserName(username);
+    setSelectedRUserId(userId);
+    // 기존 모달을 열기 위한 로직...
+    onTeamSpvsrsConnectOpen();
+};
+
+const onDenyBtnClick = (username: string, userId: number) => {
+    setSelectedRUserName(username);
+    setSelectedRUserId(userId);
+    // 기존 모달을 열기 위한 로직...
+    onTeamSpvsrsConnectingCancelByFounderOpen();
+};
 
     return (
         <>
@@ -186,8 +219,8 @@ const { isOpen : isTeamSpvsrsConnectCancelOpen, onOpen : onTeamSpvsrsConnectCanc
                                         </>
                                         :
                                         <>
-                                            <Button onClick={onTeamSpvsrsConnectingCancelOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> - 관리자 신청 취소 </Button>
-                                            <TeamSpvsrsConnectingCancelModal isOpen={isTeamSpvsrsConnectingCancelOpen} onClose={onTeamSpvsrsConnectingCancelClose} teamName={teamData ? teamData.name : ""} />
+                                            <Button onClick={onTeamSpvsrsConnectingCancelByOneselfOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> - 관리자 신청 취소 </Button>
+                                            <TeamSpvsrsConnectingCancelByOneselfModal isOpen={isTeamSpvsrsConnectingCancelByOneselfOpen} onClose={onTeamSpvsrsConnectingCancelByOneselfClose} teamName={teamData ? teamData.name : ""} />
                                         </>
                                         :
                                         null
@@ -535,28 +568,31 @@ const { isOpen : isTeamSpvsrsConnectCancelOpen, onOpen : onTeamSpvsrsConnectCanc
                                                                                                     <Avatar src={spvsr.avatar}></Avatar>
                                                                                                     <Text as="b" fontSize={"sm"}>{spvsr.username}</Text>
                                                                                                 </HStack>
-                                                                                            {spvsr.is_founder && teamData.is_founder ?
+                                                                                            {spvsr.is_founder &&
                                                                                                                 <Box justifyContent={"center"} ml={1}>
                                                                                                                     <Badge bg={"gray.100"} color={"main.500"}> 최고 관리자 </Badge>
-                                                                                                                </Box> : null}
+                                                                                                                </Box>}
                                                                                             </HStack>
                                                                                             {!spvsr.is_founder && teamData.is_founder ?
                                                                                             <>
-                                                                                                <Button onClick={onTeamSpvsrsConnectCancelOpen} variant={"unstyled"}>
+                                                                                                <Button onClick={() => onMinusBtnClick(spvsr.username, spvsr.id)} variant={"unstyled"}>
                                                                                                     <Box display={"flex"} justifyContent={"center"} alignItems={"center"} color={"black"}>
                                                                                                         <FaMinusCircle />
                                                                                                     </Box>
                                                                                                 </Button>
-                                                                                                <TeamSpvsrsConnectCancelModal isOpen={isTeamSpvsrsConnectCancelOpen} onClose={onTeamSpvsrsConnectCancelClose} userName={spvsr.username} />
+                                                                                                <TeamSpvsrsConnectCancelByFounderModal isOpen={isTeamSpvsrsConnectCancelByFounderOpen} onClose={onTeamSpvsrsConnectCancelByFounderClose}  userName={selectedUserName} userId={selectedUserId}  />
                                                                                             </> : null
                                                                                                 }
                                                                                         </HStack>)}
                                                     </VStack>
                                                     {!teamData.is_founder && 
-                                                                            <VStack>
-                                                                                <Button onClick={onTeamSpvsrsConnectCancelOpen} mt={10} backgroundColor={"black"} color={"white"} size={"xs"}> - 관리자 해제하기 </Button>
-                                                                                <TeamSpvsrsConnectCancelModal isOpen={isTeamSpvsrsConnectCancelOpen} onClose={onTeamSpvsrsConnectCancelClose} userName={"나"} />
-                                                                            </VStack>}
+                                                                                <>
+                                                                                <VStack>
+                                                                                    <Button onClick={onTeamSpvsrsConnectCancelByOneselfOpen} mt={10} backgroundColor={"black"} color={"white"} size={"xs"}> - 관리자 해제하기 </Button>
+                                                                                </VStack>
+                                                                                <TeamSpvsrsConnectCancelByOneselfModal isOpen={isTeamSpvsrsConnectCancelByOneselfOpen} onClose={onTeamSpvsrsConnectCancelByOneselfClose} userName={"나"} />
+                                                                                </>
+                                                                            }
                                                     {teamData.is_founder &&
                                                         <VStack alignItems={"flex-start"} px={5} my={8}>
                                                             <Text as="b" color={"main.500"} fontSize={"md"}> 관리자 요청 </Text>
@@ -571,14 +607,14 @@ const { isOpen : isTeamSpvsrsConnectCancelOpen, onOpen : onTeamSpvsrsConnectCanc
                                                                                                 </HStack>
                                                                                             </HStack>
                                                                                             <HStack ml={3} spacing={1}>
-                                                                                                <Button onClick={onTeamSpvsrsConnectOpen} size={"xs"} bgColor={"main.500"} color={"white"}>
+                                                                                                <Button onClick={() => onAllowBtnClick(connectingSpvsr.username, connectingSpvsr.id)} size={"xs"} bgColor={"main.500"} color={"white"}>
                                                                                                     수락
                                                                                                 </Button>
-                                                                                                <TeamSpvsrsConnectModal isOpen={isTeamSpvsrsConnectOpen} onClose={onTeamSpvsrsConnectClose} userName={connectingSpvsr.username} />
-                                                                                                <Button onClick={onTeamSpvsrsConnectingCancelOpen} size={"xs"} bgColor={"black"} color={"white"}>
+                                                                                                <TeamSpvsrsConnectModal isOpen={isTeamSpvsrsConnectOpen} onClose={onTeamSpvsrsConnectClose} userName={selectedRUserName} userId={selectedRUserId} />
+                                                                                                <Button onClick={() => onDenyBtnClick(connectingSpvsr.username, connectingSpvsr.id)} size={"xs"} bgColor={"black"} color={"white"}>
                                                                                                     거부
                                                                                                 </Button>
-                                                                                                <TeamSpvsrsConnectingCancelModal isOpen={isTeamSpvsrsConnectingCancelOpen} onClose={onTeamSpvsrsConnectingCancelClose} teamName={teamData.name} />
+                                                                                                <TeamSpvsrsConnectingCancelByFounderModal isOpen={isTeamSpvsrsConnectingCancelByFounderOpen} onClose={onTeamSpvsrsConnectingCancelByFounderClose} teamName={teamData.name} userId={selectedRUserId} />
                                                                                             </HStack>
                                                                                         </HStack>) : <Text fontSize={"sm"}>요청한 사용자가 없습니다.</Text>}
                                                         </VStack>
@@ -593,67 +629,6 @@ const { isOpen : isTeamSpvsrsConnectCancelOpen, onOpen : onTeamSpvsrsConnectCanc
                                                 </VStack>
                                             </TabPanel>
                                         }
-                {teamData?.is_spvsr && 
-                                        <TabPanel p={"0"}>
-                                            <VStack alignItems={"flex-start"} px={5} my={8}>
-                                                <Text as="b" color={"main.500"} fontSize={"md"}> 관리자 </Text>
-                                                <Divider />
-                                                {teamSpvsrsData?.map((spvsr) => 
-                                                                                <HStack mb={3} justifyContent={"space-between"}>
-                                                                                    <HStack>
-                                                                                        <HStack spacing={3}>
-                                                                                            <Avatar src={spvsr.avatar}></Avatar>
-                                                                                            <Text as="b" fontSize={"sm"}>{spvsr.username}</Text>
-                                                                                        </HStack>
-                                                                                    {spvsr.is_founder && teamData.is_founder ?
-                                                                                                        <Box justifyContent={"center"} ml={1}>
-                                                                                                            <Badge bg={"gray.100"} color={"main.500"}> 최고 관리자 </Badge>
-                                                                                                        </Box> : null}
-                                                                                    </HStack>
-                                                                                    {!spvsr.is_founder && teamData.is_founder ?
-                                                                                    <>
-                                                                                        <Button onClick={onTeamSpvsrsConnectCancelOpen} variant={"unstyled"}>
-                                                                                            <Box display={"flex"} justifyContent={"center"} alignItems={"center"} color={"black"}>
-                                                                                                <FaMinusCircle />
-                                                                                            </Box>
-                                                                                        </Button>
-                                                                                        <TeamSpvsrsConnectCancelModal isOpen={isTeamSpvsrsConnectCancelOpen} onClose={onTeamSpvsrsConnectCancelClose} userName={spvsr.username} />
-                                                                                    </> : null
-                                                                                        }
-                                                                                </HStack>)}
-                                            </VStack>
-                                            {!teamData.is_founder && 
-                                                                    <VStack>
-                                                                        <Button mt={10} backgroundColor={"black"} color={"white"} size={"xs"}> - 관리자 해제하기 </Button>
-                                                                    </VStack>}
-                                            {teamData.is_founder &&
-                                                <VStack alignItems={"flex-start"} px={5} my={8}>
-                                                    <Text as="b" color={"main.500"} fontSize={"md"}> 관리자 요청 </Text>
-                                                    <Divider />
-                                                    {teamConnectingSpvsrsData && teamConnectingSpvsrsData?.length !== 0 ? 
-                                                                        teamConnectingSpvsrsData.map((connectingSpvsr) => 
-                                                                                <HStack mb={3} justifyContent={"space-between"}>
-                                                                                    <HStack>
-                                                                                        <HStack spacing={3}>
-                                                                                            <Avatar src={connectingSpvsr.avatar}></Avatar>
-                                                                                            <Text as="b" fontSize={"sm"}>{connectingSpvsr.username}</Text>
-                                                                                        </HStack>
-                                                                                    </HStack>
-                                                                                    <HStack ml={3} spacing={1}>
-                                                                                        <Button onClick={onTeamSpvsrsConnectOpen} size={"xs"} bgColor={"main.500"} color={"white"}>
-                                                                                            수락
-                                                                                        </Button>
-                                                                                        <TeamSpvsrsConnectModal isOpen={isTeamSpvsrsConnectOpen} onClose={onTeamSpvsrsConnectClose} userName={connectingSpvsr.username} />
-                                                                                        <Button onClick={onTeamSpvsrsConnectingCancelOpen} size={"xs"} bgColor={"black"} color={"white"}>
-                                                                                            거부
-                                                                                        </Button>
-                                                                                        <TeamSpvsrsConnectingCancelModal isOpen={isTeamSpvsrsConnectingCancelOpen} onClose={onTeamSpvsrsConnectingCancelClose} teamName={teamData.name} />
-                                                                                    </HStack>
-                                                                                </HStack>) : <Text fontSize={"sm"}>요청한 사용자가 없습니다.</Text>}
-                                                </VStack>
-                                            }
-                                        </TabPanel>    
-                }
             </TabPanels>
         </Tabs>
         <Empty />

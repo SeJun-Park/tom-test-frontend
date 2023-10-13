@@ -1,25 +1,27 @@
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { teamSpvsrsConnectCancel, teamSpvsrsConnectingCancel } from "../api";
+import { teamSpvsrsConnectCancelByFounder } from "../api";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-interface TeamSpvsrsConnectCancelModalProps {
-    userName : string,
+interface TeamSpvsrsConnectCancelByFounderModalProps {
+    userName : string;
+    userId : number;
     isOpen : boolean;
     onClose : () => void;
 }
 
-export default function TeamSpvsrsConnectCancelModal ( props : TeamSpvsrsConnectCancelModalProps ) {
+export default function TeamSpvsrsConnectCancelByFounderModal ( props : TeamSpvsrsConnectCancelByFounderModalProps ) {
 
     const { teamPk } = useParams();
+    const userId = props.userId
 
     const { handleSubmit, formState : {errors} } = useForm();
 
     const toast = useToast();
     const queryClient = useQueryClient()
 
-    const teamSpvsrsConnectCancelMutation = useMutation(teamSpvsrsConnectCancel, {
+    const teamSpvsrsConnectCancelByFounderMutation = useMutation(teamSpvsrsConnectCancelByFounder, {
         onSuccess : (data) => {
             console.log("team spvsrs connect cancel successful")
             // data.ok
@@ -37,7 +39,7 @@ export default function TeamSpvsrsConnectCancelModal ( props : TeamSpvsrsConnect
 
     const onSubmit = () => {
         if(teamPk) {
-            teamSpvsrsConnectCancelMutation.mutate({ teamPk })
+            teamSpvsrsConnectCancelByFounderMutation.mutate({ teamPk, userId })
         }
     }
 
@@ -50,7 +52,7 @@ export default function TeamSpvsrsConnectCancelModal ( props : TeamSpvsrsConnect
             <ModalHeader> {props.userName === "나" ? "" : `이름 : ${props.userName}`} <br/> 관리자 등록을 취소하시겠습니까? </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
-                    <Button type={"submit"} isLoading={teamSpvsrsConnectCancelMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 취소하기 </Button>
+                    <Button type={"submit"} isLoading={teamSpvsrsConnectCancelByFounderMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 취소하기 </Button>
             </ModalBody>
         </ModalContent>
     </Modal>

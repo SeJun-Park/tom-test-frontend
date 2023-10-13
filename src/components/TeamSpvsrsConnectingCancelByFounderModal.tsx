@@ -1,17 +1,17 @@
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { teamSpvsrsConnect } from "../api";
+import { teamSpvsrsConnectingCancelByFounder } from "../api";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-interface TeamSpvsrsConnectModalProps {
-    userName : string;
+interface TeamSpvsrsConnectingCancelByFounderModalProps {
+    teamName : string;
     userId : number;
     isOpen : boolean;
     onClose : () => void;
 }
 
-export default function TeamSpvsrsConnectModal ( props : TeamSpvsrsConnectModalProps ) {
+export default function TeamSpvsrsConnectingCancelByFounderModal ( props : TeamSpvsrsConnectingCancelByFounderModalProps ) {
 
     const { teamPk } = useParams();
     const userId = props.userId
@@ -21,12 +21,12 @@ export default function TeamSpvsrsConnectModal ( props : TeamSpvsrsConnectModalP
     const toast = useToast();
     const queryClient = useQueryClient()
 
-    const teamSpvsrsConnectMutation = useMutation(teamSpvsrsConnect, {
+    const teamSpvsrsConnectingCancelByFounderMutation = useMutation(teamSpvsrsConnectingCancelByFounder, {
         onSuccess : (data) => {
-            console.log("team spvsrs connect successful")
+            console.log("team spvsrs connecting cancel successful")
             // data.ok
             toast({
-                title : "관리자 등록 요청 수락성공",
+                title : "관리자 등록 요청 해제 성공",
                 status : "success",
                 duration : 1000
             });
@@ -39,7 +39,7 @@ export default function TeamSpvsrsConnectModal ( props : TeamSpvsrsConnectModalP
 
     const onSubmit = () => {
         if(teamPk) {
-            teamSpvsrsConnectMutation.mutate({ teamPk, userId })
+            teamSpvsrsConnectingCancelByFounderMutation.mutate({ teamPk, userId })
         }
     }
 
@@ -49,10 +49,10 @@ export default function TeamSpvsrsConnectModal ( props : TeamSpvsrsConnectModalP
         <ModalOverlay />
             {/* ModalOverlay는 페이지를 조금 더 어둡게 해서 Modal이 조금 더 돋보이게 해줌 */}
         <ModalContent> 
-            <ModalHeader> {props.userName} 팀 관리자로 등록을 요청을 수락하시겠습니까? </ModalHeader>
+            <ModalHeader> {props.teamName} 팀 관리자로 등록 요청을 취소하시겠습니까? </ModalHeader>
             <ModalCloseButton />
             <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
-                    <Button type={"submit"} isLoading={teamSpvsrsConnectMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 요청 수락하기 </Button>
+                    <Button type={"submit"} isLoading={teamSpvsrsConnectingCancelByFounderMutation.isLoading} size={"md"} width="100%" backgroundColor={"black"} color={"white"}> 요청 취소하기 </Button>
             </ModalBody>
         </ModalContent>
     </Modal>

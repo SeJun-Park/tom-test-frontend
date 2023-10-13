@@ -9,6 +9,7 @@ export interface IUser {
 }
 
 export interface ISpvsrUser extends IUser {
+    id : number,
     is_founder : boolean
 }
 

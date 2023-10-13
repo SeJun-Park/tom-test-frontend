@@ -238,11 +238,26 @@ export const teamSpvsrsConnecting = ({ teamPk } : ITeamSpvsrsConnectingVariables
     }
     ).then((response) => response.data)
 
-export interface ITeamSpvsrsConnectingCancelVariables {
+export interface ITeamSpvsrsConnectingCancelByOneselfVariables {
     teamPk : string,
 }
 
-export const teamSpvsrsConnectingCancel = ({ teamPk } : ITeamSpvsrsConnectingCancelVariables) => instance.put(`teams/${teamPk}/connecting/cancel/`, null, 
+export const teamSpvsrsConnectingCancelByOneself = ({ teamPk } : ITeamSpvsrsConnectingCancelByOneselfVariables) => instance.put(`teams/${teamPk}/spvsrs/connecting/cancel/`, null, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ITeamSpvsrsConnectingCancelByFounderVariables {
+    teamPk : string,
+    userId : number,
+}
+
+export const teamSpvsrsConnectingCancelByFounder = ({ teamPk, userId } : ITeamSpvsrsConnectingCancelByFounderVariables) => instance.put(`teams/${teamPk}/spvsrs/connecting/cancel/byfounder`, { userId }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""
@@ -254,9 +269,10 @@ export const teamSpvsrsConnectingCancel = ({ teamPk } : ITeamSpvsrsConnectingCan
 
 export interface ITeamSpvsrsConnectVariables {
     teamPk : string,
+    userId : number
 }
 
-export const teamSpvsrsConnect = ({ teamPk } : ITeamSpvsrsConnectVariables) => instance.post(`teams/${teamPk}/connect/`, null, 
+export const teamSpvsrsConnect = ({ teamPk, userId } : ITeamSpvsrsConnectVariables) => instance.post(`teams/${teamPk}/spvsrs/connect/`, { userId }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""
@@ -266,11 +282,26 @@ export const teamSpvsrsConnect = ({ teamPk } : ITeamSpvsrsConnectVariables) => i
     ).then((response) => response.data)
 
 
-export interface ITeamSpvsrsConnectCancelVariables {
+export interface ITeamSpvsrsConnectCancelByOneselfVariables {
     teamPk : string,
 }
 
-export const teamSpvsrsConnectCancel = ({ teamPk } : ITeamSpvsrsConnectCancelVariables) => instance.put(`teams/${teamPk}/connect/cancel/`, null, 
+export const teamSpvsrsConnectCancelByOneself = ({ teamPk } : ITeamSpvsrsConnectCancelByOneselfVariables) => instance.put(`teams/${teamPk}/spvsrs/connect/cancel/`, null, 
+    {
+        headers :  {
+            "X-CSRFToken" : Cookie.get("csrftoken") || ""
+                // post 관련해서는 항상 보내줘야 하는 듯
+        },
+    }
+    ).then((response) => response.data)
+
+
+export interface ITeamSpvsrsConnectCancelByFounderVariables {
+    teamPk : string,
+    userId : number,
+}
+
+export const teamSpvsrsConnectCancelByFounder = ({ teamPk, userId } : ITeamSpvsrsConnectCancelByFounderVariables) => instance.put(`teams/${teamPk}/spvsrs/connect/cancel/byfounder/`, { userId }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""
