@@ -11,7 +11,6 @@ import KakaoADSmall from "../components/KakaoADSmall";
 import Player from "../components/Player";
 import PlayerGoalStats from "../components/PlayerGoalStats";
 import PlayerTOMStats from "../components/PlayerTOMStats";
-import ProtectedPage from "../components/ProtectedPage";
 import { ITeam, ITinyPlayer } from "../types";
 
 export default function IsPlayerTeamPlayerList() {
@@ -30,7 +29,7 @@ export default function IsPlayerTeamPlayerList() {
     }
 
     return (
-        <ProtectedPage>
+        <>
             <Helmet>
                 <title>{ teamData ? (`삼오엠 | ${teamData.name} 플레이어`) : "Loading.." }</title>
             </Helmet>
@@ -143,6 +142,6 @@ export default function IsPlayerTeamPlayerList() {
             </VStack>
             <Empty />
             <Empty />
-        </ProtectedPage>
+        </>
     )
 }

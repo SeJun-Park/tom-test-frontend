@@ -31,6 +31,7 @@ export default function TeamSpvsrsConnectingModal ( props : TeamSpvsrsConnecting
             props.onClose();
             queryClient.refetchQueries(["team"])
             queryClient.refetchQueries(["teamSpvsrs"])
+            queryClient.refetchQueries(["teamConnectingSpvsrs"])
             
         },
     });

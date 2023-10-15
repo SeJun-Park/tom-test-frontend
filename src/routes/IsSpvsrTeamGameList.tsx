@@ -11,7 +11,6 @@ import Empty from "../components/Empty";
 import Game from "../components/Game";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
-import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
 import { IGoals, ISpvsrUser, ITeam, ITeamAllStats, ITeamStatsRelative, ITinyGame, IVSteams } from "../types";
 
@@ -87,7 +86,7 @@ export default function IsSpvsrTeamGameList() {
     }
 
     return (
-        <ProtectedPage>
+        <>
             <Helmet>
                 <title>{ teamData ? (`삼오엠 | ${teamData.name} 경기`) : "Loading.." }</title>
             </Helmet>
@@ -283,6 +282,6 @@ export default function IsSpvsrTeamGameList() {
             </VStack>
             <Empty />
             <Empty />
-        </ProtectedPage>
+        </>
     )
 }

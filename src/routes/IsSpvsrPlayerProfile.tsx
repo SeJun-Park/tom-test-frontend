@@ -11,7 +11,6 @@ import IsSpvsrPlayerConnectingModal from "../components/IsSpvsrPlayerConnectingM
 import IsSpvsrPlayerConnectionModal from "../components/IsSpvsrPlayerConnectionModal";
 import IsSpvsrPlayerUpdateModal from "../components/IsSpvsrPlayerUpdateModal";
 import NullGame from "../components/NullGame";
-import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
 import { IGoals, IPlayer, ISpvsrUser, ITinyGame } from "../types";
 import { Helmet } from "react-helmet";
@@ -43,7 +42,7 @@ export default function IsSpvsrPlayerProfile() {
     }
 
     return (
-        <ProtectedPage>
+        <>
             <Helmet>
                 <title>{ playerData ? (`삼오엠 | ${playerData.team.name} / ${playerData.backnumber}.${playerData.name}`) : "Loading.." }</title>
             </Helmet>
@@ -232,6 +231,6 @@ export default function IsSpvsrPlayerProfile() {
             </VStack>
             <Empty />
             <Empty />
-        </ProtectedPage>
+        </>
     )
 }

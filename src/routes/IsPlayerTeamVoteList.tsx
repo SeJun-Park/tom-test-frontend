@@ -8,7 +8,6 @@ import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
-import ProtectedPage from "../components/ProtectedPage";
 import TomGame from "../components/TomGame";
 import { ITeam, ITinyGame } from "../types";
 
@@ -25,7 +24,7 @@ export default function IsPlayerTeamVoteList() {
     }
 
     return (
-        <ProtectedPage>
+        <>
             <Helmet>
                 <title>{ teamData ? (`삼오엠 | ${teamData.name} 투표`) : "Loading.." }</title>
             </Helmet>
@@ -99,6 +98,6 @@ export default function IsPlayerTeamVoteList() {
             </VStack>
             <Empty />
             <Empty />
-        </ProtectedPage>
+        </>
     )
 }

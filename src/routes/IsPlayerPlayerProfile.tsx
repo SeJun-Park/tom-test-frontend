@@ -10,7 +10,6 @@ import Game from "../components/Game";
 import KakaoADBig from "../components/KakaoADBig";
 import KakaoADSmall from "../components/KakaoADSmall";
 import NullGame from "../components/NullGame";
-import ProtectedPage from "../components/ProtectedPage";
 import SmallDivider from "../components/SmallDivider";
 import { IGoals, IPlayer, ITinyGame } from "../types";
 
@@ -29,7 +28,7 @@ export default function IsPlayerPlayerProfile() {
     }
 
     return (
-        <ProtectedPage>
+        <>
             <Helmet>
                 <title>{ playerData ? (`삼오엠 | ${playerData.team.name} / ${playerData.backnumber}.${playerData.name}`) : "Loading.." }</title>
             </Helmet>
@@ -149,6 +148,6 @@ export default function IsPlayerPlayerProfile() {
             </VStack>
             <Empty />
             <Empty />
-        </ProtectedPage>
+        </>
     )
 }

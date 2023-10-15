@@ -11,7 +11,6 @@ import KakaoADSmall from "../components/KakaoADSmall";
 import PlayerAddModal from "../components/PlayerAddModal";
 import PlayerGoalStats from "../components/PlayerGoalStats";
 import PlayerTOMStats from "../components/PlayerTOMStats";
-import ProtectedPage from "../components/ProtectedPage";
 import SpvsrPlayer from "../components/SpvsrPlayer";
 import { ISpvsrUser, ITeam, ITinyPlayer } from "../types";
 
@@ -33,7 +32,7 @@ export default function IsSpvsrTeamPlayerList() {
     }
 
     return (
-        <ProtectedPage>
+        <>
             <Helmet>
                 <title>{ teamData ? (`삼오엠 | ${teamData.name} 플레이어`) : "Loading.." }</title>
             </Helmet>
@@ -154,6 +153,6 @@ export default function IsSpvsrTeamPlayerList() {
             </VStack>
             <Empty />
             <Empty />
-        </ProtectedPage>
+        </>
     )
 }
