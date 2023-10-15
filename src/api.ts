@@ -257,7 +257,7 @@ export interface ITeamSpvsrsConnectingCancelByFounderVariables {
     userId : number,
 }
 
-export const teamSpvsrsConnectingCancelByFounder = ({ teamPk, userId } : ITeamSpvsrsConnectingCancelByFounderVariables) => instance.put(`teams/${teamPk}/spvsrs/connecting/cancel/byfounder`, { userId }, 
+export const teamSpvsrsConnectingCancelByFounder = ({ teamPk, userId } : ITeamSpvsrsConnectingCancelByFounderVariables) => instance.put(`teams/${teamPk}/spvsrs/connecting/cancel/byfounder/`, { userId }, 
     {
         headers :  {
             "X-CSRFToken" : Cookie.get("csrftoken") || ""

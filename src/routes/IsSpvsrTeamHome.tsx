@@ -219,7 +219,7 @@ const onDenyBtnClick = (username: string, userId: number) => {
                                         </>
                                         :
                                         <>
-                                            <Button onClick={onTeamSpvsrsConnectingCancelByOneselfOpen} backgroundColor={"main.500"} color={"white"} size={"xs"}> - 관리자 신청 취소 </Button>
+                                            <Button onClick={onTeamSpvsrsConnectingCancelByOneselfOpen} backgroundColor={"black"} color={"white"} size={"xs"}> - 관리자 신청 취소 </Button>
                                             <TeamSpvsrsConnectingCancelByOneselfModal isOpen={isTeamSpvsrsConnectingCancelByOneselfOpen} onClose={onTeamSpvsrsConnectingCancelByOneselfClose} teamName={teamData ? teamData.name : ""} />
                                         </>
                                         :

@@ -31,6 +31,7 @@ export default function TeamSpvsrsConnectingCancelByOneselfModal ( props : TeamS
             props.onClose();
             queryClient.refetchQueries(["team"])
             queryClient.refetchQueries(["teamSpvsrs"])
+            queryClient.refetchQueries(["teamConnectingSpvsrs"])
             
         },
     });
