@@ -6,6 +6,7 @@ import { FaFutbol, FaStream, FaCheck, FaKey, FaArrowLeft } from "react-icons/fa"
 import { useNavigate } from "react-router-dom";
 import { teamRegister } from "../api";
 import Empty from "../components/Empty";
+import SpvsrOnlyPage from "../components/SpvsrOnlyPage";
 
 interface ISpvsrTeamRegisterForm {
     name : string;
@@ -23,10 +24,11 @@ export default function TeamRegister() {
         onSuccess : () => {
             console.log("team register mutation success");
             toast({
-                title : "팀 등록 성공",
+                title : "team register success.",
                 status : "success",
                 duration : 1000
             });
+            navigate("/")
             queryClient.refetchQueries(["isSpvsr"])
             queryClient.refetchQueries(["isSpvsrTeams"])
         }
@@ -42,9 +44,9 @@ export default function TeamRegister() {
     }
 
     return (
-        <>
+        <SpvsrOnlyPage>
             <Helmet>
-                <title>삼오엠 | 팀 등록하기</title>
+                <title>3OM | TeamRegister</title>
             </Helmet>
             <HStack justifyContent={"space-between"} height={20} px={5}>
                 <Button variant={"unstyled"} onClick={onClickBack}>
@@ -83,6 +85,6 @@ export default function TeamRegister() {
             <Empty />
             <Empty />
             <Empty />
-        </>
+        </SpvsrOnlyPage>
     )
 }

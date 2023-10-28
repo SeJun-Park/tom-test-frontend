@@ -1,17 +1,17 @@
 import useUser from "../lib/useUser";
-import ProtectedPage from "../components/ProtectedPage";
+import IsNotLoggedInDuesPayment from "./IsNotLoggedInDuesPayment";
 import IsPlayerDuesPayment from "./IsPlayerDuesPayment";
 import IsSpvsrDuesPayment from "./IsSpvsrDuesPayment";
 
 export default function DuesPayment() {
-    const { user } = useUser();
+    const { userLoading, isLoggedIn, user} = useUser();
     return (
-        <ProtectedPage>
-            <>
-            {user?.is_player ? <IsPlayerDuesPayment /> : (
-                            user?.is_spvsr ? <IsSpvsrDuesPayment /> : null
-                            )}
-            </>
-        </ProtectedPage>
+        <>
+            {!userLoading && (
+                !isLoggedIn ? <IsNotLoggedInDuesPayment /> :
+                                                        (user?.is_player ? <IsPlayerDuesPayment /> : 
+                                                                                                    (user?.is_spvsr ? <IsSpvsrDuesPayment /> : null))
+            )}
+        </>
     )
 }

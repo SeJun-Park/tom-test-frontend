@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./components/Root";
-import DuesDetail from "./routes/DuesDetails";
 import DuesPayment from "./routes/DuesPayment";
 import DuesPaymentDetail from "./routes/DuesPaymentDetail";
 import GameDetail from "./routes/GameDetail";
@@ -32,9 +31,10 @@ import DuesPaymentDetailReadOnly from "./routes/DuesPaymentDetailReadOnly";
 import DuesDetailsDetailReadOnly from "./routes/DuesDetailsDetailReadOnly";
 import GameQuotasReadOnly from "./routes/GameQuotasReadOnly";
 import TeamSchedulesReadOnly from "./routes/TeamSchedulesReadOnly";
-import TeamRegister from "./routes/TeamRegister";
 import GameVoteReadOnly from "./routes/GameVoteReadOnly";
 import Introduce from "./routes/Introduce";
+import DuesDetails from "./routes/DuesDetails";
+import TeamRegister from "./routes/TeamRegister";
 
 const router = createBrowserRouter(
     [
@@ -117,7 +117,7 @@ const router = createBrowserRouter(
                 },
                 {
                     path : "teams/:teamPk/dues/details",
-                    element : <DuesDetail />
+                    element : <DuesDetails />
                 },
                 {
                     path : "teams/:teamPk/dues/details/:detailPk",

@@ -1,18 +1,18 @@
 import useUser from "../lib/useUser";
-import ProtectedPage from "../components/ProtectedPage";
 import IsPlayerTeamVoteList from "./IsPlayerTeamVoteList";
 import IsSpvsrTeamVoteList from "./IsSpvsrTeamVoteList";
+import IsNotLoggedInTeamVoteList from "./IsNotLoggedInTeamVoteList";
 
 
 export default function TeamVoteList () {
-    const { user } = useUser();
+    const { userLoading, isLoggedIn, user} = useUser();
     return (
-        <ProtectedPage>
-            <>
-            {user?.is_player ? <IsPlayerTeamVoteList /> : (
-                            user?.is_spvsr ? <IsSpvsrTeamVoteList /> : null
-                            )}
-            </>
-        </ProtectedPage>
+        <>
+            {!userLoading && (
+                !isLoggedIn ? <IsNotLoggedInTeamVoteList /> :
+                                                        (user?.is_player ? <IsPlayerTeamVoteList /> : 
+                                                                                                    (user?.is_spvsr ? <IsSpvsrTeamVoteList /> : null))
+            )}
+        </>
     )
 }

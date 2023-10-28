@@ -1,17 +1,17 @@
 import useUser from "../lib/useUser";
-import ProtectedPage from "../components/ProtectedPage";
+import IsNotLoggedInDuesDetailsDetail from "./IsNotLoggedInDuesDetailsDetail";
 import IsPlayerDuesDetailsDetail from "./IsPlayerDuesDetailsDetail";
 import IsSpvsrDuesDetailsDetail from "./IsSpvsrDuesDetailsDetail";
 
 export default function DuesDetailsDetail() {
-    const { user } = useUser();
+    const { userLoading, isLoggedIn, user} = useUser();
     return (
-        <ProtectedPage>
-            <>
-            {user?.is_player ? <IsPlayerDuesDetailsDetail /> : (
-                            user?.is_spvsr ? <IsSpvsrDuesDetailsDetail /> : null
-                            )}
-            </>
-        </ProtectedPage>
+        <>
+            {!userLoading && (
+                !isLoggedIn ? <IsNotLoggedInDuesDetailsDetail /> :
+                                                        (user?.is_player ? <IsPlayerDuesDetailsDetail /> : 
+                                                                                                    (user?.is_spvsr ? <IsSpvsrDuesDetailsDetail /> : null))
+            )}
+        </>
     )
 }
