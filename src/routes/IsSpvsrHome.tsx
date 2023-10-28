@@ -35,11 +35,11 @@ export default function IsSpvsrHome() {
                 <TabPanels>
                     <TabPanel px={"5"}>
                         <VStack>
-                            <VStack position="relative" width="90%" height="75">
-                                <Link to={"/community"}>
+                            <VStack position="relative" width="100%" height="100">
+                                <Link to={"/introduce"}>
                                     <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                         <Box
-                                        backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/3e881f4e-0d99-4087-77a2-236600d78700/public)"
+                                        backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/55da74ce-715c-4795-5746-c27ace4b5b00/public)"
                                         backgroundSize="cover"
                                         backgroundPosition="center"
                                         width="100%"
@@ -54,7 +54,7 @@ export default function IsSpvsrHome() {
                                         >
                                             <HStack mr={2}>
                                                 <Text fontSize="lg" color="white">
-                                                    COMMUNITY
+                                                    삼오엠을 소개합니다
                                                 </Text>
                                                 <Box color={"white"}>
                                                     <FaArrowRight />
@@ -64,7 +64,7 @@ export default function IsSpvsrHome() {
                                     </Box>
                                 </Link>
                             </VStack>
-                            <VStack position="relative" width="90%" height="75">
+                            <VStack position="relative" width="100%" height="50">
                                 <Link to={"/teams/search"}>
                                     <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                         <Box

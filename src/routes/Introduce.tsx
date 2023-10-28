@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export default function Community() {
+export default function Introduce() {
 
     const navigate = useNavigate();
 
