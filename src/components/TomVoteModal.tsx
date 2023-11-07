@@ -39,6 +39,23 @@ export default function TomVoteModal ( props : TomVoteModalProps ) {
             queryClient.refetchQueries(["game"])
 
         },
+        onError: (error: unknown) => { // 여기서 error의 타입을 unknown으로 명시적으로 선언합니다.
+            if (error instanceof Error) {
+                // 이제 error는 Error 타입으로 간주됩니다.
+                toast({
+                    title: "투표 실패",
+                    description: `오류: ${error.message}`,
+                    status: "error"
+                });
+            } else {
+                // error가 Error 타입이 아닌 경우의 처리
+                toast({
+                    title: "투표 실패",
+                    description: "알 수 없는 오류 발생",
+                    status: "error"
+                });
+            }
+        },
     });
 
 
