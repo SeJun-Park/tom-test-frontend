@@ -111,12 +111,12 @@ export default function IsSpvsrHome() {
                                 <Team  pk={team.pk} avatar={team.avatar} name={team.name} />
                             )}
                         </VStack>
-                        <VStack alignItems={"flex-start"} width={"90%"} mt={8}>
+                        {/* <VStack alignItems={"flex-start"} width={"90%"} mt={8}>
                             <Text as="b" color={"main.500"} fontSize={"md"}> 삼오엠 베스트 </Text>
                             <Divider />
                         </VStack>
                         <VStack alignItems={"flex-start"} px={3} spacing={3} my={10}>
-                        </VStack>
+                        </VStack> */}
                     </TabPanel>
                     <TabPanel p={0}>
                         <VStack my={10} spacing={3}>
