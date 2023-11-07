@@ -54,7 +54,7 @@ export default function Introduce() {
                         </Box>
                     </Link>
                 </VStack>
-                <Text fontSize={"md"} my={5}>
+                <Text fontSize={"md"} py={10}>
                     축구 좋아하세요? <br/>
                     삼오엠은 3manofthematch의 약자로, <br/>
                     플레이어의 가입이 필요 없는 <br/>
