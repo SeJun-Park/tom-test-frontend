@@ -131,6 +131,7 @@ export default function TomVoteModal ( props : TomVoteModalProps ) {
                 ))}
                 <FormHelperText mt={5} fontSize={"xs"}> *본인에게 투표할 수 있습니다. </FormHelperText>
                 <FormHelperText fontSize={"xs"}> *최대 3명에게 투표할 수 있습니다. </FormHelperText>
+                <FormHelperText fontSize={"xs"} as="b"> *버튼이 눌리지 않을 땐 투표 창을 다시 열고 시도해보세요!</FormHelperText>
             </FormControl>
                     <Button type={"submit"} isLoading={uploadBallotMutation.isLoading} size={"md"} width="100%" backgroundColor={"main.500"} color={"white"} my={6}> 투표하기 </Button>
             </ModalBody>
