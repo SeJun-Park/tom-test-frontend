@@ -53,7 +53,7 @@ export default function IsSpvsrHome() {
                                         padding={2}
                                         >
                                             <HStack mr={2}>
-                                                <Text fontSize="lg" color="white">
+                                                <Text as="b" fontSize="lg" color="white">
                                                     삼오엠을 소개합니다
                                                 </Text>
                                                 <Box color={"white"}>
@@ -68,7 +68,7 @@ export default function IsSpvsrHome() {
                                 <Link to={"/teams/search"}>
                                     <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                         <Box
-                                        backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/38cd1e75-ab8a-4319-18b6-cc160a5d2100/public)"
+                                        backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/c4bd6cf6-ba7d-4db4-393f-01fd2b5e6a00/public)"
                                         backgroundSize="cover"
                                         backgroundPosition="center"
                                         width="100%"
@@ -82,7 +82,7 @@ export default function IsSpvsrHome() {
                                         padding={2}
                                         >
                                             <HStack mr={2}>
-                                                <Text fontSize="lg" color="white">
+                                                <Text as="b" fontSize="lg" color="white">
                                                     팀 검색하기
                                                 </Text>
                                                 <Box color={"white"}>
