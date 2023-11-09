@@ -1,20 +1,23 @@
-import { Box, Button, HStack, Input, InputGroup, InputLeftElement, Text, useToast, VStack } from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
+import { Box, Button, Divider, HStack, Input, InputGroup, InputLeftElement, Text, useToast, VStack } from "@chakra-ui/react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft, FaFutbol } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { searchTeam } from "../api";
+import { getTeamsRecently, searchTeam } from "../api";
 import Empty from "../components/Empty";
 import Team from "../components/Team";
-import { ITinyTeam } from "../types";
+import { ITeam, ITinyTeam } from "../types";
 
 interface ISearchTeamFrom {
     name : string
 }
 
 export default function SearchTeam() {
+
+    const { isLoading : teamsRecentlyLoading, data : teamsRecentlyData, isError : teamsRecentlyError } = useQuery<ITeam[]>(["teamsRecently"], getTeamsRecently);
+
     const { register, handleSubmit, formState : {errors}, reset : searchTeamFormReset } = useForm<ISearchTeamFrom>();
     const navigate = useNavigate();
     const toast = useToast();
@@ -83,14 +86,15 @@ export default function SearchTeam() {
                     <Empty />
                 </>
             ) : null}
-            <Empty />
-            <Empty />
-            <Empty />
-            <Empty />
-            <Empty />
-            <Empty />
-            <Empty />
-            <Empty />
+            <VStack alignItems={"flex-start"} px={5} pt={20}>
+                <Text as="b" color={"main.500"} fontSize={"md"}> 새로 올라온 팀 </Text>
+                <Divider />
+            </VStack>
+            <VStack alignItems={"flex-start"} px={5} spacing={3} my={5}>
+                {teamsRecentlyData?.map((team) => 
+                    <Team  pk={team.pk} avatar={team.avatar} name={team.name} />
+                )}
+            </VStack>
             <Empty />
             <Empty />
         </>

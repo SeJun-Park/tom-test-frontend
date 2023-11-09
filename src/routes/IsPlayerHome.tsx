@@ -48,7 +48,7 @@ export default function IsPlayerHome() {
                 <TabPanels>
                     <TabPanel px={"5"}>
                         <VStack>
-                            <VStack position="relative" width="100%" height="100">
+                            <VStack position="relative" width="100%" height="200">
                                 <Link to={"/introduce"}>
                                     <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                         <Box
@@ -77,7 +77,7 @@ export default function IsPlayerHome() {
                                     </Box>
                                 </Link>
                             </VStack>
-                            <VStack position="relative" width="100%" height="50">
+                            <VStack position="relative" width="100%" height="200">
                                 <Link to={"/teams/search"}>
                                     <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                         <Box
@@ -108,28 +108,12 @@ export default function IsPlayerHome() {
                             </VStack>
                         </VStack>
                         <Empty />
-                        {/* <Image src="https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/2dd3a302-1759-4888-9a07-520718726400/public" /> */}
                         <VStack mt={2}>
                             <Box w="320px" h="100px">
                                     <KakaoADBig />
                             </Box>
                         </VStack>
                         <Empty />
-                        <VStack alignItems={"flex-start"} width={"90%"} mt={8}>
-                            <Text as="b" color={"main.500"} fontSize={"md"}> 새로 올라온 팀 </Text>
-                            <Divider />
-                        </VStack>
-                        <VStack alignItems={"flex-start"} px={3} spacing={3} my={10}>
-                            {teamsRecentlyData?.map((team) => 
-                                <Team  pk={team.pk} avatar={team.avatar} name={team.name} />
-                            )}
-                        </VStack>
-                        {/* <VStack alignItems={"flex-start"} width={"90%"} mt={8}>
-                            <Text as="b" color={"main.500"} fontSize={"md"}> 삼오엠 베스트 </Text>
-                            <Divider />
-                        </VStack>
-                        <VStack alignItems={"flex-start"} px={3} spacing={3} my={10}>
-                        </VStack> */}
                     </TabPanel>
                     <TabPanel p={0}>
                         <VStack my={10} spacing={3}>
