@@ -77,7 +77,7 @@ export default function IsPlayerHome() {
                                     </Box>
                                 </Link>
                             </VStack>
-                            <VStack position="relative" width="100%" height="200">
+                            <VStack position="relative" width="100%" height="150">
                                 <Link to={"/teams/search"}>
                                     <Box position="absolute" top={0} left={0} right={0} bottom={0}>
                                         <Box
