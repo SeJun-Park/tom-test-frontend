@@ -149,23 +149,20 @@ export default function UploadGame() {
                         <Box my={6}>
                             <Calendar onChange={handleDateChange} prev2Label={null} next2Label={null} minDetail="month" maxDate={new Date(Date.now() + (60*60*24*7*4*6*1000))} formatDay={(locale, date) => date.toLocaleString("en", {day : "numeric"})} />
                         </Box>
-                        {dateError && (
-                                <Text color="red.500" fontSize="sm">{dateError}</Text>
-                            )}
                         <FormHelperText fontSize={"xs"}> 날짜와 시간은 필수로 선택해야 합니다. </FormHelperText>
                     </FormControl>
                     <FormControl>
                         <FormLabel mb={5}>
                             시작 시간
                         </FormLabel>
-                        <Input {...register("start_time", { required : true })} type={"time"} step="1800" isInvalid={Boolean(errors.start_time?.message)} placeholder="" variant={"flushed"} />
+                        <Input {...register("start_time", { required : true })} type={"time"} isInvalid={Boolean(errors.start_time?.message)} placeholder="" variant={"flushed"} />
 
                     </FormControl>
                     <FormControl>
                         <FormLabel mb={5}>
                             종료 시간
                         </FormLabel>
-                        <Input {...register("end_time", { required : true })} type={"time"} step="1800" isInvalid={Boolean(errors.end_time?.message)} placeholder="" variant={"flushed"} />
+                        <Input {...register("end_time", { required : true })} type={"time"} isInvalid={Boolean(errors.end_time?.message)} placeholder="" variant={"flushed"} />
 
                     </FormControl>
                     <FormControl>
@@ -184,6 +181,7 @@ export default function UploadGame() {
                     </FormControl>
                     <Empty />
                     {uploadGameMutation.isError ? (<Text color={"red.100"} textAlign={"center"} fontSize={"sm"}> Something is wrong </Text>) : null}
+                    {dateError && ( <Text color="red.500" fontSize="sm">{dateError}</Text>)}
                     <Button isLoading={uploadGameMutation.isLoading} type="submit"  color={"main.500"} width={"100%"} marginTop={4} variant={"unstyled"}> Upload </Button>
                 </VStack>
                 <Empty />
