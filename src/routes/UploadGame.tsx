@@ -36,6 +36,7 @@ export default function UploadGame() {
     const toast = useToast();
 
     const [ date, setDate ] = useState<string | undefined>();
+    const [dateError, setDateError] = useState<string | undefined>();
 
     const uploadGameMutation = useMutation(gameUpload, {
         onSuccess : (data) => {
@@ -45,7 +46,28 @@ export default function UploadGame() {
                 duration : 1000
             });
             navigate(-1)
-        }
+        },
+        onError: (error) => {
+            // 오류 처리 로직
+            if (error instanceof Error) {
+                toast({
+                    title: "업로드 실패",
+                    description: error.message,
+                    status: "error",
+                    duration: 2000,
+                    isClosable: true,
+                });
+            } else {
+                // 일반적인 오류 처리
+                toast({
+                    title: "업로드 실패",
+                    description: "알 수 없는 오류가 발생했습니다.",
+                    status: "error",
+                    duration: 2000,
+                    isClosable: true,
+                });
+            }
+        },
     })
 
     const handleDateChange = (date : any) => {
@@ -54,10 +76,16 @@ export default function UploadGame() {
         const formattedDate = koreanTime.toISOString().split("T")[0]; // 한국 시간을 ISO 8601 형식으로 변환합니다.
       
         setDate(formattedDate);
+        setDateError(undefined);
         console.log(formattedDate);
       };
 
     const onSubmit = ( { vsteam, location, start_time, end_time, participants } : IUploadGameForm) => {
+
+        if (!date) { // 날짜가 선택되지 않았을 경우
+            setDateError("날짜를 선택해주세요."); // 날짜가 없을 때 오류 설정
+            return;
+        }
 
         if (!Array.isArray(participants)) {
             participants = [participants];
@@ -114,7 +142,7 @@ export default function UploadGame() {
                         <Input {...register("location", { required : true})} type={"text"} px={1} isInvalid={Boolean(errors.location?.message)} placeholder="" variant={"flushed"}/>
 
                     </FormControl>
-                    <FormControl>
+                    <FormControl isInvalid={!!dateError}>
                         <FormLabel> 
                             날짜 
                         </FormLabel>

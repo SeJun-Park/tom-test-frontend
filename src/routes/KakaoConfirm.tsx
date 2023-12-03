@@ -53,6 +53,7 @@ export default function KakaoConfirm() {
     <VStack justifyContent={"center"} mt={40}>
         <Heading> 로그인 중... </Heading>
         <Text> 삼오엠에 오신 걸 환영합니다. </Text>
+        <Empty />
         <Spinner size={"lg"} />
         <Empty />
         <Empty />
