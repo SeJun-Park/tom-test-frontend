@@ -149,6 +149,9 @@ export default function UploadGame() {
                         <Box my={6}>
                             <Calendar onChange={handleDateChange} prev2Label={null} next2Label={null} minDetail="month" maxDate={new Date(Date.now() + (60*60*24*7*4*6*1000))} formatDay={(locale, date) => date.toLocaleString("en", {day : "numeric"})} />
                         </Box>
+                        {dateError && (
+                                <Text color="red.500" fontSize="sm">{dateError}</Text>
+                            )}
                         <FormHelperText fontSize={"xs"}> 날짜와 시간은 필수로 선택해야 합니다. </FormHelperText>
                     </FormControl>
                     <FormControl>
