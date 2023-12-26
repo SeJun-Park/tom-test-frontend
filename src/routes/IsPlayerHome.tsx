@@ -47,65 +47,20 @@ export default function IsPlayerHome() {
                 </TabList>
                 <TabPanels>
                     <TabPanel px={"5"}>
-                        <VStack>
-                            <VStack position="relative" width="100%" height="200">
-                                <Link to={"/introduce"}>
-                                    <Box position="absolute" top={0} left={0} right={0} bottom={0}>
-                                        <Box
-                                        backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/55da74ce-715c-4795-5746-c27ace4b5b00/public)"
-                                        backgroundSize="cover"
-                                        backgroundPosition="center"
-                                        width="100%"
-                                        height="100%"
-                                        borderRadius="xl"
-                                        textAlign={"center"}
-                                        display={"flex"}
-                                        flexDirection={"column"}
-                                        justifyContent={"flex-end"}
-                                        alignItems={"end"}
-                                        padding={2}
-                                        >
-                                            <HStack mr={2}>
-                                                <Text as="b" fontSize="lg" color="white">
-                                                    삼오엠을 소개합니다
-                                                </Text>
-                                                <Box color={"white"}>
-                                                    <FaArrowRight />
-                                                </Box>
-                                            </HStack>
-                                        </Box>
-                                    </Box>
-                                </Link>
-                            </VStack>
-                            <VStack position="relative" width="100%" height="150">
-                                <Link to={"/teams/search"}>
-                                    <Box position="absolute" top={0} left={0} right={0} bottom={0}>
-                                        <Box
-                                        backgroundImage="url(https://imagedelivery.net/SbAhiipQhJYzfniSqnZDWw/c4bd6cf6-ba7d-4db4-393f-01fd2b5e6a00/public)"
-                                        backgroundSize="cover"
-                                        backgroundPosition="center"
-                                        width="100%"
-                                        height="100%"
-                                        borderRadius="xl"
-                                        textAlign={"center"}
-                                        display={"flex"}
-                                        flexDirection={"column"}
-                                        justifyContent={"flex-end"}
-                                        alignItems={"end"}
-                                        padding={2}
-                                        >
-                                            <HStack mr={2}>
-                                                <Text as="b" fontSize="lg" color="white">
-                                                    팀 검색하기
-                                                </Text>
-                                                <Box color={"white"}>
-                                                    <FaArrowRight />
-                                                </Box>
-                                            </HStack>
-                                        </Box>
-                                    </Box>
-                                </Link>
-                            </VStack>
+                        <VStack spacing={5} py={32}>
+                            <Link to={"/introduce"}>
+                                <Text as="b" fontSize="xl">
+                                    WHAT IS THE
+                                </Text>
+                                <Text as="b" fontSize="xl" color={"main.500"} ml={2}>
+                                    3OM?
+                                </Text>
+                            </Link>
+                            <Link to={"/teams/search"}>
+                                <Text as="b" fontSize="xl">
+                                    TEAM SEARCH ⌕
+                                </Text>
+                            </Link>
                         </VStack>
                         <Empty />
                         <VStack mt={2}>

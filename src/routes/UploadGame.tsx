@@ -155,14 +155,14 @@ export default function UploadGame() {
                         <FormLabel mb={5}>
                             시작 시간
                         </FormLabel>
-                        <Input {...register("start_time", { required : true })} type={"time"} isInvalid={Boolean(errors.start_time?.message)} placeholder="" variant={"flushed"} />
+                        <Input {...register("start_time", { required : true })} type={"time"} isInvalid={Boolean(errors.start_time?.message)} variant={"flushed"} />
 
                     </FormControl>
                     <FormControl>
                         <FormLabel mb={5}>
                             종료 시간
                         </FormLabel>
-                        <Input {...register("end_time", { required : true })} type={"time"} isInvalid={Boolean(errors.end_time?.message)} placeholder="" variant={"flushed"} />
+                        <Input {...register("end_time", { required : true })} type={"time"} isInvalid={Boolean(errors.end_time?.message)} variant={"flushed"} />
 
                     </FormControl>
                     <FormControl>
