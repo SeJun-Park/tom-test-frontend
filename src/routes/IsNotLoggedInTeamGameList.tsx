@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamGames, getTeamGamesRelative, getTeamGoals, getTeamGoalsAgainst, getTeamGoalsAgainstRelative, getTeamGoalsRelative, getTeamStats, getTeamStatsRelative, getTeamVSteams } from "../api";
+import { getTeamGames, getTeamGamesRelative, getTeamGoals, getTeamGoalsAgainst, getTeamGoalsAgainstRelative, getTeamGoalsRelative, getTeamReadOnly, getTeamStats, getTeamStatsRelative, getTeamVSteams } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import Game from "../components/Game";
@@ -23,7 +23,7 @@ export default function IsNotLoggedInTeamGameList() {
 
     const { teamPk } = useParams();
 
-    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
+    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["teamReadOnly", teamPk], getTeamReadOnly);
     const { isLoading : teamGamesLoading, data : teamGamesData, isError : teamGamesError } = useQuery<ITinyGame[]>(["teamGames", teamPk], getTeamGames);
     const { isLoading : teamGoalsLoading, data : teamGoalsData, isError : teamGoalsError } = useQuery<IGoals>(["teamGoals", teamPk], getTeamGoals);
     const { isLoading : teamGoalsAgainstLoading, data : teamGoalsAgainstData, isError : teamGoalsAgainstError } = useQuery<IGoals>(["teamGoalsAgainst", teamPk], getTeamGoalsAgainst);

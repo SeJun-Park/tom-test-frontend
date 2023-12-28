@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft, FaCheckCircle, FaDotCircle, FaMinusCircle, FaToggleOff, FaToggleOn } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamDuesPayment, getTeamDuesPaymentItems } from "../api";
+import { getTeamDuesPayment, getTeamDuesPaymentItems, getTeamReadOnly } from "../api";
 import DuesPaymentItem from "../components/DuesPaymentItem";
 import Empty from "../components/Empty";
 import { IDuesPayment, IDuesPaymentItem, ITeam } from "../types";
@@ -12,7 +12,7 @@ export default function IsNotLoggedInDuesPaymentDetail() {
 
     const { teamPk, paymentPk } = useParams();
 
-    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
+    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["teamReadOnly", teamPk], getTeamReadOnly);
     const { isLoading : duesPaymentLoading, data : duesPaymentData, isError : duesPaymentError } = useQuery<IDuesPayment>(["duesPayment", teamPk, paymentPk], getTeamDuesPayment);
     const { isLoading : duesPaymentItemsLoading, data : duesPaymentItemsData, isError : duesPaymentItemsError } = useQuery<IDuesPaymentItem[]>(["duesPaymentItems", teamPk, paymentPk], getTeamDuesPaymentItems);
 

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamTomGames } from "../api";
+import { getTeamReadOnly, getTeamTomGames } from "../api";
 import BigDivider from "../components/BigDivider";
 import Empty from "../components/Empty";
 import TomGame from "../components/TomGame";
@@ -13,7 +13,7 @@ export default function IsNotLoggedInTeamVoteList() {
 
     const { teamPk } = useParams();
 
-    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
+    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["teamReadOnly", teamPk], getTeamReadOnly);
     const { isLoading : teamTomGamesLoading, data : teamTomGamesData, isError : teamTomGamesError } = useQuery<ITinyGame[]>(["teamTomGames", teamPk], getTeamTomGames);
 
     const navigate = useNavigate();

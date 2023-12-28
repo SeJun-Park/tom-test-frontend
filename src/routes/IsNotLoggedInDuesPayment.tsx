@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTeam, getTeamDuesPaymentList } from "../api";
+import { getTeamDuesPaymentList, getTeamReadOnly } from "../api";
 import DuesPaymentList from "../components/DuesPaymentList";
 import { IDuesPayment, ITeam } from "../types";
 
@@ -11,7 +11,7 @@ export default function IsNotLoggedInDuesPayment() {
 
     const { teamPk } = useParams();
 
-    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["team", teamPk], getTeam);
+    const { isLoading : teamLoading, data : teamData, isError : teamError } = useQuery<ITeam>(["teamReadOnly", teamPk], getTeamReadOnly);
     const { isLoading : teamDuesPaymentsLoading, data : teamDuesPaymentsData, isError : teamDuesPaymentsError } = useQuery<IDuesPayment[]>(["teamDuesPayments", teamPk], getTeamDuesPaymentList);
 
     const navigate = useNavigate();
