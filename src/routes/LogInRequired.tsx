@@ -1,19 +1,16 @@
 import { Helmet } from "react-helmet";
-import { Box, Divider, Heading, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Divider, Heading, HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { FaArrowRight, FaRunning, FaUserCog } from "react-icons/fa";
+import { FaAndroid, FaApple, FaEllipsisV, FaRunning, FaUserCog } from "react-icons/fa";
 import Empty from "../components/Empty";
 import SocialLogin from "../components/SocialLogin";
-import { useQuery } from "@tanstack/react-query";
-import { ITeam } from "../types";
-import { getTeamsRecently } from "../api";
-import Team from "../components/Team";
 import KakaoADBig from "../components/KakaoADBig";
 import { useEffect, useState } from "react";
+import { BsBoxArrowUp } from "react-icons/bs";
 
 export default function LogInRequired() {
 
-    const { isLoading : teamsRecentlyLoading, data : teamsRecentlyData, isError : teamsRecentlyError } = useQuery<ITeam[]>(["teamsRecently"], getTeamsRecently);
+    const { isOpen, onOpen, onClose } = useDisclosure(); 
 
     const [tabIndex, setTabIndex] = useState(Number(localStorage.getItem('tabIndex')) || 0);
 
@@ -47,6 +44,58 @@ export default function LogInRequired() {
                                         TEAM SEARCH ⌕
                                     </Text>
                                 </Link>
+                                <Button mt={5} onClick={onOpen} size={"xs"} width="100%" variant="ghost"> 
+                                    <Text as="b" color={"main.500"}>
+                                    ✓ 삼오엠을 홈 화면에 추가하는 방법
+                                    </Text>
+                                </Button>
+                                <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                                    <ModalOverlay />
+                                    <ModalContent>
+                                        <ModalCloseButton />
+                                        <ModalBody>
+                                            <VStack padding={"5"} spacing="5">
+                                                <HStack>
+                                                    <FaApple />
+                                                    <Text fontSize={"md"}>
+                                                        아이폰에서는
+                                                    </Text>
+                                                </HStack>
+                                                <HStack>
+                                                    <Text fontSize={"md"}>
+                                                        사파리로 접속 &rarr; 
+                                                    </Text>
+                                                    <VStack spacing={1}>
+                                                        <BsBoxArrowUp />
+                                                        <Text fontSize={"xs"} color={"gray"}>하단 중앙</Text>
+                                                    </VStack>
+                                                    <Text fontSize={"md"}>
+                                                        &rarr; 홈 화면에 추가
+                                                    </Text>
+                                                </HStack>
+                                                <Divider />
+                                                <HStack>
+                                                    <FaAndroid color="#A8CF45" />
+                                                    <Text fontSize={"md"}>
+                                                        안드로이드 폰에서는
+                                                    </Text>
+                                                </HStack>
+                                                <HStack>
+                                                    <Text fontSize={"md"}>
+                                                        크롬으로 접속 &rarr; 
+                                                    </Text>
+                                                    <VStack spacing={1}>
+                                                        <FaEllipsisV />
+                                                        <Text fontSize={"xs"} color={"gray"}>우측 상단</Text>
+                                                    </VStack>
+                                                    <Text fontSize={"md"}>
+                                                        &rarr; 홈 화면에 추가
+                                                    </Text>
+                                                </HStack>
+                                            </VStack>
+                                        </ModalBody>
+                                    </ModalContent>
+                                </Modal>
                             </VStack>
                             <Empty />
                             <VStack mt={2}>

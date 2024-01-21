@@ -1,20 +1,23 @@
-import { VStack, Text, Tabs, TabList, Tab, TabPanels, TabPanel, Divider, HStack, Box, Badge, Image, Card, CardHeader, Flex, Heading, Avatar, Button } from "@chakra-ui/react"
+import { VStack, Text, Tabs, TabList, Tab, TabPanels, TabPanel, Divider, HStack, Box, Badge, Image, Card, CardHeader, Flex, Heading, Avatar, Button, useDisclosure, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
-import { FaArrowRight } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import { getTeamsRecently, isSpvsr, isSpvsrTeams } from "../api"
 import Empty from "../components/Empty"
 import KakaoADBig from "../components/KakaoADBig"
 import Team from "../components/Team"
 import { ISpvsrUser, ITeam, ITinyTeam } from "../types"
+import { BsBoxArrowUp } from "react-icons/bs";
+import { FaAndroid, FaApple, FaEllipsisV } from "react-icons/fa"
 
 export default function IsSpvsrHome() {
 
     const { isLoading : teamsRecentlyLoading, data : teamsRecentlyData, isError : teamsRecentlyError } = useQuery<ITinyTeam[]>(["teamsRecently"], getTeamsRecently);
     const { isLoading : spvsrLoading, data : spvsrData, isError : spvsrError } = useQuery<ISpvsrUser>(["isSpvsr"], isSpvsr); 
     const { isLoading : spvsrTeamsLoading, data : spvsrTeamsData, isError : spvsrTeamsError } = useQuery<ITinyTeam[]>(["isSpvsrTeams"], isSpvsrTeams);
+
+    const { isOpen, onOpen, onClose } = useDisclosure(); 
 
     const [tabIndexHome, setTabIndexHome] = useState(Number(localStorage.getItem('tabIndexHome')) || 0);
 
@@ -48,6 +51,58 @@ export default function IsSpvsrHome() {
                                     TEAM SEARCH ⌕
                                 </Text>
                             </Link>
+                            <Button mt={5} onClick={onOpen} size={"xs"} width="100%" variant="ghost"> 
+                                <Text as="b" color={"main.500"}>
+                                ✓ 삼오엠을 홈 화면에 추가하는 방법
+                                </Text>
+                            </Button>
+                            <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                                <ModalOverlay />
+                                <ModalContent>
+                                    <ModalCloseButton />
+                                    <ModalBody>
+                                        <VStack padding={"5"} spacing="5">
+                                            <HStack>
+                                                <FaApple />
+                                                <Text fontSize={"md"}>
+                                                    아이폰에서는
+                                                </Text>
+                                            </HStack>
+                                            <HStack>
+                                                <Text fontSize={"md"}>
+                                                    사파리로 접속 &rarr; 
+                                                </Text>
+                                                <VStack spacing={1}>
+                                                    <BsBoxArrowUp />
+                                                    <Text fontSize={"xs"} color={"gray"}>하단 중앙</Text>
+                                                </VStack>
+                                                <Text fontSize={"md"}>
+                                                    &rarr; 홈 화면에 추가
+                                                </Text>
+                                            </HStack>
+                                            <Divider />
+                                            <HStack>
+                                                <FaAndroid color="#A8CF45" />
+                                                <Text fontSize={"md"}>
+                                                    안드로이드 폰에서는
+                                                </Text>
+                                            </HStack>
+                                            <HStack>
+                                                <Text fontSize={"md"}>
+                                                    크롬으로 접속 &rarr; 
+                                                </Text>
+                                                <VStack spacing={1}>
+                                                    <FaEllipsisV />
+                                                    <Text fontSize={"xs"} color={"gray"}>우측 상단</Text>
+                                                </VStack>
+                                                <Text fontSize={"md"}>
+                                                    &rarr; 홈 화면에 추가
+                                                </Text>
+                                            </HStack>
+                                        </VStack>
+                                    </ModalBody>
+                                </ModalContent>
+                            </Modal>
                         </VStack>
                         <Empty />
                         <VStack mt={2}>
