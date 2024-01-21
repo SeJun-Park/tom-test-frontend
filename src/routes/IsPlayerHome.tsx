@@ -2,7 +2,7 @@ import { VStack, Text, Tabs, TabList, Tab, TabPanels, TabPanel, Divider, HStack,
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
-import { FaArrowRight, FaFutbol, FaRunning, FaUserFriends, FaUserNinja } from "react-icons/fa"
+import { FaArrowRight, FaCaretRight, FaFutbol, FaRunning, FaUserFriends, FaUserNinja } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import { getTeamsRecently, isPlayer, isPlayerGames, isPlayerGoals, isPlayerTeams, isPlayerTomGames } from "../api"
 import BigDivider from "../components/BigDivider"
@@ -82,16 +82,23 @@ export default function IsPlayerHome() {
                                                     아이폰에서는
                                                 </Text>
                                             </HStack>
-                                            <HStack>
-                                                <Text fontSize={"md"}>
-                                                    사파리로 접속 &rarr; 
-                                                </Text>
-                                                <VStack spacing={1}>
+                                            <HStack spacing={3}>
+                                                <VStack spacing={0}>
+                                                    <Text fontSize={"md"}>
+                                                        사파리로 
+                                                    </Text>
+                                                    <Text fontSize={"md"}>
+                                                        삼오엠 접속
+                                                    </Text>
+                                                </VStack>
+                                                <FaCaretRight/>
+                                                <VStack pt={2} spacing={1}>
                                                     <BsBoxArrowUp />
                                                     <Text fontSize={"xs"} color={"gray"}>하단 중앙</Text>
                                                 </VStack>
+                                                <FaCaretRight/>
                                                 <Text fontSize={"md"}>
-                                                    &rarr; 홈 화면에 추가
+                                                    홈 화면에 추가
                                                 </Text>
                                             </HStack>
                                             <Divider />
@@ -102,15 +109,22 @@ export default function IsPlayerHome() {
                                                 </Text>
                                             </HStack>
                                             <HStack>
-                                                <Text fontSize={"md"}>
-                                                    크롬으로 접속 &rarr; 
-                                                </Text>
-                                                <VStack spacing={1}>
+                                                <VStack spacing={0}>
+                                                    <Text fontSize={"md"}>
+                                                        크롬으로 
+                                                    </Text>
+                                                    <Text fontSize={"md"}>
+                                                        삼오엠 접속
+                                                    </Text>
+                                                </VStack>
+                                                <FaCaretRight/>
+                                                <VStack pt={2} spacing={1}>
                                                     <FaEllipsisV />
                                                     <Text fontSize={"xs"} color={"gray"}>우측 상단</Text>
                                                 </VStack>
+                                                <FaCaretRight/>
                                                 <Text fontSize={"md"}>
-                                                    &rarr; 홈 화면에 추가
+                                                    홈 화면에 추가
                                                 </Text>
                                             </HStack>
                                         </VStack>

@@ -9,7 +9,7 @@ import KakaoADBig from "../components/KakaoADBig"
 import Team from "../components/Team"
 import { ISpvsrUser, ITeam, ITinyTeam } from "../types"
 import { BsBoxArrowUp } from "react-icons/bs";
-import { FaAndroid, FaApple, FaEllipsisV } from "react-icons/fa"
+import { FaAndroid, FaApple, FaCaretRight, FaEllipsisV } from "react-icons/fa"
 
 export default function IsSpvsrHome() {
 
@@ -68,16 +68,23 @@ export default function IsSpvsrHome() {
                                                     아이폰에서는
                                                 </Text>
                                             </HStack>
-                                            <HStack>
-                                                <Text fontSize={"md"}>
-                                                    사파리로 접속 &rarr; 
-                                                </Text>
-                                                <VStack spacing={1}>
+                                            <HStack spacing={3}>
+                                                <VStack spacing={0}>
+                                                    <Text fontSize={"md"}>
+                                                        사파리로 
+                                                    </Text>
+                                                    <Text fontSize={"md"}>
+                                                        삼오엠 접속
+                                                    </Text>
+                                                </VStack>
+                                                <FaCaretRight/>
+                                                <VStack pt={2} spacing={1}>
                                                     <BsBoxArrowUp />
                                                     <Text fontSize={"xs"} color={"gray"}>하단 중앙</Text>
                                                 </VStack>
+                                                <FaCaretRight/>
                                                 <Text fontSize={"md"}>
-                                                    &rarr; 홈 화면에 추가
+                                                    홈 화면에 추가
                                                 </Text>
                                             </HStack>
                                             <Divider />
@@ -88,15 +95,22 @@ export default function IsSpvsrHome() {
                                                 </Text>
                                             </HStack>
                                             <HStack>
-                                                <Text fontSize={"md"}>
-                                                    크롬으로 접속 &rarr; 
-                                                </Text>
-                                                <VStack spacing={1}>
+                                                <VStack spacing={0}>
+                                                    <Text fontSize={"md"}>
+                                                        크롬으로 
+                                                    </Text>
+                                                    <Text fontSize={"md"}>
+                                                        삼오엠 접속
+                                                    </Text>
+                                                </VStack>
+                                                <FaCaretRight/>
+                                                <VStack pt={2} spacing={1}>
                                                     <FaEllipsisV />
                                                     <Text fontSize={"xs"} color={"gray"}>우측 상단</Text>
                                                 </VStack>
+                                                <FaCaretRight/>
                                                 <Text fontSize={"md"}>
-                                                    &rarr; 홈 화면에 추가
+                                                    홈 화면에 추가
                                                 </Text>
                                             </HStack>
                                         </VStack>
