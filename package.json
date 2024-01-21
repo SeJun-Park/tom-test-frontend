@@ -23,6 +23,7 @@
     "moment-timezone": "^0.5.43",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-gtm-module": "^2.0.11",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.43.9",
     "react-icons": "^4.8.0",
@@ -59,6 +60,7 @@
   "devDependencies": {
     "@types/js-cookie": "^3.0.3",
     "@types/react-calendar": "^4.1.0",
+    "@types/react-gtm-module": "^2.0.3",
     "@types/react-helmet": "^6.1.6"
   }
 }

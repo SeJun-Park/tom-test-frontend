@@ -8,6 +8,13 @@ import router from './router';
 import theme from './theme';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { RecoilRoot } from "recoil";
+import TagManager from 'react-gtm-module';
+
+const tagManagerArgs = {
+  gtmId: 'AW-11478614762'
+}
+
+TagManager.initialize(tagManagerArgs);
 
 const client = new QueryClient();
   // 여기서 React Query가 캐싱을 엄청나게 함
