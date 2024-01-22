@@ -124,7 +124,7 @@ export default function LogInRequired() {
                             <Empty />
                             <VStack p={5}>
                                 <HStack spacing={3}>
-                                    <Heading as="b" size={"sm"}>로그인이 필요합니다.</Heading>
+                                    <Heading as="b" size={"sm"}>로그인하고 우리 팀을 만들거나 찾아보세요!</Heading>
                                 </HStack>
                                 <Empty />
                                 <SocialLogin />
