@@ -11,7 +11,7 @@ import { RecoilRoot } from "recoil";
 import TagManager from 'react-gtm-module';
 
 const tagManagerArgs = {
-  gtmId: 'AW-11478614762'
+  gtmId: 'GT-KDTS7T4'
 }
 
 TagManager.initialize(tagManagerArgs);
